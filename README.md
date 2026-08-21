@@ -1,888 +1,1207 @@
-# 🌍 VIATRA
+# Bharat Parikrama — Clean Professional Travel UI
 
-### Your Journey, Intelligently Planned.
+Redesign the frontend UI of my existing **Bharat Parikrama** travel planning web application.
 
-**VIATRA** is an AI-powered smart travel planning web application designed to simplify and personalize travel across India. It brings itinerary planning, transportation, accommodation, budgeting, business scheduling, local exploration, food discovery, and travel assistance together in one platform.
+## IMPORTANT: FIRST BUILD A CLEAN BASIC VERSION
 
-VIATRA goes beyond traditional itinerary planning by understanding the **purpose, schedule, budget, and preferences** of a traveller and creating a personalized travel experience around them.
+At this stage, **DO NOT use heavy Bento UI, Glassmorphism, AI Bento layouts, complex animations, 3D effects, floating cards, or experimental layouts.**
 
----
+We will add advanced UI effects later.
 
-## ✨ About the Project
+The current priority is:
 
-Planning a trip often requires switching between multiple platforms for transportation, hotels, sightseeing, food, budgeting, maps, and schedules.
+**Clean structure → Correct spacing → No overlaps → Proper alignment → Professional typography → Consistent components → Responsive layout**
 
-VIATRA aims to bring these activities together into a **single intelligent travel ecosystem**.
+The existing UI currently has problems such as:
 
-A traveller can simply provide:
+* components overlapping each other
+* sections appearing too close together
+* inconsistent spacing
+* oversized or undersized elements
+* poor visual hierarchy
+* content touching screen edges
+* inconsistent card sizes
+* hero content and map not properly balanced
+* navigation alignment issues
+* sections visually merging into one another
+* inconsistent image dimensions
+* footer looking compressed
+* excessive information appearing at once
 
-* Starting location
-* Destination
-* Travel dates
-* Travel purpose
-* Number of travellers
-* Budget
-* Transportation preference
-* Accommodation preference
-
-VIATRA then helps organize the complete journey.
-
----
-
-## 🎯 Objectives
-
-The main objectives of VIATRA are to:
-
-* Simplify multi-city travel planning.
-* Generate personalized itineraries.
-* Provide purpose-based travel recommendations.
-* Help travellers stay within their budget.
-* Assist business travellers with meeting-aware schedules.
-* Recommend nearby activities based on available free time.
-* Provide intelligent itinerary modifications through AI.
-* Bring transport, accommodation, food, activities, and local services into one platform.
-* Allow travellers to preserve and share their travel memories.
+Fix all of these problems.
 
 ---
 
-## 🧭 How VIATRA Works
+# 1. DESIGN REFERENCE
+
+Use the provided reference screenshots as the **visual direction**, but DO NOT copy them pixel-for-pixel.
+
+The desired visual identity is:
+
+**Modern India + Premium Travel + Clean Editorial Design + Route Intelligence**
+
+The website should feel like a professionally designed Indian travel-tech platform.
+
+Think:
+
+**Indian tourism identity + modern SaaS usability + premium travel editorial design**
+
+The design should look intentionally created by a professional UI/UX designer.
+
+---
+
+# 2. VISUAL STYLE
+
+Use:
+
+* Clean white / warm off-white background
+* Deep navy text
+* Royal blue as primary action color
+* Muted gold/orange accents
+* Very subtle warm Indian tones
+* Thin borders
+* Soft shadows
+* Controlled border radius
+* Plenty of whitespace
+
+Avoid:
+
+* Neon colors
+* Purple AI gradients
+* Excessive gradients
+* Excessive shadows
+* Glass cards
+* Huge rounded containers
+* Cartoon UI
+* Random decorative blobs
+* Overloaded cards
+* Excessive icons
+* Excessive animation
+
+---
+
+# 3. STRICT LAYOUT SYSTEM
+
+Create a proper global container.
+
+Use approximately:
 
 ```text
-Login / Signup
-      ↓
-Create a Trip
-      ↓
-Select Travel Purpose
-      ↓
-Choose Travel Dates
-      ↓
-Enter Source & Destination
-      ↓
-Select One-Way / Round Trip
-      ↓
-Choose Transportation
-      ↓
-Select / Compare Hotels
-      ↓
-Generate Smart Itinerary
-      ↓
-Add Activities / Meetings
-      ↓
-Explore Nearby Places
-      ↓
-Manage Budget
-      ↓
-Use VIATRA AI Assistant
-      ↓
-Complete Trip
-      ↓
-Memories + Reviews + PDF Report
+Maximum content width: 1200–1280px
+Desktop horizontal padding: 48–64px
+Tablet padding: 32px
+Mobile padding: 16–20px
 ```
 
----
+Every major section must align to the SAME container.
 
-# 🚀 Key Features
-
-## 🔐 1. Authentication
-
-Users can securely create and manage their accounts.
-
-Features include:
-
-* Sign Up
-* Login
-* Forgot Password
-* User Profile
-* Account Settings
-* Secure Authentication
+Do not allow some sections to touch the viewport while others are centered.
 
 ---
 
-## 🧳 2. Smart Trip Creation
+# 4. ABSOLUTELY NO OVERLAPPING COMPONENTS
 
-Users can create customized trips by entering:
+This is extremely important.
 
-* Source
-* Destination
-* Multiple destinations
-* Start date
-* End date
-* Number of travellers
-* Approximate budget
-* Travel preferences
+NO component should overlap another component unless it is an intentionally positioned decorative element.
 
-The application automatically calculates the duration of the trip.
+Do not use arbitrary:
 
----
+```css
+position: absolute;
+top: ...
+left: ...
+margin-top: -...
+transform: translate(...)
+```
 
-## 🎯 3. Purpose-Based Travel Planning
+for normal page layout.
 
-VIATRA personalizes recommendations according to the user's travel purpose.
+Use:
 
-### Business
+* CSS Grid
+* Flexbox
+* proper container widths
+* gap
+* padding
+* margin
+* responsive breakpoints
 
-Optimizes the itinerary around meetings, conferences, work commitments, and free time.
-
-### Devotional
-
-Recommends temples, pilgrimage destinations, spiritual locations, and nearby relevant places.
-
-### Family
-
-Prioritizes family-friendly attractions, comfortable transportation, restaurants, and activities.
-
-### Entertainment
-
-Recommends sightseeing, shopping, entertainment, events, and recreational activities.
-
-### Personal / Leisure
-
-Provides flexible recommendations for relaxation, local exploration, cafés, nature, photography, and other experiences.
+Sections must remain inside normal document flow.
 
 ---
 
-## 🚆 4. Transportation Planning
+# 5. SECTION SPACING
 
-Users can compare different modes of transportation.
+Give every major section enough breathing room.
 
-Supported options can include:
+Recommended:
 
-* ✈️ Flights
-* 🚆 Trains
-* 🚌 Buses
-* 🚗 Cars
+```text
+Major section spacing:
+80–100px desktop
+64–80px tablet
+48–64px mobile
 
-Users can select:
+Card gap:
+20–24px
 
-**One-Way Trip** or **Round Trip**
+Heading → description:
+8–12px
 
-Transportation can be compared based on:
+Description → content:
+24–32px
+```
 
-* Estimated cost
-* Travel duration
-* Convenience
-* Comfort
-
----
-
-## 🏨 5. Hotel Discovery & Comparison
-
-VIATRA recommends accommodation according to the user's destination and budget.
-
-Users can filter hotels by:
-
-* Price
-* Rating
-* 3 Star
-* 4 Star
-* 5 Star
-* Distance
-* Business-friendly
-* Family-friendly
-
-Hotels can also be compared side-by-side before selection.
+Do NOT place one section immediately against another.
 
 ---
 
-## 🗓️ 6. Smart Itinerary Builder
+# 6. HEADER / NAVBAR
 
-VIATRA creates a structured **day-wise itinerary**.
+Create a clean professional navbar similar in spirit to the reference.
+
+LEFT:
+
+Bharat Parikrama logo
+
+Use:
+
+**भारत परिक्रमा**
+
+and smaller:
+
+**BHARAT PARIKRAMA**
+
+CENTER:
+
+Home
+Explore
+Community
+How It Works
+
+RIGHT:
+
+Login
+
+Primary CTA:
+
+**Plan Your Parikrama**
+
+Navbar should have:
+
+* proper vertical alignment
+* approximately 72–80px height
+* subtle bottom border
+* white background
+* comfortable spacing
+
+Do not make navigation text tiny.
+
+Do not allow buttons or links to touch each other.
+
+---
+
+# 7. HERO SECTION
+
+This is the most important visual section.
+
+Create a spacious **two-column hero**.
+
+Desktop:
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│ LEFT CONTENT                     INDIA ROUTE VISUAL          │
+│                                                             │
+│ Bharat Parikrama                 [India Map]                │
+│                                                             │
+│ Pan-India Travel &               Srinagar ●                 │
+│ Itinerary Optimization                 │                    │
+│                                      Delhi ●                │
+│ Smarter journeys.                     │                    │
+│ Seamless experiences.             Mumbai ●                 │
+│ Adaptive travel plans.                │                    │
+│                                    Chennai ●                │
+│                                                             │
+│ [Plan Your Parikrama]                                        │
+│ [Explore How It Works]                                      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+Use approximately:
+
+**Left: 42–45%**
+
+**Right: 55–58%**
+
+Do not center everything.
+
+---
+
+# 8. HERO TYPOGRAPHY
+
+Small eyebrow:
+
+**AI-POWERED INDIA TRAVEL PLANNING**
+
+Main heading:
+
+# BHARAT PARIKRAMA
+
+Supporting heading:
+
+## Pan-India Travel & Itinerary Optimization
+
+Description:
+
+**Smarter journeys. Seamless experiences. Adaptive travel plans across India.**
+
+Primary CTA:
+
+**Plan Your Parikrama →**
+
+Secondary CTA:
+
+**Explore How It Works**
+
+Keep line lengths controlled.
+
+Do not stretch text across the entire screen.
+
+---
+
+# 9. INDIA MAP HERO VISUAL
+
+The right side should feature a clean stylized **India map**.
+
+Do not use an extremely dark technical command-center map.
+
+For the basic UI version, use:
+
+* white / very light background
+* subtle India outline
+* thin route lines
+* restrained blue/gold route accents
+* simple city markers
+
+Example cities:
+
+Srinagar
+
+Delhi
+
+Jaipur
+
+Ahmedabad
+
+Mumbai
+
+Varanasi
+
+Kolkata
+
+Guwahati
+
+Bengaluru
+
+Chennai
+
+Add small transport illustrations/icons where appropriate:
+
+✈ Flight
+
+Train
+
+Car
+
+Ship/Ferry
+
+Do NOT overcrowd the map.
+
+The map should be understandable within 2–3 seconds.
+
+---
+
+# 10. INDIAN VISUAL IDENTITY
+
+Add subtle Indian identity without making the website look traditional or outdated.
+
+Possible visual details:
+
+* simplified temple silhouette
+* Indian railway motif
+* coastal/ferry illustration
+* small cultural illustration
+* subtle Indian route line
+* India map
+* regional travel imagery
+
+Use these sparingly.
+
+The application is still a modern technology platform.
+
+---
+
+# 11. HERO BOTTOM DECORATIVE ROUTE
+
+Take inspiration from the reference image.
+
+At the bottom of the hero, optionally add a subtle curved travel line.
+
+Along the route, small illustrations can represent:
+
+Temple → Train → Culture → Airport → Coastal Travel
+
+This should remain decorative and should NOT overlap hero content.
+
+---
+
+# 12. DO NOT PUT STATS ABOVE THE HERO
+
+Current design shows cards such as:
+
+28 States Covered
+
+4-in-1 Transit Modes
+
+4.9 Rating
+
+above/inside the hero area.
+
+Do NOT do this.
+
+The hero should remain clean.
+
+Place statistics in a separate section BELOW the hero.
+
+---
+
+# 13. QUICK STATS SECTION
+
+Immediately after the hero:
+
+```text
+────────────────────────────────────────────
+
+28+
+States Covered
+
+4
+Travel Modes
+
+100+
+Destinations
+
+AI
+Smart Planning
+
+────────────────────────────────────────────
+```
+
+Keep this section minimal.
+
+Do not put each statistic inside a huge card.
+
+---
+
+# 14. EVERYTHING YOU NEED
+
+Create a clean feature introduction.
+
+Centered heading:
+
+# Everything You Need for Your Journey
+
+Supporting text:
+
+**From planning your route to managing your stay, Bharat Parikrama keeps your entire journey organized.**
+
+Then use a simple 3-column grid.
+
+---
+
+# 15. CORE FEATURE CARDS
+
+First row:
+
+### Multi-Modal Routing
+
+Plan journeys using flights, trains, roads and maritime routes.
+
+### Business Travel Mode
+
+Organize professional travel around meetings and available free time.
+
+### Smart Budget Planner
+
+Track transportation, accommodation, food and activity expenses.
+
+Second row:
+
+### Smart Itinerary
+
+Create organized day-wise travel plans.
+
+### Explore Nearby
+
+Discover places that fit into your available time.
+
+### AI Travel Assistant
+
+Get contextual help with your journey.
+
+Keep cards simple.
+
+No glassmorphism yet.
+
+---
+
+# 16. FEATURE CARD DESIGN
+
+Feature cards should use:
+
+White background
+
+1px subtle border
+
+16–20px radius
+
+24–28px padding
+
+Small icon
+
+Strong title
+
+2–3 lines description
+
+Optional small link:
+
+**Learn more →**
+
+Do not make icons huge.
+
+Do not use different bright colors for every card.
+
+---
+
+# 17. CURATED JOURNEYS SECTION
+
+Create a visually strong section inspired by the second reference image.
+
+Heading:
+
+# Curated Bharat Circuits
+
+Description:
+
+**Thoughtfully planned journeys connecting India's culture, cities and experiences.**
+
+Create large horizontal travel cards.
+
+---
+
+# 18. CURATED CIRCUIT CARD
 
 Example:
 
-```text
-Day 1 — Ahmedabad
+### Ganga Heritage & Deccan Corridor
 
-09:00 AM  Hotel Check-in
-10:30 AM  Sabarmati Ashram
-12:30 PM  Lunch
-02:00 PM  Adalaj Stepwell
-05:30 PM  Sabarmati Riverfront
-08:00 PM  Dinner
-```
+**New Delhi → Varanasi → Prayagraj → Ayodhya → Mumbai**
 
-Users can:
+Top visual should contain two complementary images/illustrations.
 
-* Add activities
-* Remove activities
-* Edit timings
-* Replace activities
-* Reorder activities
-* Modify the itinerary
+LEFT:
+
+Varanasi Ghats
+
+RIGHT:
+
+Vande Bharat
+
+Below:
+
+**8 Days / 7 Nights**
+
+**Instant Itinerary**
+
+Then:
+
+### Integrated Modes of Transit
+
+Use four clean small boxes:
+
+✈ Flight
+
+🚆 Vande Bharat
+
+🚗 Private Cab
+
+⛴ River Cruise
+
+Then:
+
+**Starting from**
+
+# ₹24,999
+
+/per person
+
+CTA:
+
+**Explore Circuit →**
 
 ---
 
-# 💼 7. Business Travel Mode
+# 19. CURATED CARD STRUCTURE
 
-One of VIATRA's major features is its dedicated **Business Travel Mode**.
+Do NOT squeeze all information together.
 
-Business travellers can enter:
+Use this spacing:
 
-* Meeting name
-* Meeting date
-* Start time
-* End time
-* Meeting location
-* Notes
+```text
+IMAGE
+↓ 24px
 
-VIATRA organizes the itinerary around these professional commitments.
+Metadata
+↓ 12px
+
+Journey Name
+↓ 8px
+
+Route
+↓ 28px
+
+Transport Modes
+↓ 32px
+
+Divider
+↓ 24px
+
+Price                 CTA
+```
+
+This is important.
+
+---
+
+# 20. COMMUNITY TRIPS
+
+Create:
+
+# Community Trips
+
+**Browse itineraries shared by fellow travellers.**
+
+Use a clean 3-column grid on desktop.
+
+Do NOT use four extremely wide cards squeezed together.
+
+Each card:
+
+Large 16:9 image
+
+Trip title
+
+Route
+
+Duration
+
+Traveller name
+
+Likes
 
 Example:
 
-```text
-10:00 AM   Nearby Exploration
-12:30 PM   Lunch
-01:20 PM   Travel to Meeting
-02:00 PM   Client Meeting
-03:00 PM   Meeting Ends
-03:30 PM   Nearby Attraction
+**Golden Triangle in 6 Days**
+
+Delhi → Agra → Jaipur → Delhi
+
+6 Days
+
+Priya Sharma
+
+♡ 234
+
+---
+
+# 21. IMAGE CONSISTENCY
+
+All images inside the same card type MUST use the same aspect ratio.
+
+For Community:
+
+16:9
+
+For Destination cards:
+
+4:3 or 3:2
+
+For profile:
+
+1:1
+
+Never allow one image to become taller or shorter than neighboring cards.
+
+Use:
+
+```css
+object-fit: cover;
 ```
 
-This prevents sightseeing activities from conflicting with important meetings.
-
 ---
 
-## 📍 8. Smart Free-Time Explorer
+# 22. DESTINATION SECTION
 
-VIATRA analyzes free time between scheduled activities.
+Create:
 
-For example:
+# Explore Bharat
 
-```text
-Meeting: 2:00 PM
-Free Time: 10:30 AM – 1:30 PM
-```
+Subtitle:
 
-VIATRA can recommend nearby locations that realistically fit within this time.
+**From mountains and heritage cities to coastlines and spiritual destinations.**
 
-Recommendations consider:
+Use destination cards for:
 
-* Current location
-* Meeting location
-* Distance
-* Travel time
-* Available free time
-* Expected activity duration
+Goa
 
----
+Jaipur
 
-## 🔔 9. Optional Smart Reminders
+Udaipur
 
-Users can enable reminders for important events.
+Shimla
 
-Examples:
+Varanasi
 
-> Meeting starts in 30 minutes.
+Kerala
 
-> Leave in 15 minutes to reach your meeting on time.
+Cards should contain:
 
-> Your train departs in 1 hour.
+Image
 
-> Hotel checkout is tomorrow at 11:00 AM.
+Destination name
 
-Reminders remain optional and can be enabled or disabled by the user.
-
----
-
-# 🤖 10. VIATRA AI Assistant
-
-VIATRA includes an intelligent travel chatbot that understands the user's current trip.
-
-Users can ask questions such as:
-
-* “What can I explore near my meeting?”
-* “I have 2 hours free. Where can I go?”
-* “Find good vegetarian food nearby.”
-* “Make tomorrow's itinerary less hectic.”
-* “Reduce my trip budget.”
-* “Suggest something near my hotel.”
-* “Reschedule my afternoon.”
-
-The assistant can help users make decisions without manually searching through different parts of the application.
-
----
-
-## 🔄 11. AI-Powered Rescheduling
-
-The AI assistant can also suggest modifications to an existing itinerary.
+Category
 
 Example:
 
-```text
-User:
-My meeting moved from 2 PM to 4 PM.
+**Jaipur**
 
-VIATRA:
-Your meeting has been moved to 4 PM.
-You now have approximately two additional
-hours available.
-
-Suggested:
-02:00 PM — Nearby Museum
-03:15 PM — Leave for Meeting
-04:00 PM — Client Meeting
-```
-
-The system should show proposed changes before modifying the actual itinerary.
+Heritage
 
 ---
 
-# 🗺️ 12. India-Focused Exploration
+# 23. TESTIMONIALS
 
-VIATRA initially focuses on travel within **India**.
+Current testimonial area is visually too dark and compressed.
 
-The interface can display an India map showing:
+Replace it with a clean light section.
 
-* Source
-* Destination
-* Multiple stops
-* Travel route
-* Current destination
+Heading:
+
+# Travellers Love Bharat Parikrama
+
+Use 3 testimonial cards.
+
+Each card:
+
+★★★★★
+
+Short quote
+
+Profile photo
+
+Name
+
+City
 
 Example:
 
-```text
-Mumbai ● ─────────── ● Ahmedabad
-```
+“Bharat Parikrama made my multi-city journey much easier to organize.”
+
+Avoid giant dark navy background.
 
 ---
 
-## 🏛️ 13. Sightseeing & Activities
+# 24. CTA SECTION
 
-Travellers can discover activities according to categories such as:
+Create a clean strong CTA near the bottom.
 
-* Historical
-* Adventure
-* Nature
-* Shopping
-* Religious
-* Entertainment
-* Museums
-* Photography
-* Hidden Gems
-* Local Experiences
+Use royal blue or deep navy background.
 
-Activities can directly be added to the itinerary.
+Heading:
 
----
+# Start Planning Your Parikrama
 
-# 🍽️ 14. Food Discovery
+Description:
 
-Users can discover restaurants and local cuisine around their:
+**One journey. Multiple destinations. One intelligent travel companion.**
 
-* Hotel
-* Current location
-* Meeting location
-* Tourist attraction
+Buttons:
 
-Information can include:
+**Plan Your Trip →**
 
-* Restaurant name
-* Images
-* Rating
-* Distance
-* Approximate cost
-* Cuisine
-* Popular dishes
-* Reviews
-* Opening hours
+**Explore India**
 
-Users can also ask the AI assistant:
+Give this section substantial padding.
 
-> “Where can I get authentic local food nearby?”
+Do not compress it into a thin horizontal bar.
 
 ---
 
-# 🚕 15. Taxi / Local Transport
+# 25. FOOTER
 
-VIATRA can provide local ride assistance.
+Create a spacious footer.
 
-Users provide:
+Dark navy background.
 
-```text
-Pickup Location
-       ↓
-Destination
-       ↓
-Estimated Distance
-       ↓
-Estimated Travel Time
-       ↓
-Estimated Fare
-       ↓
-Book Ride
-```
+Four columns:
 
-During the prototype stage, taxi bookings can use simulated data while maintaining architecture for future integration with real mobility services.
+### Bharat Parikrama
 
----
+Short description.
 
-# 🧑‍💼 16. Local Guide Marketplace
+### Platform
 
-Travellers can discover and book local guides.
+Plan a Trip
+Explore India
+Community Trips
+AI Assistant
 
-Guide profiles can contain:
+### Travel
 
-* Name
-* Profile photo
-* City
-* Languages
-* Experience
-* Specialization
-* Rating
-* Price per hour
-* Reviews
+Hotels
+Transport
+Local Guides
+Emergency Help
 
-Guide categories may include:
+### Support
 
-* Heritage Guide
-* Food Guide
-* Religious Guide
-* Adventure Guide
-* Photography Guide
-* General City Guide
+Contact
+Help
+Privacy
+Terms
+
+Bottom:
+
+**© 2026 Bharat Parikrama. Made for journeys across India.**
+
+Do NOT squeeze footer content.
+
+Use at least 48–64px vertical padding.
 
 ---
 
-# 🆘 17. Emergency Travel Assistance
+# 26. BASIC CARD SYSTEM
 
-VIATRA provides an emergency support section to help travellers quickly locate useful resources.
+Use only 3 card styles initially.
 
-Examples include:
+### Standard Card
 
-* Nearby hospital
-* Police station
-* Transportation
-* Hotel contact
-* Current location
-* Emergency contact information
+For features.
 
-The AI assistant acts only as a support tool and does not replace official emergency services.
+### Image Card
 
----
+For destinations/community.
 
-# 💰 18. Smart Budget Management
+### Journey Card
 
-Users can maintain a complete trip budget.
+For curated travel circuits.
 
-Expense categories include:
+Do not create 10 different card designs.
 
-* Transportation
-* Accommodation
-* Food
-* Activities
-* Taxi
-* Local Guide
-* Shopping
-* Other Expenses
-
-Dashboard example:
-
-```text
-Total Budget       ₹30,000
-Estimated Cost     ₹26,500
-Remaining          ₹3,500
-```
-
-Visualizations can include:
-
-* Pie charts
-* Bar charts
-* Daily expenses
-* Category-wise breakdown
-
-The application can notify users when estimated expenses exceed their budget.
+Consistency first.
 
 ---
 
-# 📸 19. Travel Memories
+# 27. BUTTON SYSTEM
 
-Every trip contains a dedicated **My Memories** section.
+Use only three button types.
 
-Users can upload:
+### Primary
 
-* Photos
-* Short videos
-* Captions
+Royal blue background
 
-Memories can be associated with:
+White text
 
-* Destination
-* Day
-* Activity
-* Trip
+Example:
 
-This turns VIATRA into both a travel planner and a personal travel diary.
+**Plan Your Parikrama →**
 
----
+### Secondary
 
-# ⭐ 20. Reviews & Ratings
+White background
 
-After completing a trip, users can provide ratings and reviews for:
+Dark text
 
-* Hotels
-* Restaurants
-* Transportation
-* Local guides
-* Activities
-* Overall trip experience
+Subtle border
 
-Ratings use a 1–5 star system.
+### Text Button
 
----
+No container.
 
-# 👥 21. Community & Trip Sharing
+Example:
 
-Users can optionally make their itineraries public.
+**See all →**
 
-Other users can explore:
+Keep button height approximately:
 
-* Popular Trips
-* Budget Trips
-* Weekend Trips
-* Family Trips
-* Business Trips
-* Devotional Trips
-
-A public itinerary can provide a:
-
-**Copy This Trip**
-
-option.
-
-The copied itinerary becomes editable inside the user's account.
+44–48px.
 
 ---
 
-# 📄 22. PDF Trip Report
+# 28. RESPONSIVE DESIGN
 
-Users can generate a professional travel report containing:
+The UI must remain clean at every screen size.
 
-* Traveller information
-* Trip details
-* Travel purpose
-* Source and destination
-* Travel dates
-* Transportation
-* Accommodation
-* Day-wise itinerary
-* Business meetings
-* Activities
-* Restaurants
-* Budget breakdown
-* Estimated expenses
-* Places visited
-* Selected memories
-* Reviews
+Desktop:
 
-This report can be downloaded as a PDF.
+2-column hero
 
----
+3-column features
 
-# 👤 23. User Profile
+3-column community
 
-The profile section contains:
+Tablet:
 
-* Profile picture
-* Name
-* Email
-* Home city
-* Travel preferences
-* Food preferences
-* Saved destinations
-* Upcoming trips
-* Previous trips
-* Reviews
-* Account settings
+2-column grids
+
+Smaller hero map
+
+Mobile:
+
+Single column
+
+Hero text first
+
+Map second
+
+Cards stacked
+
+Navigation collapsed
+
+No horizontal overflow.
 
 ---
 
-# 📊 24. Admin Dashboard
+# 29. MOBILE HERO
 
-A protected Admin Dashboard can provide analytics such as:
-
-* Total users
-* Trips created
-* Active trips
-* Completed trips
-* Popular destinations
-* Popular activities
-* Travel purpose statistics
-* Guide bookings
-* Taxi requests
-* User engagement
-
-Admins can also manage:
-
-* Users
-* Destinations
-* Activities
-* Guides
-* Reviews
-* Reports
-
----
-
-# 🗄️ Database Design
-
-VIATRA uses a relational database structure.
-
-Major entities include:
+Mobile layout:
 
 ```text
-Users
-│
-├── Trips
-│   ├── Trip Stops
-│   ├── Activities
-│   ├── Meetings
-│   ├── Expenses
-│   ├── Memories
-│   ├── Reminders
-│   └── Reviews
-│
-├── Hotel Bookings
-├── Transport Bookings
-├── Guide Bookings
-├── Taxi Bookings
-└── Shared Trips
+BHARAT PARIKRAMA
+
+Pan-India Travel &
+Itinerary Optimization
+
+Description
+
+[Plan Your Parikrama]
+
+[Explore How It Works]
+
+
+      INDIA MAP
+
+
+Quick Stats
 ```
 
-Possible tables:
+Do NOT attempt to keep desktop two-column layout on mobile.
+
+---
+
+# 30. OVERFLOW PROTECTION
+
+Ensure:
+
+```css
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+```
+
+But do NOT use `overflow: hidden` to hide broken layouts.
+
+Fix the actual component width.
+
+All images should use:
+
+```css
+max-width: 100%;
+height: auto;
+```
+
+Grid children should be allowed to shrink correctly.
+
+---
+
+# 31. TYPOGRAPHY
+
+Use one clean modern sans-serif family.
+
+Possible choices:
+
+Inter
+
+Manrope
+
+DM Sans
+
+Plus Jakarta Sans
+
+Use approximately:
+
+Hero heading:
+56–64px desktop
+
+Page heading:
+36–44px
+
+Section heading:
+28–36px
+
+Card title:
+18–22px
+
+Body:
+15–17px
+
+Metadata:
+13–14px
+
+On mobile scale typography properly.
+
+---
+
+# 32. VISUAL HIERARCHY
+
+Every section should clearly follow:
 
 ```text
-users
-trips
-trip_stops
-destinations
-activities
-trip_activities
-hotels
-hotel_bookings
-transport_options
-transport_bookings
-meetings
-reminders
-restaurants
-guides
-guide_bookings
-taxi_bookings
-expenses
-memories
-reviews
-shared_trips
-notifications
-chat_sessions
-chat_messages
+SECTION LABEL
+      ↓
+HEADING
+      ↓
+DESCRIPTION
+      ↓
+CONTENT
+      ↓
+ACTION
 ```
 
----
-
-# 🛠️ Proposed Tech Stack
-
-### Frontend
-
-* React / Next.js
-* TypeScript
-* Tailwind CSS
-* Reusable UI components
-
-### Backend
-
-* Node.js
-* Express.js / Next.js API
-
-### Database
-
-* PostgreSQL
-
-### ORM
-
-* Prisma
-
-### Authentication
-
-* JWT / Session Authentication
-
-### AI
-
-* LLM API integration for VIATRA AI
-
-### Maps & Location
-
-* Map/Places API integration
-
-### Data Visualization
-
-* Recharts
-
-### PDF Generation
-
-* PDF generation library/service
-
-### Media
-
-* Cloud-based image storage
+Do not place heading, buttons, cards and descriptions randomly.
 
 ---
 
-# 📁 Suggested Project Structure
+# 33. USE WHITESPACE
 
-```text
-viatra/
-│
-├── client/
-│   ├── components/
-│   ├── pages/
-│   ├── layouts/
-│   ├── hooks/
-│   ├── services/
-│   ├── utils/
-│   └── assets/
-│
-├── server/
-│   ├── controllers/
-│   ├── routes/
-│   ├── middleware/
-│   ├── services/
-│   ├── models/
-│   └── utils/
-│
-├── prisma/
-│   └── schema.prisma
-│
-├── public/
-│
-├── .env.example
-├── package.json
-└── README.md
-```
+Whitespace is intentional.
+
+Do not try to fill every empty area.
+
+The reference design works because the content has room to breathe.
+
+The final website should feel calm and premium.
 
 ---
 
-# 🔌 Future API Integrations
+# 34. REMOVE CURRENT VISUAL CLUTTER
 
-The application architecture can support integration with:
+Specifically fix the current UI issues.
 
-* Maps and Places APIs
-* Hotel APIs
-* Flight APIs
-* Railway/transport APIs
-* Weather APIs
-* Restaurant/places APIs
-* Payment gateways
-* Mobility providers
-* AI APIs
+Remove:
 
-During development, mock data can be used where live APIs are unavailable.
+* giant dark technical map panel
+* compressed top statistics
+* overlapping hero elements
+* overly dense transport labels
+* cards touching each other
+* text touching container edges
+* compressed testimonials
+* thin CTA bar
+* cramped footer
+* inconsistent image heights
+* unnecessary floating UI
+* random badge placement
 
----
-
-# 🔐 Security
-
-The application should implement:
-
-* Password hashing
-* Secure authentication
-* Protected routes
-* Role-based access control
-* Input validation
-* Secure media uploads
-* API error handling
-* Authorization checks
-* Environment variables for API credentials
+Keep the information, but present it more cleanly.
 
 ---
 
-# 🚀 Development Roadmap
+# 35. NO ADVANCED EFFECTS YET
 
-### Phase 1 — Core MVP
+For this first version:
 
-* Authentication
-* Dashboard
-* Create Trip
-* Purpose Selection
-* Multi-city Planning
-* Transport Selection
-* Hotel Selection
-* Itinerary Builder
-* Business Meeting Scheduler
-* Nearby Explorer
-* Budget Manager
-* AI Assistant
-* PDF Report
+DO NOT add:
 
-### Phase 2 — Enhanced Experience
+Bento UI
 
-* Smart Reminders
-* Food Discovery
-* Taxi Module
-* Local Guides
-* Reviews
-* Memories
+AI Bento
 
-### Phase 3 — Advanced Platform
+Glassmorphism
 
-* Community Trips
-* Payments
-* Advanced AI Rescheduling
-* Emergency Assistance
-* Admin Analytics
-* Real-time third-party integrations
+3D cards
+
+Parallax
+
+Complex scroll animation
+
+Animated background
+
+Particle effects
+
+Heavy gradients
+
+Floating dashboard widgets
+
+Advanced map animations
+
+We will add these AFTER the basic design is visually correct.
 
 ---
 
-# 🔮 Future Scope
+# 36. ALLOWED MICRO-INTERACTIONS
 
-Future versions of VIATRA can include:
+Only simple interactions:
 
-* Real-time flight and train booking
-* Live hotel availability
-* Weather-aware itinerary modifications
-* Traffic-aware scheduling
-* Voice-based AI assistant
-* Multilingual AI support
-* Offline itinerary access
-* Group trip collaboration
-* Expense splitting
-* Real-time location sharing
-* Automatic travel delay detection
-* Smart packing recommendations
-* Personalized recommendations based on previous trips
-* International travel support
+Button hover
 
----
+Card hover
 
-# 🎯 Project Vision
+Image zoom of approximately 1.02
 
-VIATRA aims to transform travel planning from a fragmented process into one intelligent and personalized experience.
+Navigation active state
 
-Instead of using separate applications for:
+Smooth dropdown
 
-**Transport + Hotels + Itinerary + Meetings + Food + Budget + Local Exploration + Travel Assistance**
+Smooth mobile menu
 
-VIATRA brings them together into a unified platform.
+Simple 150–250ms transitions
 
-> **VIATRA — Your Journey, Intelligently Planned.**
+Nothing more.
 
 ---
 
-## 📌 Project Status
+# 37. DEVELOPMENT RULE
 
-🚧 **Currently Under Development**
+Do NOT rebuild functionality.
 
-The initial version focuses on India-based travel planning with future expansion toward a larger intelligent travel ecosystem.
+Preserve:
+
+Existing React logic
+
+Existing routes
+
+Existing APIs
+
+Authentication
+
+Forms
+
+Database connections
+
+Existing data
+
+Existing functionality
+
+Only reorganize and redesign the presentation layer where required.
 
 ---
 
-## 🤝 Contributors
+# 38. IMPLEMENT IN PHASES
 
-Developed as a travel-tech software project.
+Do NOT redesign everything simultaneously.
 
-Contributions, suggestions, and improvements are welcome.
+### Phase 1
+
+Global layout
+
+Container
+
+Typography
+
+Colors
+
+Navbar
+
+Buttons
+
+Spacing
+
+### Phase 2
+
+Hero + India Map
+
+### Phase 3
+
+Stats + Features
+
+### Phase 4
+
+Curated Journeys
+
+### Phase 5
+
+Explore + Community
+
+### Phase 6
+
+Testimonials + CTA + Footer
+
+### Phase 7
+
+Responsive fixes
+
+After every phase, verify:
+
+No overlap
+
+No overflow
+
+Correct spacing
+
+Correct alignment
+
+Responsive behavior
 
 ---
 
-## 📜 License
+# FINAL EXPECTATION
 
-This project is intended for educational and development purposes. Appropriate licensing information can be added before public distribution.
+The final basic UI should visually resemble the **quality and structure of the supplied Bharat Parikrama references**, especially:
+
+* spacious hero
+* prominent India map
+* strong typography
+* Indian travel identity
+* blue + warm accent palette
+* route visualization
+* clean travel circuit cards
+* clear transport-mode presentation
+* large professional CTAs
+* controlled information density
+
+However, do NOT copy the references exactly.
+
+Create an original Bharat Parikrama visual system based on the same level of professionalism.
+
+The first version should prioritize:
+
+**Structure > Effects**
+
+**Spacing > Decoration**
+
+**Readability > Animation**
+
+**Consistency > Complexity**
+
+**Professionalism > Flashiness**
+
+Once this basic UI is perfect and completely responsive, we will separately add:
+
+**Bento UI + AI Bento + Glassmorphism + advanced micro-interactions.**
