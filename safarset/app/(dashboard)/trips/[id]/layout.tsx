@@ -54,19 +54,24 @@ export default function TripWorkspaceLayout({
         {trip.coverImage && (
           <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" alt="" />
         )}
-        <div className="relative space-y-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-black uppercase tracking-wider">
-              {trip.purpose}
-            </span>
-            <span className="text-xs text-slate-300 font-bold">
-              {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
-            </span>
+        <div className="relative flex items-start gap-4">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden bg-amber-50/15 border border-amber-400/40 p-1 shadow-md shrink-0 backdrop-blur-md hidden sm:flex items-center justify-center">
+            <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{trip.name}</h1>
-          <p className="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
-            <Calendar size={14} className="text-blue-400" /> {trip.startDate} to {trip.endDate} ({trip.duration})
-          </p>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="bg-blue-600 text-white text-xs px-3 py-0.5 rounded-full font-black uppercase tracking-wider">
+                {trip.purpose}
+              </span>
+              <span className="text-xs text-slate-300 font-bold">
+                {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{trip.name}</h1>
+            <p className="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
+              <Calendar size={14} className="text-blue-400" /> {trip.startDate} to {trip.endDate} ({trip.duration})
+            </p>
+          </div>
         </div>
 
         <div className="relative flex gap-2.5 flex-wrap">

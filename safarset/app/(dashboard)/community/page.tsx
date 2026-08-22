@@ -34,9 +34,14 @@ export default function CommunityPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Community Trips</h1>
-        <p className="text-slate-500 text-sm mt-0.5">Discover itineraries shared by fellow travellers.</p>
+      <div className="flex items-center gap-3.5">
+        <div className="w-12 h-12 rounded-2xl overflow-hidden bg-amber-50/20 border border-amber-400/30 p-1 shadow-sm flex items-center justify-center shrink-0">
+          <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
+        </div>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Community Parikramas</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Discover and fork travel itineraries shared by fellow pilgrims and business travelers.</p>
+        </div>
       </div>
 
       {/* Search + filter */}

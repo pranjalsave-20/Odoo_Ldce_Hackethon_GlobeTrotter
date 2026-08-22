@@ -54,10 +54,15 @@ export default function Home() {
             {/* Left Hero Content */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Pill Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/30 border border-blue-400/40 text-blue-200 text-[11px] font-black uppercase tracking-wider backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-                <span>MARITIME VOYAGE INTELLIGENCE</span>
+              {/* Logo Emblem & Pill Badge */}
+              <div className="flex items-center gap-3.5">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden bg-amber-50/15 border border-amber-400/40 p-1 shadow-xl flex items-center justify-center shrink-0 backdrop-blur-md">
+                  <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
+                </div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/30 border border-blue-400/40 text-blue-200 text-[11px] font-black uppercase tracking-wider backdrop-blur-md">
+                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                  <span>MARITIME VOYAGE INTELLIGENCE</span>
+                </div>
               </div>
 
               {/* Main Heading */}
@@ -95,9 +100,12 @@ export default function Home() {
               {/* Quick Trip Planner Form Floating Over Video */}
               <form onSubmit={handleQuickPlan} className="bg-white/95 backdrop-blur-xl p-4 sm:p-5 rounded-3xl border border-white/20 shadow-2xl space-y-3 mt-4 text-slate-900">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <Sparkles size={14} className="text-blue-600" /> Instant Route Planner
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <img src="/logo.png" alt="Logo" className="w-5 h-5 object-contain" />
+                    <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                      <Sparkles size={14} className="text-blue-600" /> Instant Route Planner
+                    </span>
+                  </div>
                   <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                     28 States + Islands
                   </span>
@@ -142,10 +150,11 @@ export default function Home() {
             <div className="lg:col-span-5 flex flex-col items-center justify-center">
               <div className="w-full rounded-3xl overflow-hidden bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-2xl p-4 sm:p-5 space-y-3.5 text-white">
                 
-                {/* Header */}
+                {/* Header with Emblem */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                    <img src="/logo.png" alt="Bharat Parikrama" className="w-5 h-5 object-contain" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
                     <span className="text-xs font-black uppercase tracking-wider text-white">
                       Live Voyage Stream
                     </span>
@@ -169,8 +178,9 @@ export default function Home() {
                     <source src="/hero.mp4" type="video/mp4" />
                   </video>
 
-                  <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-lg border border-white/10">
-                    📹 Bharat Parikrama Live Reel
+                  <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <img src="/logo.png" alt="Logo" className="w-3.5 h-3.5 object-contain" />
+                    Bharat Parikrama Live Reel
                   </div>
                 </div>
 
@@ -382,7 +392,7 @@ export default function Home() {
       {/* ── CALL TO ACTION BANNER ────────────────────────────────── */}
       <section className="py-16 bg-[#0f172a] text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6 relative z-10">
-          <div className="w-16 h-16 mx-auto rounded-3xl overflow-hidden bg-amber-50/10 border border-amber-200/30 p-1 shadow-lg">
+          <div className="w-20 h-20 mx-auto rounded-3xl overflow-hidden bg-amber-50/15 border border-amber-400/40 p-1.5 shadow-xl backdrop-blur-md">
             <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
           </div>
 
