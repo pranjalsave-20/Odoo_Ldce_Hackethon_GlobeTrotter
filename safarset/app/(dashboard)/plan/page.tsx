@@ -5,6 +5,7 @@ import { useTrips } from "@/lib/context/TripsContext";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { Card, Button, Input, Select } from "@/components/ui/index";
 import { MOCK_HOTELS, MOCK_PLACES, MOCK_GUIDES, getTransportOptionsForRoute } from "@/lib/data/mockData";
+import { generateSmartItinerary } from "@/lib/services/itineraryEngine";
 import { useToast } from "@/components/ui/Toast";
 import { 
   MapPin, Sparkles, ArrowLeft, ArrowRight, Wallet, BedDouble, Plane, Train, Bus, Car, 
@@ -73,7 +74,7 @@ export default function CreateTripWizard() {
   // Step 6: Free-Time Attractions
   const [selectedAttractions, setSelectedAttractions] = useState<Place[]>([
     MOCK_PLACES[0],
-    MOCK_PLACES[2]
+    MOCK_PLACES[1]
   ]);
 
   // Sorting transport options
@@ -103,8 +104,32 @@ export default function CreateTripWizard() {
 
   const handleGenerateTrip = async () => {
     setLoading(true);
-    addToast("success", `Generating your Parikrama itinerary for ${fromCity} → ${toCity}...`);
-    await new Promise(r => setTimeout(r, 1000));
+    addToast("success", `Generating custom Parikrama itinerary for ${fromCity} → ${toCity}...`);
+    await new Promise(r => setTimeout(r, 800));
+
+    // Generate comprehensive real city-tailored itinerary
+    const generatedItinerary = generateSmartItinerary({
+      fromCity,
+      toCity,
+      purpose,
+      tripType,
+      startDate,
+      endDate,
+      transport: selectedTransport,
+      hotel: skipHotel ? undefined : selectedHotel,
+      meetings: purpose === "business" ? [
+        {
+          id: "m-1",
+          name: meetingName,
+          company,
+          date: meetingDate,
+          startTime: meetStart,
+          endTime: meetEnd,
+          location: meetLocation,
+          notes: "Scheduled business agenda"
+        }
+      ] : []
+    });
 
     const newTrip: Trip = {
       id: `trip-${Date.now()}`,
@@ -139,113 +164,7 @@ export default function CreateTripWizard() {
           notes: "Scheduled business agenda"
         }
       ] : [],
-      itinerary: [
-        {
-          day: 1,
-          date: startDate,
-          city: toCity,
-          activities: [
-            {
-              id: "act-1",
-              name: `Departure from ${fromCity} via ${selectedTransport.provider}`,
-              category: "travel",
-              time: selectedTransport.departure || "07:00",
-              duration: selectedTransport.duration,
-              location: `${fromCity} Transit Hub`,
-              city: fromCity,
-              estimatedCost: selectedTransport.cost,
-              image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80",
-              type: "travel"
-            },
-            {
-              id: "act-2",
-              name: skipHotel ? `Arrival at ${toCity}` : `Arrival & Check-in at ${selectedHotel.name}`,
-              category: "hotel",
-              time: "13:30",
-              duration: "45 min",
-              location: skipHotel ? toCity : selectedHotel.location,
-              city: toCity,
-              estimatedCost: skipHotel ? 0 : selectedHotel.pricePerNight,
-              image: skipHotel ? "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&q=80" : selectedHotel.image,
-              type: "hotel"
-            },
-            {
-              id: "act-3",
-              name: selectedAttractions[0]?.name || "Cultural City Walk",
-              category: "historical",
-              time: "16:00",
-              duration: "2 hrs",
-              location: toCity,
-              city: toCity,
-              estimatedCost: selectedAttractions[0]?.estimatedCost || 0,
-              image: selectedAttractions[0]?.image || "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=400&q=80",
-              type: "activity"
-            }
-          ]
-        },
-        {
-          day: 2,
-          date: meetingDate,
-          city: toCity,
-          activities: [
-            {
-              id: "act-4",
-              name: "Free Morning Slot – Sightseeing & Local Breakfast",
-              category: "food",
-              time: "08:30",
-              duration: "1.5 hrs",
-              location: toCity,
-              city: toCity,
-              estimatedCost: 350,
-              image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80",
-              type: "free-time"
-            },
-            ...(purpose === "business" ? [{
-              id: "act-m",
-              name: `💼 ${meetingName} (${company})`,
-              category: "meeting" as const,
-              time: meetStart,
-              duration: "2 hrs",
-              location: meetLocation,
-              city: toCity,
-              estimatedCost: 0,
-              image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80",
-              type: "meeting" as const
-            }] : []),
-            {
-              id: "act-5",
-              name: selectedAttractions[1]?.name || "Evening Heritage Spot",
-              category: "nature",
-              time: "16:30",
-              duration: "2 hrs",
-              location: toCity,
-              city: toCity,
-              estimatedCost: selectedAttractions[1]?.estimatedCost || 0,
-              image: selectedAttractions[1]?.image || "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80",
-              type: "activity"
-            }
-          ]
-        },
-        {
-          day: 3,
-          date: endDate,
-          city: toCity,
-          activities: [
-            {
-              id: "act-6",
-              name: `Return Journey to ${fromCity} via ${selectedTransport.provider}`,
-              category: "travel",
-              time: "11:00",
-              duration: selectedTransport.duration,
-              location: `${toCity} Terminal`,
-              city: toCity,
-              estimatedCost: tripType === "round-trip" ? selectedTransport.cost : 0,
-              image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80",
-              type: "travel"
-            }
-          ]
-        }
-      ],
+      itinerary: generatedItinerary,
       budget: {
         total: targetBudgetNum,
         estimated: totalEstimatedCost,
@@ -264,7 +183,7 @@ export default function CreateTripWizard() {
 
     addTrip(newTrip);
     setLoading(false);
-    addToast("success", "Bharat Parikrama plan created successfully! 🎉");
+    addToast("success", `Bharat Parikrama itinerary for ${toCity} generated successfully! 🎉`);
     router.push(`/trips/${newTrip.id}/itinerary`);
   };
 
