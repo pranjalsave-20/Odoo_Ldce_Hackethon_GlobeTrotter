@@ -1,84 +1,112 @@
 "use client";
 
 import React from "react";
+import { Landmark, Train, Sparkles, PlaneTakeoff, ChevronRight } from "lucide-react";
 
 export default function BottomWavyTimeline() {
+  const checkpoints = [
+    {
+      title: "Devotional & Heritage",
+      subtitle: "Kashi, Kedarnath, Hampi",
+      icon: Landmark,
+      badge: "Spiritual",
+      color: "from-amber-500 to-orange-600",
+      bgColor: "bg-amber-50 border-amber-200 text-amber-900",
+      dotColor: "bg-amber-600",
+    },
+    {
+      title: "Vande Bharat Rail",
+      subtitle: "High-Speed Corridors",
+      icon: Train,
+      badge: "Express Rail",
+      color: "from-blue-600 to-indigo-700",
+      bgColor: "bg-blue-50 border-blue-200 text-blue-900",
+      dotColor: "bg-blue-600",
+    },
+    {
+      title: "Cultural Expeditions",
+      subtitle: "Festivals & Traditions",
+      icon: Sparkles,
+      badge: "Arts & Culture",
+      color: "from-orange-500 to-rose-600",
+      bgColor: "bg-orange-50 border-orange-200 text-orange-900",
+      dotColor: "bg-orange-600",
+    },
+    {
+      title: "Airway & Maritime Hub",
+      subtitle: "Multi-Modal Transfer",
+      icon: PlaneTakeoff,
+      badge: "Port & Airport",
+      color: "from-sky-500 to-cyan-600",
+      bgColor: "bg-sky-50 border-sky-200 text-sky-900",
+      dotColor: "bg-sky-600",
+    },
+  ];
+
   return (
-    <div className="relative w-full overflow-hidden pt-8 pb-10 bg-slate-50 border-t border-slate-200/80">
+    <div className="w-full bg-gradient-to-b from-slate-50 via-slate-100/70 to-white py-12 border-y border-slate-200/80 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-36 flex items-center justify-between">
-
-          {/* SVG Wavy Line Ribbon Background */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Dark Blue Base Wavy Ribbon Line */}
-            <path
-              d="M 0 60 C 150 110, 300 10, 450 60 C 600 110, 750 10, 900 60 C 1050 110, 1150 40, 1200 60"
-              stroke="#1e3a8a"
-              strokeWidth="5"
-              strokeLinecap="round"
-            />
-            {/* Lighter Sky Blue Accent Parallel Line */}
-            <path
-              d="M 0 68 C 150 118, 300 18, 450 68 C 600 118, 750 18, 900 68 C 1050 118, 1150 48, 1200 68"
-              stroke="#60a5fa"
-              strokeWidth="2"
-              strokeDasharray="6 4"
-              opacity="0.7"
-            />
-          </svg>
-
-          {/* Checkpoint Nodes along the Wavy Ribbon with Icons & Illustrations */}
-          <div className="relative z-10 w-full grid grid-cols-4 items-center gap-4">
-
-            {/* Checkpoint 1: Heritage Temple */}
-            <div className="flex flex-col items-center group cursor-pointer transform hover:-translate-y-1 transition-transform">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-amber-200 shadow-md flex items-center justify-center text-3xl mb-2 group-hover:shadow-lg transition-shadow">
-                🏛️
-              </div>
-              <div className="w-4 h-4 rounded-full bg-amber-600 border-2 border-white shadow-sm" />
-              <span className="text-xs font-bold text-slate-800 mt-1">Devotional & Heritage</span>
-              <span className="text-[10px] text-slate-500">Kashi, Kedarnath, Hampi</span>
-            </div>
-
-            {/* Checkpoint 2: Train Station */}
-            <div className="flex flex-col items-center group cursor-pointer transform hover:-translate-y-1 transition-transform">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-blue-200 shadow-md flex items-center justify-center text-3xl mb-2 group-hover:shadow-lg transition-shadow">
-                🚉
-              </div>
-              <div className="w-4 h-4 rounded-full bg-blue-600 border-2 border-white shadow-sm" />
-              <span className="text-xs font-bold text-slate-800 mt-1">Vande Bharat Rail</span>
-              <span className="text-[10px] text-slate-500">High Speed Corridor</span>
-            </div>
-
-            {/* Checkpoint 3: Cultural Heritage & Arts */}
-            <div className="flex flex-col items-center group cursor-pointer transform hover:-translate-y-1 transition-transform">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-orange-200 shadow-md flex items-center justify-center text-3xl mb-2 group-hover:shadow-lg transition-shadow">
-                💃
-              </div>
-              <div className="w-4 h-4 rounded-full bg-orange-600 border-2 border-white shadow-sm" />
-              <span className="text-xs font-bold text-slate-800 mt-1">Cultural Expeditions</span>
-              <span className="text-[10px] text-slate-500">Festivals & Traditions</span>
-            </div>
-
-            {/* Checkpoint 4: Airport Terminal */}
-            <div className="flex flex-col items-center group cursor-pointer transform hover:-translate-y-1 transition-transform">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-sky-200 shadow-md flex items-center justify-center text-3xl mb-2 group-hover:shadow-lg transition-shadow">
-                🛫
-              </div>
-              <div className="w-4 h-4 rounded-full bg-sky-600 border-2 border-white shadow-sm" />
-              <span className="text-xs font-bold text-slate-800 mt-1">Airway & Maritime Hub</span>
-              <span className="text-[10px] text-slate-500">Multi-Modal Transfer</span>
-            </div>
-
+        
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <span className="text-[11px] font-extrabold uppercase tracking-widest text-blue-700 bg-blue-100/80 px-3 py-1 rounded-full border border-blue-200">
+              Integrated Travel Modalities
+            </span>
+            <h3 className="text-xl font-black text-slate-900 mt-2 tracking-tight">
+              Four Core Pillars of Bharat Parikrama
+            </h3>
           </div>
+          <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-600 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
+            <span>Seamless Waypoint Synchronization</span>
+          </div>
+        </div>
+
+        {/* 4 Checkpoint Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative">
+          
+          {checkpoints.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="group relative bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+              >
+                {/* Top Header inside Card */}
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon size={24} />
+                    </div>
+                    <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border ${item.bgColor}`}>
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <h4 className="text-base font-bold text-slate-900 group-hover:text-blue-900 transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-slate-500 font-medium mt-1">
+                    {item.subtitle}
+                  </p>
+                </div>
+
+                {/* Bottom Node Indicator */}
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2.5 h-2.5 rounded-full ${item.dotColor} animate-pulse`} />
+                    <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                      Pillar 0{index + 1}
+                    </span>
+                  </div>
+                  <ChevronRight size={16} className="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                </div>
+              </div>
+            );
+          })}
 
         </div>
+
       </div>
     </div>
   );
