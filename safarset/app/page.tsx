@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { 
   Plane, Train, Bus, Car, ArrowRight, MapPin, Calendar, Sparkles, 
   Briefcase, Compass, ShieldCheck, FileDown, CheckCircle2, Star, Clock,
-  UserCheck, Zap, Phone, Award
+  UserCheck, Zap, Phone, Award, Play
 } from "lucide-react";
 import BharatParikramaHeroMap from "@/components/maps/BharatParikramaHeroMap";
 import { POPULAR_DESTINATIONS, MOCK_LOCAL_CABS, MOCK_GUIDES } from "@/lib/data/mockData";
@@ -26,36 +26,53 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
       
-      {/* ── HERO SECTION ─────────────────────────────────────────── */}
-      <section className="relative pt-6 pb-16 lg:pt-12 lg:pb-20 overflow-hidden bg-white border-b border-slate-200">
+      {/* ── CINEMATIC VIDEO HERO SECTION ──────────────────────────── */}
+      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white">
         
-        {/* Subtle Background Lighting */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-50/70 rounded-full filter blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-amber-50/50 rounded-full filter blur-3xl pointer-events-none" />
+        {/* Background Embedded Looping Silent Video */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover scale-105 filter brightness-75 contrast-110 pointer-events-none"
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/hero.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
+          {/* Gradients to ensure 100% readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80" />
+        </div>
+
+        {/* Hero Foreground Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10 w-full">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
             
-            {/* Left Hero Content */}
-            <div className="lg:col-span-6 space-y-6">
+            {/* Left Hero Text & Quick Planner Form */}
+            <div className="lg:col-span-7 space-y-6">
               
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-black uppercase tracking-wider">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/30 backdrop-blur-md border border-blue-400/40 text-blue-200 text-xs font-black uppercase tracking-wider">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-ping" />
                 <span>Pan-India Smart Travel & Itinerary Optimizer</span>
               </div>
 
               <div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-950 tracking-tight leading-[1.08]">
-                  Plan Your <span className="text-blue-700">Parikrama</span> Across India
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] drop-shadow-md">
+                  Plan Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-amber-300">Parikrama</span> Across India
                 </h1>
                 
-                <p className="text-base sm:text-lg text-slate-600 font-medium mt-3 leading-relaxed">
-                  Compare multi-modal transport (Flight, Vande Bharat, Bus, Cab), book verified local guides & taxis like Uber, schedule meetings, and download a complete day-by-day travel routine.
+                <p className="text-sm sm:text-base text-slate-200 font-medium mt-3 max-w-xl leading-relaxed drop-shadow">
+                  Compare multi-modal travel (Flight, Vande Bharat Rail, Coastal Ferries, Expressway Cabs), book local verified guides & Uber-like taxis, schedule meetings, and generate day-by-day PDF routines.
                 </p>
               </div>
 
-              {/* Quick Search & Plan Box right in Hero */}
-              <form onSubmit={handleQuickPlan} className="bg-slate-50 p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3.5">
+              {/* Quick Search & Plan Box Floating on Video */}
+              <form onSubmit={handleQuickPlan} className="bg-white/95 backdrop-blur-xl p-5 rounded-3xl border border-white/20 shadow-2xl space-y-3.5 text-slate-900">
+                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-bold text-slate-700 block mb-1">Origin City</label>
@@ -65,7 +82,7 @@ export default function Home() {
                         type="text" 
                         value={fromCity} 
                         onChange={e => setFromCity(e.target.value)} 
-                        className="w-full pl-10 pr-3 py-2.5 text-sm bg-white border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold"
+                        className="w-full pl-10 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold"
                         placeholder="e.g. Mumbai"
                         required
                       />
@@ -80,8 +97,8 @@ export default function Home() {
                         type="text" 
                         value={toCity} 
                         onChange={e => setToCity(e.target.value)} 
-                        className="w-full pl-10 pr-3 py-2.5 text-sm bg-white border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold"
-                        placeholder="e.g. Delhi, Ahmedabad"
+                        className="w-full pl-10 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold"
+                        placeholder="e.g. Delhi, Ahmedabad, Varanasi"
                         required
                       />
                     </div>
@@ -97,7 +114,7 @@ export default function Home() {
                         type="date" 
                         value={startDate} 
                         onChange={e => setStartDate(e.target.value)} 
-                        className="w-full pl-10 pr-3 py-2.5 text-sm bg-white border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold"
+                        className="w-full pl-10 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold"
                         required
                       />
                     </div>
@@ -108,7 +125,7 @@ export default function Home() {
                     <select 
                       value={purpose} 
                       onChange={e => setPurpose(e.target.value)}
-                      className="w-full px-3 py-2.5 text-sm bg-white border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold"
+                      className="w-full px-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold"
                     >
                       <option value="business">💼 Business (Meetings & Work)</option>
                       <option value="devotional">🛕 Devotional / Yatra (Pilgrimage)</option>
@@ -122,27 +139,91 @@ export default function Home() {
 
                 <button 
                   type="submit"
-                  className="w-full py-4 rounded-2xl text-sm font-black uppercase tracking-wider text-white bg-blue-700 hover:bg-blue-800 shadow-md transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
+                  className="w-full py-4 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider text-white bg-blue-700 hover:bg-blue-800 shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
                 >
                   <Sparkles size={18} /> Plan My Parikrama Journey <ArrowRight size={18} />
                 </button>
               </form>
 
-              {/* Trust Specs */}
-              <div className="flex items-center gap-6 pt-1 text-xs font-bold text-slate-500">
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-600" /> Multi-Modal Transit</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-600" /> Meeting Scheduler</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-600" /> Local Cabs & Guides</span>
+              {/* Trust Badges */}
+              <div className="flex items-center gap-6 pt-1 text-xs font-bold text-slate-300">
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-400" /> Multi-Modal Transit</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-400" /> Meeting Scheduler</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-400" /> Local Cabs & Guides</span>
               </div>
 
             </div>
 
-            {/* Right Hero Visual Map */}
-            <div className="lg:col-span-6 flex justify-center w-full">
-              <BharatParikramaHeroMap />
+            {/* Right Video / Interactive Showcase Card */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="w-full rounded-3xl overflow-hidden border border-white/20 bg-slate-900/60 backdrop-blur-xl shadow-2xl p-5 space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-black uppercase tracking-wider text-white">Live Voyage Stream</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-400/30">
+                    HD Experience
+                  </span>
+                </div>
+
+                {/* Mini Video Window */}
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/10">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/videos/hero.mp4" type="video/mp4" />
+                    <source src="/hero.mp4" type="video/mp4" />
+                  </video>
+                  <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-lg">
+                    📹 Bharat Parikrama Live Reel
+                  </div>
+                </div>
+
+                <div className="space-y-2 text-xs text-slate-300">
+                  <p className="font-bold text-white">Seamless Pan-India Transit Hubs</p>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Connect across North, South, West, and East India with punctuality ratings, budget checks, and instant local guides.
+                  </p>
+                </div>
+
+                <Link
+                  href="/plan"
+                  className="block text-center w-full py-3 bg-white hover:bg-slate-100 text-slate-950 rounded-xl text-xs font-black uppercase tracking-wider shadow-md transition-all"
+                >
+                  Start Custom Itinerary Now
+                </Link>
+              </div>
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* ── INTERACTIVE PAN-INDIA SELECTABLE MAP SECTION ─────────── */}
+      <section className="py-16 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-black uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
+              Interactive Route Telemetry
+            </span>
+            <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+              Explore 28 States & Select Any City Hub
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Click any city marker on the map to inspect attractions, transit corridors, average budget per day, and start your plan.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <BharatParikramaHeroMap />
+          </div>
+
         </div>
       </section>
 
