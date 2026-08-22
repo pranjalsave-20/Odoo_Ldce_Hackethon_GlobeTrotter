@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useToast } from "@/components/ui/Toast";
-import { Button, Input } from "@/components/ui/index";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
@@ -12,8 +11,9 @@ export default function LoginPage() {
   const { addToast } = useToast();
   const router = useRouter();
   const [email, setEmail] = useState("arjun@example.com");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("password123");
   const [showPw, setShowPw] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
@@ -45,70 +45,193 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F7F4] flex">
-      {/* Left Panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#1A3A5C] relative overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80" alt="India travel" className="absolute inset-0 w-full h-full object-cover opacity-30" />
-        <div className="relative flex flex-col justify-between p-12 h-full">
-          <Link href="/" className="flex items-center gap-2 text-white font-bold text-xl">
-            <div className="w-8 h-8 bg-[#E85D26] rounded-lg flex items-center justify-center text-sm">S</div>
-            Safar<span className="text-[#E85D26]">Set</span>
-          </Link>
-          <div>
-            <h2 className="text-4xl font-bold text-white mb-4">Plan Karo.<br />Safar Set Karo.</h2>
-            <p className="text-blue-200">India's AI-powered travel planning platform. From transport to meetings to hidden gems — all in one place.</p>
+    <div className="min-h-screen bg-[#080d1a] flex items-center justify-center p-4 sm:p-8 font-sans">
+      
+      {/* Outer Browser Window Mockup Container matching exact screenshot */}
+      <div className="w-full max-w-[1100px] bg-[#0c1220] rounded-[24px] overflow-hidden shadow-2xl border border-slate-800 grid grid-cols-1 lg:grid-cols-2 min-h-[640px]">
+        
+        {/* LEFT PANEL: Geometric Dark Architecture Graphic + Brand Info */}
+        <div className="relative bg-[#0b1326] p-8 sm:p-12 flex flex-col justify-between overflow-hidden min-h-[500px]">
+          
+          {/* Architectural Faceted Glass Background Layer */}
+          <div className="absolute inset-0 z-0">
+            {/* High definition architectural glass pattern */}
+            <svg className="w-full h-full object-cover opacity-25" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#0f172a" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
+                </linearGradient>
+                <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#020617" stopOpacity="0.95" />
+                </linearGradient>
+              </defs>
+              <rect width="800" height="800" fill="#090d16" />
+              {/* Faceted glass polygons simulating geometric architecture */}
+              <polygon points="0,0 400,200 200,600 0,400" fill="url(#grad1)" />
+              <polygon points="400,200 800,0 800,500 500,800" fill="url(#grad2)" />
+              <polygon points="200,600 500,800 0,800" fill="#030712" />
+              <polygon points="400,200 500,800 200,600" fill="url(#grad1)" opacity="0.6" />
+              <polygon points="0,0 800,0 400,200" fill="#1e293b" opacity="0.2" />
+              {/* Structural grid lines */}
+              <line x1="0" y1="0" x2="800" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.15" />
+              <line x1="800" y1="0" x2="0" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.15" />
+              <line x1="400" y1="0" x2="400" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.1" />
+              <line x1="0" y1="400" x2="800" y2="400" stroke="#38bdf8" strokeWidth="1" opacity="0.1" />
+            </svg>
+            {/* Additional realistic Unsplash architectural background image */}
+            <img 
+              src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?q=80&w=1200&auto=format&fit=crop" 
+              alt="Architecture" 
+              className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay" 
+            />
+            {/* Gradient shadow overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d1a] via-[#080d1a]/50 to-transparent" />
           </div>
-          <div className="flex gap-6">
-            {[["50K+","Trips Planned"],["200+","Destinations"],["4.9★","Rating"]].map(([n,l]) => (
-              <div key={l}><p className="text-2xl font-bold text-white">{n}</p><p className="text-xs text-blue-300">{l}</p></div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* Right Panel */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#E85D26] mb-8">
-            <ArrowLeft size={14} /> Back to home
-          </Link>
-          <div className="card p-8">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-[#1C1C1E] mb-1">Welcome back</h1>
-              <p className="text-sm text-[#6B7280]">Sign in to your SafarSet account</p>
+          {/* Top Header Row */}
+          <div className="relative z-10 flex items-center justify-between w-full">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 text-white group text-decoration-none">
+              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md">
+                <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <span className="font-bold text-lg text-white font-sans tracking-tight">
+                SafarSet
+              </span>
+            </Link>
+
+            {/* Back link - neatly padded so it never touches the right boundary */}
+            <Link href="/" className="flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors">
+              <ArrowLeft size={13} /> Back to Website
+            </Link>
+          </div>
+
+          {/* Bottom Left Content Area */}
+          <div className="relative z-10 space-y-3.5 max-w-md my-auto lg:my-0 pt-12">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight font-sans">
+              Edit Smarter. Export<br />Faster. Create Anywhere.
+            </h1>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal opacity-90">
+              From quick social media clips to full-length videos, our powerful editor lets you work seamlessly across devices.
+            </p>
+
+            {/* Indicator Dots */}
+            <div className="flex items-center gap-2 pt-2">
+              <span className="w-6 h-1 rounded-full bg-white" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
             </div>
-            {/* Demo hint */}
-            <div className="bg-orange-50 border border-orange-100 rounded-xl p-3 mb-6">
-              <p className="text-xs text-orange-700 font-medium">🎯 Demo Account / Firebase Auth</p>
-              <p className="text-xs text-orange-600 mt-0.5">Demo Email: arjun@example.com | Password: password123</p>
+          </div>
+
+        </div>
+
+        {/* RIGHT PANEL: Clean White Card Container */}
+        <div className="bg-white p-8 sm:p-12 flex flex-col justify-center items-center w-full">
+          
+          <div className="w-full max-w-md space-y-6">
+            
+            {/* Title & Subtitle */}
+            <div className="space-y-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Welcome Back!
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm">
+                Log in to start creating stunning videos with ease.
+              </p>
             </div>
-            {error && <div className="bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">{error}</div>}
+
+            {/* Error Banner */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl p-3">
+                {error}
+              </div>
+            )}
+
+            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input label="Email address" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" required />
-              <div className="relative">
-                <Input label="Password" type={showPw ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-9 text-gray-400 hover:text-gray-600">
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
+              
+              {/* Email Input */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Input your email"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900 placeholder:text-slate-400 bg-white"
+                  required
+                />
               </div>
-              <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-sm text-[#6B7280] cursor-pointer">
-                  <input type="checkbox" className="rounded" /> Remember me
+
+              {/* Password Input */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPw ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Input your password"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900 placeholder:text-slate-400 bg-white pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPw(!showPw)}
+                    className="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600"
+                  >
+                    {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Remember Me & Forgot Password Row */}
+              <div className="flex items-center justify-between pt-1">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                  />
+                  <span className="text-xs text-slate-600 font-medium">Remember Me</span>
                 </label>
-                <Link href="/forgot-password" className="text-sm text-[#E85D26] hover:underline">Forgot password?</Link>
+
+                <Link href="/forgot-password" className="text-xs text-slate-500 hover:text-slate-900 font-medium">
+                  Forgot Password?
+                </Link>
               </div>
-              <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full">Sign In</Button>
+
+              {/* Primary Black Login Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3.5 px-4 bg-[#18181b] hover:bg-[#09090b] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all duration-150 disabled:opacity-50 mt-2"
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
             </form>
-            <div className="mt-4 flex items-center gap-3">
-              <hr className="flex-1 border-[#E5E0D8]" />
-              <span className="text-xs text-[#6B7280]">or continue with</span>
-              <hr className="flex-1 border-[#E5E0D8]" />
+
+            {/* Or Continue With Divider */}
+            <div className="relative flex items-center justify-center my-4">
+              <div className="border-t border-slate-200 w-full" />
+              <span className="bg-white px-3 text-[11px] text-slate-400 font-medium whitespace-nowrap uppercase tracking-wider">
+                Or continue with:
+              </span>
+              <div className="border-t border-slate-200 w-full" />
             </div>
-            <button 
+
+            {/* Google Button */}
+            <button
               type="button"
               onClick={handleGoogleSignIn}
               disabled={googleLoading}
-              className="mt-4 w-full border border-[#E5E0D8] rounded-xl py-2.5 text-sm font-medium text-[#1C1C1E] hover:bg-gray-50 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              className="w-full py-3 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 font-semibold text-xs rounded-full flex items-center justify-center gap-2.5 transition-colors shadow-sm disabled:opacity-50"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -116,13 +239,21 @@ export default function LoginPage() {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
               </svg>
-              {googleLoading ? "Signing in..." : "Continue with Google"}
+              <span>{googleLoading ? "Connecting..." : "Continue with Google"}</span>
             </button>
-            <p className="text-center text-sm text-[#6B7280] mt-6">
-              Don't have an account? <Link href="/signup" className="text-[#E85D26] font-medium hover:underline">Sign up free</Link>
+
+            {/* Bottom Signup Link */}
+            <p className="text-center text-xs text-slate-500 pt-1">
+              Don't have an account?{" "}
+              <Link href="/signup" className="font-bold text-slate-900 hover:underline">
+                Sign up here
+              </Link>
             </p>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );
