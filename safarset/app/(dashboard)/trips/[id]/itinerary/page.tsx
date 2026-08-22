@@ -35,7 +35,6 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
   useEffect(() => {
     const t = getTrip(resolvedParams.id);
     if (t) {
-      // If itinerary has no activities or only generic placeholders, generate a real itinerary
       if (!t.itinerary || t.itinerary.length === 0 || t.itinerary[0].activities.length <= 1) {
         const generated = generateSmartItinerary({
           fromCity: t.from,
@@ -191,34 +190,34 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
 
   const getActivityBadge = (act: Activity) => {
     if (act.type === "meeting" || act.category === "meeting") {
-      return { label: "💼 Meeting", color: "bg-blue-600 text-white border-blue-600" };
+      return { label: "💼 Meeting", color: "bg-blue-600 text-white border-blue-700" };
     }
     if (act.category === "travel" || act.type === "travel") {
-      return { label: "🚆 Transit", color: "bg-sky-50 text-sky-800 border-sky-200" };
+      return { label: "🚆 Transit", color: "bg-sky-100 text-sky-900 border-sky-300" };
     }
     if (act.category === "hotel" || act.type === "hotel") {
-      return { label: "🏨 Hotel Stay", color: "bg-slate-900 text-white border-slate-900" };
+      return { label: "🏨 Hotel Stay", color: "bg-slate-900 text-white border-slate-950" };
     }
     if (act.category === "food" || act.type === "meal") {
-      return { label: "🍽️ Meal / Dining", color: "bg-amber-50 text-amber-800 border-amber-200" };
+      return { label: "🍽️ Meal / Dining", color: "bg-amber-100 text-amber-900 border-amber-300" };
     }
     if (act.category === "religious") {
-      return { label: "🛕 Holy Yatra", color: "bg-orange-50 text-orange-800 border-orange-200" };
+      return { label: "🛕 Holy Yatra", color: "bg-orange-100 text-orange-900 border-orange-300" };
     }
     if (act.category === "shopping") {
-      return { label: "🛍️ Bazaar", color: "bg-pink-50 text-pink-800 border-pink-200" };
+      return { label: "🛍️ Bazaar", color: "bg-pink-100 text-pink-900 border-pink-300" };
     }
     if (act.type === "free-time") {
-      return { label: "⏳ Free Slot", color: "bg-emerald-50 text-emerald-800 border-emerald-200" };
+      return { label: "⏳ Free Slot", color: "bg-emerald-100 text-emerald-900 border-emerald-300" };
     }
-    return { label: "📸 Sightseeing", color: "bg-purple-50 text-purple-800 border-purple-200" };
+    return { label: "📸 Sightseeing", color: "bg-purple-100 text-purple-900 border-purple-300" };
   };
 
   return (
     <div className="space-y-6 animate-fade-in max-w-7xl mx-auto">
       
       {/* ── Top Bar: Day Tabs & Actions ─────────────────────────────── */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
         
         {/* Day Selector */}
         <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0">
@@ -228,8 +227,8 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
               onClick={() => setSelectedDay(day.day)}
               className={`px-4 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all border shrink-0 ${
                 selectedDay === day.day
-                  ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/20"
-                  : "bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                  ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/25"
+                  : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
               Day {day.day} • {day.date}
@@ -238,12 +237,12 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <Button variant="outline" size="sm" onClick={() => setShowAddModal(true)} className="rounded-xl">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <Button variant="outline" size="sm" onClick={() => setShowAddModal(true)} className="rounded-xl font-bold border-slate-300 text-slate-800 hover:bg-slate-50">
             <Plus size={14} /> Add Event
           </Button>
           
-          <Button variant="outline" size="sm" onClick={handleReschedule} loading={rescheduling} className="rounded-xl">
+          <Button variant="outline" size="sm" onClick={handleReschedule} loading={rescheduling} className="rounded-xl font-bold border-slate-300 text-slate-800 hover:bg-slate-50">
             <RefreshCw size={14} className={rescheduling ? "animate-spin" : ""} /> AI Reschedule
           </Button>
 
@@ -251,7 +250,7 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
             variant="primary" 
             size="sm" 
             onClick={() => generateTripPDF(trip)}
-            className="rounded-xl bg-blue-600 hover:bg-blue-700 font-bold"
+            className="rounded-xl bg-blue-600 hover:bg-blue-700 font-black text-white shadow-md shadow-blue-500/20"
           >
             <FileDown size={14} /> Download Official PDF
           </Button>
@@ -263,23 +262,23 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
         
         {/* ── Left Column: Real-Time Day Timeline ──────────────────── */}
         <div className="lg:col-span-8 space-y-6">
-          <Card className="p-6 space-y-6 rounded-3xl border border-slate-200">
+          <div className="p-6 sm:p-7 space-y-6 rounded-3xl bg-white border border-slate-200 shadow-sm">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 gap-2">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
                   {trip.name}
                 </span>
-                <h3 className="text-xl font-black text-slate-900 mt-1">
+                <h3 className="text-xl font-black text-slate-950 mt-1.5">
                   Day {selectedDay} Routine — {currentItineraryDay?.city}
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-600 font-medium mt-0.5">
                   Chronological schedule with automated travel buffers, transit, meals, and meetings.
                 </p>
               </div>
 
               <div className="text-left sm:text-right">
-                <span className="text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                <span className="text-xs font-black text-slate-900 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
                   {currentItineraryDay?.activities.length || 0} Events Scheduled
                 </span>
               </div>
@@ -294,8 +293,8 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
                     key={act.id || idx} 
                     className={`relative group p-4 sm:p-5 rounded-3xl border transition-all ${
                       act.type === "meeting" 
-                        ? "bg-blue-50/50 border-blue-200 ring-2 ring-blue-500/10 shadow-sm" 
-                        : "bg-white hover:bg-slate-50/80 border-slate-200 shadow-xs"
+                        ? "bg-blue-50/70 border-blue-300 ring-2 ring-blue-500/10 shadow-sm" 
+                        : "bg-white hover:bg-slate-50 border-slate-200 shadow-xs"
                     }`}
                   >
                     
@@ -309,40 +308,40 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
                       {/* Event Details */}
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-black text-blue-700 flex items-center gap-1 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200">
+                          <span className="text-xs font-black text-blue-900 flex items-center gap-1 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200">
                             <Clock size={12} /> {act.time}
                           </span>
                           
-                          <span className={`text-[10px] px-2.5 py-0.5 rounded-md font-bold uppercase border ${badge.color}`}>
+                          <span className={`text-[10px] px-2.5 py-0.5 rounded-md font-black uppercase border ${badge.color}`}>
                             {badge.label}
                           </span>
 
                           {act.duration && (
-                            <span className="text-xs text-slate-500 font-semibold">({act.duration})</span>
+                            <span className="text-xs text-slate-600 font-bold">({act.duration})</span>
                           )}
                         </div>
 
-                        <h4 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug">
+                        <h4 className="font-extrabold text-slate-950 text-base leading-snug">
                           {act.name}
                         </h4>
                         
-                        <p className="text-xs text-slate-600 flex items-center gap-1.5 font-medium">
+                        <p className="text-xs text-slate-700 flex items-center gap-1.5 font-semibold">
                           <MapPin size={13} className="text-slate-400 shrink-0" /> {act.location}
                         </p>
 
-                        <div className="flex items-center gap-4 text-xs font-semibold pt-1">
+                        <div className="flex items-center gap-4 text-xs font-bold pt-1 flex-wrap">
                           {act.estimatedCost > 0 ? (
-                            <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                            <span className="text-emerald-900 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
                               Est. Expense: ₹{act.estimatedCost}
                             </span>
                           ) : (
-                            <span className="text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                            <span className="text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 font-semibold">
                               Free / Included
                             </span>
                           )}
 
                           {act.travelTime && (
-                            <span className="text-orange-800 bg-orange-50 px-2 py-0.5 rounded border border-orange-200">
+                            <span className="text-amber-950 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
                               🚗 Buffer: {act.travelTime}
                             </span>
                           )}
@@ -371,22 +370,22 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
               })}
             </div>
 
-          </Card>
+          </div>
         </div>
 
         {/* ── Right Column: Reminders & Free Time Explorer ─────────── */}
         <div className="lg:col-span-4 space-y-6">
           
           {/* Smart Trigger Reminders Box */}
-          <Card className="p-5 space-y-4 rounded-3xl border border-slate-200 bg-gradient-to-br from-blue-50/60 via-white to-slate-50">
+          <div className="p-5 sm:p-6 space-y-4 rounded-3xl bg-white border border-slate-200 shadow-sm">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold">
-                  <Bell size={17} />
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold border border-blue-200">
+                  <Bell size={18} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-slate-900">System Trigger Reminders</h3>
-                  <p className="text-[11px] text-slate-500">Live Commitments & Alarms</p>
+                  <h3 className="text-sm font-black text-slate-950">System Trigger Reminders</h3>
+                  <p className="text-[11px] text-slate-500 font-medium">Live Commitments & Alarms</p>
                 </div>
               </div>
 
@@ -397,79 +396,79 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
                   onChange={e => setRemindersEnabled(e.target.checked)}
                   className="rounded border-slate-300 text-blue-600"
                 />
-                <span className="text-xs font-bold text-slate-600">Active</span>
+                <span className="text-xs font-black text-slate-700">Active</span>
               </label>
             </div>
 
             {remindersEnabled ? (
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 {trip.purpose === "business" && (
-                  <div className="p-3.5 bg-white rounded-2xl border border-blue-200 shadow-xs space-y-1.5">
+                  <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-200 shadow-xs space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-bold text-blue-900 flex items-center gap-1">
                         <Briefcase size={13} /> Meeting Alert Trigger
                       </span>
-                      <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold">
+                      <span className="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-full font-black">
                         In 45 Mins
                       </span>
                     </div>
-                    <p className="text-xs font-bold text-slate-800">{trip.meetings?.[0]?.name || "Client Review Meeting"}</p>
-                    <p className="text-[11px] text-slate-600">📍 {trip.meetings?.[0]?.location || `${targetCity} Business Center`}</p>
-                    <p className="text-[11px] text-blue-700 font-bold bg-blue-50 p-1.5 rounded-lg border border-blue-100">
+                    <p className="text-xs font-extrabold text-slate-900">{trip.meetings?.[0]?.name || "Client Review Meeting"}</p>
+                    <p className="text-[11px] text-slate-700 font-medium">📍 {trip.meetings?.[0]?.location || `${targetCity} Business Center`}</p>
+                    <p className="text-[11px] text-blue-900 font-bold bg-white p-2 rounded-xl border border-blue-200">
                       🚗 Leave by 1:30 PM to maintain traffic buffer.
                     </p>
                   </div>
                 )}
 
-                <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 shadow-xs space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-slate-800 flex items-center gap-1">
+                    <span className="font-bold text-slate-900 flex items-center gap-1">
                       🏨 Stay Checkout Reminder
                     </span>
-                    <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">
+                    <span className="text-[10px] bg-slate-200 text-slate-800 px-2 py-0.5 rounded-full font-bold">
                       Day {trip.itinerary.length} 11:00 AM
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600">Express check-out requested at hotel front desk.</p>
+                  <p className="text-xs text-slate-600 font-medium">Express check-out requested at hotel front desk.</p>
                 </div>
               </div>
             ) : (
               <p className="text-xs text-slate-400 italic">Trigger reminders disabled. Toggle active to enable.</p>
             )}
-          </Card>
+          </div>
 
           {/* Smart Free-Time Explorer for Destination City */}
-          <Card className="p-5 space-y-4 rounded-3xl border border-slate-200">
+          <div className="p-5 sm:p-6 space-y-4 rounded-3xl bg-white border border-slate-200 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Compass size={18} className="text-blue-700" />
-                <h3 className="text-sm font-black text-slate-900">Nearby Sights in {targetCity}</h3>
+                <h3 className="text-sm font-black text-slate-950">Nearby Sights in {targetCity}</h3>
               </div>
-              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
                 Free Slots
               </span>
             </div>
             
-            <p className="text-xs text-slate-500">Top-rated attractions that fit your open schedule hours:</p>
+            <p className="text-xs text-slate-600 font-medium">Top-rated attractions that fit your open schedule hours:</p>
 
             <div className="space-y-3">
               {MOCK_PLACES.map(place => (
-                <div key={place.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200/80 hover:bg-slate-100 transition-colors">
+                <div key={place.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200 hover:bg-slate-100 transition-colors">
                   <img src={place.image} alt={place.name} className="w-12 h-12 rounded-xl object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-bold text-slate-900 truncate">{place.name}</p>
-                    <p className="text-[11px] text-slate-500">{place.distance} • {place.duration}</p>
+                    <p className="text-xs font-black text-slate-900 truncate">{place.name}</p>
+                    <p className="text-[11px] text-slate-600 font-medium">{place.distance} • {place.duration}</p>
                   </div>
                   <button
                     onClick={() => handleAddPlace(place)}
-                    className="text-xs font-black text-blue-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-blue-50 shadow-xs shrink-0"
+                    className="text-xs font-black text-blue-700 bg-white px-3 py-1.5 rounded-xl border border-slate-300 hover:bg-blue-50 shadow-xs shrink-0"
                   >
                     + Add
                   </button>
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
 
         </div>
 
@@ -479,7 +478,7 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 animate-fade-in border border-slate-200">
-            <h3 className="text-lg font-black text-slate-900">Add Custom Activity to Day {selectedDay}</h3>
+            <h3 className="text-lg font-black text-slate-950">Add Custom Activity to Day {selectedDay}</h3>
             
             <Input 
               label="Activity / Place Name" 
@@ -530,7 +529,7 @@ export default function TripItineraryPage({ params }: { params: Promise<{ id: st
               <Button variant="outline" size="sm" onClick={() => setShowAddModal(false)} className="rounded-xl">
                 Cancel
               </Button>
-              <Button variant="primary" size="sm" onClick={handleAddActivity} className="rounded-xl bg-blue-600 font-bold">
+              <Button variant="primary" size="sm" onClick={handleAddActivity} className="rounded-xl bg-blue-600 font-bold text-white">
                 Save to Itinerary
               </Button>
             </div>

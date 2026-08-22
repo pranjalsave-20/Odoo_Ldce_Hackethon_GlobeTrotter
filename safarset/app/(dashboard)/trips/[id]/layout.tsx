@@ -1,10 +1,13 @@
 "use client";
+
 import { useEffect, useState, use } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useTrips } from "@/lib/context/TripsContext";
-import { Card } from "@/components/ui/index";
 import Link from "next/link";
-import { Calendar, MapPin, Wallet, Sparkles, Navigation, Info, FileDown, BookOpen, Car } from "lucide-react";
+import { 
+  Calendar, MapPin, Wallet, Sparkles, Navigation, 
+  Info, FileDown, BookOpen, Car, Share2 
+} from "lucide-react";
 import type { Trip } from "@/lib/types";
 import { generateTripPDF } from "@/lib/services/pdfGenerator";
 import { useToast } from "@/components/ui/Toast";
@@ -18,7 +21,9 @@ export default function TripWorkspaceLayout({
 }) {
   const resolvedParams = use(params);
   const { getTrip } = useTrips();
+  const { addToast } = useToast();
   const router = useRouter();
+  const pathname = usePathname();
   const [trip, setTrip] = useState<Trip | null>(null);
 
   useEffect(() => {
@@ -49,89 +54,92 @@ export default function TripWorkspaceLayout({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Trip workspace header banner */}
-      <Card className="p-6 relative overflow-hidden bg-slate-900 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800 shadow-xl rounded-3xl">
+      
+      {/* ── HIGH-CONTRAST WORKSPACE HEADER BANNER ────────────────────── */}
+      <div className="relative p-6 sm:p-8 rounded-3xl overflow-hidden bg-[#0a1128] text-white flex flex-col md:flex-row md:items-center md:justify-between gap-6 border border-slate-800 shadow-2xl">
+        
+        {/* Cover image with strong dark gradients for 100% text readability */}
         {trip.coverImage && (
-          <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" alt="" />
+          <img 
+            src={trip.coverImage} 
+            className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none filter brightness-75 contrast-125" 
+            alt="" 
+          />
         )}
-        <div className="relative flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl overflow-hidden bg-amber-50/15 border border-amber-400/40 p-1 shadow-md shrink-0 backdrop-blur-md hidden sm:flex items-center justify-center">
+        
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1128] via-[#0a1128]/95 to-[#0a1128]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1128] via-transparent to-[#0a1128]/60 pointer-events-none" />
+
+        {/* Content */}
+        <div className="relative z-10 flex items-start gap-4">
+          <div className="w-14 h-14 rounded-2xl overflow-hidden bg-amber-50/15 border border-amber-400/50 p-1 shadow-xl shrink-0 backdrop-blur-md flex items-center justify-center">
             <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
           </div>
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="bg-blue-600 text-white text-xs px-3 py-0.5 rounded-full font-black uppercase tracking-wider">
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <span className="bg-blue-600 text-white text-[11px] px-3 py-0.5 rounded-full font-black uppercase tracking-wider shadow-md">
                 {trip.purpose}
               </span>
-              <span className="text-xs text-slate-300 font-bold">
-                {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
+              <span className="text-xs text-amber-300 font-bold drop-shadow">
+                📍 {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{trip.name}</h1>
-            <p className="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-snug drop-shadow-md">
+              {trip.name}
+            </h1>
+
+            <p className="text-xs sm:text-sm text-slate-200 flex items-center gap-2 font-medium drop-shadow">
               <Calendar size={14} className="text-blue-400" /> {trip.startDate} to {trip.endDate} ({trip.duration})
             </p>
           </div>
         </div>
 
-        <div className="relative flex gap-2.5 flex-wrap">
-          <ButtonVariantShare trip={trip} />
-        </div>
-      </Card>
+        {/* Action buttons */}
+        <div className="relative z-10 flex items-center gap-3 shrink-0 flex-wrap">
+          <button
+            onClick={() => {
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href);
+                addToast("success", "Parikrama link copied to clipboard!");
+              }
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition-all shadow-sm"
+          >
+            <Share2 size={14} /> Share Link
+          </button>
 
-      {/* Tabs */}
-      <div className="flex border-b border-slate-200 overflow-x-auto pb-1 gap-6">
+          <button
+            onClick={() => generateTripPDF(trip)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-blue-500/30 transition-all hover:scale-105"
+          >
+            <FileDown size={14} /> Export PDF Report
+          </button>
+        </div>
+
+      </div>
+
+      {/* ── WORKSPACE TABS WITH HIGH-CONTRAST SELECTION ──────────────── */}
+      <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2 sm:gap-3 bg-white p-2 rounded-2xl shadow-xs">
         {tabs.map((tab) => {
-          const isSelected = typeof window !== "undefined" && window.location.pathname.endsWith(tab.id);
+          const isSelected = pathname === tab.path || pathname.endsWith(tab.id);
           return (
-            <Link key={tab.id} href={tab.path} className="block flex-shrink-0">
-              <span className={`pb-3 text-xs sm:text-sm font-bold flex items-center gap-1.5 border-b-2 transition-all cursor-pointer ${
+            <Link key={tab.id} href={tab.path} className="shrink-0">
+              <span className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                 isSelected
-                  ? "border-blue-700 text-blue-700"
-                  : "border-transparent text-slate-500 hover:text-slate-900"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-500/20 font-black"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}>
-                <tab.icon size={16} /> {tab.label}
+                <tab.icon size={15} /> {tab.label}
               </span>
             </Link>
           );
         })}
       </div>
 
-      <div>{children}</div>
+      <div className="pt-2">{children}</div>
+
     </div>
-  );
-}
-
-function ButtonVariantShare({ trip }: { trip: Trip }) {
-  const { addToast } = useToast();
-  
-  const handleExportPDF = () => {
-    addToast("success", "Generating full PDF report...");
-    try {
-      generateTripPDF(trip);
-      addToast("success", "PDF Report downloaded successfully! 📄");
-    } catch (err) {
-      addToast("error", "Failed to generate PDF. Please try again.");
-    }
-  };
-
-  return (
-    <>
-      <button
-        onClick={() => {
-          navigator.clipboard.writeText(window.location.href);
-          addToast("success", "Workspace link copied to clipboard!");
-        }}
-        className="px-4 py-2 border border-slate-700 bg-slate-800/80 rounded-xl text-xs font-bold hover:bg-slate-700 transition-colors flex items-center gap-1.5"
-      >
-        Share Link
-      </button>
-      <button
-        onClick={handleExportPDF}
-        className="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold text-white transition-all shadow-md flex items-center gap-1.5"
-      >
-        <FileDown size={15} /> Export PDF Report
-      </button>
-    </>
   );
 }
