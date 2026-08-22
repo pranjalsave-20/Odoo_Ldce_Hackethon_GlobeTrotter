@@ -18,14 +18,14 @@ export function LocalGuruFloatingWidget({ initialCity }: LocalGuruFloatingWidget
         {!isOpen && (
           <div className="hidden sm:flex items-center gap-2 bg-slate-900/90 border border-amber-500/30 text-amber-300 text-xs px-3.5 py-2 rounded-xl shadow-xl backdrop-blur-md animate-bounce">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-semibold">Ask Local Guru AI</span>
+            <span className="font-semibold">Ask Travel Guru AI</span>
             <Mic className="w-3.5 h-3.5 text-indigo-400" />
           </div>
         )}
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Local Guru Chatbot"
+          aria-label="Toggle Travel Guru Chatbot"
           className="relative group w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 via-orange-600 to-amber-700 text-white flex items-center justify-center shadow-2xl shadow-orange-950/60 hover:scale-110 active:scale-95 transition-all border-2 border-amber-400/40"
         >
           {isOpen ? (

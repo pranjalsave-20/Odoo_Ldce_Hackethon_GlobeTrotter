@@ -79,11 +79,11 @@ export function LocalGuruChatbot({
     const welcomeMsg: LocalGuruResponse = {
       id: `welcome-${Date.now()}`,
       role: "assistant",
-      content: `Namaste! 🙏 I am **Local Guru**, your local travel guide for **${cityInfo.name}**.\n\n${cityInfo.description}\n\nAsk me about famous places to visit, iconic food spots, hidden gems, or best evening sunset views in ${cityInfo.name}! You can also speak to me directly using the voice microphone.`,
+      content: `Namaste! 🙏 I am **Travel Guru**, your local travel guide for **${cityInfo.name}**.\n\n${cityInfo.description}\n\nAsk me about famous places to visit, iconic food spots, hidden gems, or best evening sunset views in ${cityInfo.name}! You can also speak to me directly using the voice microphone.`,
       city: selectedCity,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       recommendations: cityInfo.places,
-      audioText: `Namaste! I am Local Guru, your personal travel guide for ${cityInfo.name}. Ask me about famous places to visit or speak to me directly using the microphone button!`
+      audioText: `Namaste! I am Travel Guru, your personal travel guide for ${cityInfo.name}. Ask me about famous places to visit or speak to me directly using the microphone button!`
     };
     setMessages([welcomeMsg]);
   }, [selectedCity]);
@@ -165,7 +165,7 @@ export function LocalGuruChatbot({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                  Local Guru AI
+                  Travel Guru AI
                 </h2>
                 <span className="px-2 py-0.5 text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-full flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-400" /> Famous Tourist Guide
@@ -257,7 +257,7 @@ export function LocalGuruChatbot({
           <div className="mt-3 bg-amber-500/10 border border-amber-500/20 rounded-xl px-3 py-1.5 flex items-center justify-between text-xs text-amber-300">
             <span className="flex items-center gap-2 font-medium">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-              Local Guru is speaking...
+              Travel Guru is speaking...
             </span>
             <button
               onClick={stopSpeaking}
@@ -432,7 +432,7 @@ export function LocalGuruChatbot({
             </div>
             <div className="bg-slate-800 text-slate-300 p-4 rounded-2xl rounded-tl-none border border-slate-700/80 flex items-center gap-2 text-xs">
               <RefreshCw className="w-4 h-4 animate-spin text-amber-400" />
-              <span>Local Guru is gathering famous recommendations for {selectedCity}...</span>
+              <span>Travel Guru is gathering famous recommendations for {selectedCity}...</span>
             </div>
           </div>
         )}
@@ -451,7 +451,7 @@ export function LocalGuruChatbot({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
               </span>
-              <span className="font-semibold">Microphone Active:</span> Speak now (Local Guru is listening...)
+              <span className="font-semibold">Microphone Active:</span> Speak now (Travel Guru is listening...)
             </div>
             <button
               onClick={toggleListening}
@@ -481,7 +481,7 @@ export function LocalGuruChatbot({
             <button
               type="button"
               onClick={toggleListening}
-              title={isListening ? "Stop listening" : "Speak to Local Guru"}
+              title={isListening ? "Stop listening" : "Speak to Travel Guru"}
               className={`p-3 rounded-xl border transition-all flex items-center justify-center shrink-0 ${
                 isListening
                   ? "bg-red-600 border-red-400 text-white shadow-lg shadow-red-950/50 scale-105"
@@ -526,7 +526,7 @@ export function LocalGuruChatbot({
 
         <div className="flex items-center justify-between text-[11px] text-slate-500 px-1 pt-1">
           <span>💡 Tip: Click the microphone to speak your question directly.</span>
-          <span className="text-amber-500/80 font-medium">Local Guru v1.0 • SafarSet AI</span>
+          <span className="text-amber-500/80 font-medium">Travel Guru v1.0 • SafarSet AI</span>
         </div>
       </div>
     </div>

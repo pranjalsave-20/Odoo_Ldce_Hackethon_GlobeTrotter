@@ -20,7 +20,7 @@ export default function SafarAI() {
     {
       id: "welcome",
       role: "assistant",
-      content: "👋 Namaste! I'm **Parikrama AI**, your intelligent travel companion.\n\nAsk me anything about your trip — food, places, budget, schedule changes, or emergencies.",
+      content: "👋 Namaste! I'm **Travel Guru**, your intelligent travel companion.\n\nAsk me anything about your trip — food, places, budget, schedule changes, or emergencies.",
       timestamp: new Date().toISOString()
     }
   ]);
@@ -62,7 +62,7 @@ export default function SafarAI() {
         className={`fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#1E5EAA] text-white rounded-full flex items-center justify-center ai-fab transition-all ${
           open ? "opacity-0 pointer-events-none" : ""
         }`}
-        aria-label="Open Parikrama AI"
+        aria-label="Open Travel Guru"
       >
         <Sparkles size={22} />
       </button>
@@ -80,7 +80,7 @@ export default function SafarAI() {
                 <Sparkles size={16} />
               </div>
               <div>
-                <p className="font-semibold text-sm">Parikrama AI</p>
+                <p className="font-semibold text-sm">Travel Guru</p>
                 <p className="text-xs text-slate-300">Your travel companion</p>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function SafarAI() {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-              placeholder="Ask Parikrama AI anything..."
+              placeholder="Ask Travel Guru anything..."
               className="flex-1 text-sm px-3 py-2 border border-[#E4E4DF] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E5EAA] focus:border-transparent"
             />
             <button

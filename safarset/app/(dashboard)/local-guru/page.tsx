@@ -22,11 +22,11 @@ export default function LocalGuruPage() {
           </div>
 
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Meet <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Local Guru</span>
+            Meet <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Travel Guru</span>
           </h1>
 
           <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-            Discover famous tourist spots, iconic local food joints, cultural heritage, and hidden gems in any selected city. Speak to Local Guru directly using voice input and listen to recommendations hands-free!
+            Discover famous tourist spots, iconic local food joints, cultural heritage, and hidden gems in any selected city. Speak to Travel Guru directly using voice input and listen to recommendations hands-free!
           </p>
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-400 pt-2">
@@ -82,7 +82,7 @@ export default function LocalGuruPage() {
       {/* MAIN LOCAL GURU CHATBOT CONTAINER */}
       <div className="space-y-3">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-amber-400" /> Local Guru Workspace ({selectedCity})
+          <Sparkles className="w-5 h-5 text-amber-400" /> Travel Guru Workspace ({selectedCity})
         </h2>
 
         <LocalGuruChatbot initialCity={selectedCity} key={selectedCity} />
