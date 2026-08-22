@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/index";
 import Link from "next/link";
 import { Calendar, MapPin, Wallet, Sparkles, Navigation, Info, FileDown, BookOpen } from "lucide-react";
 import type { Trip } from "@/lib/types";
+import { generateTripPDF } from "@/lib/services/pdfGenerator";
+import { useToast } from "@/components/ui/Toast";
 
 export default function TripWorkspaceLayout({
   children,
@@ -31,14 +33,14 @@ export default function TripWorkspaceLayout({
   if (!trip) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-[#E85D26] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   const tabs = [
     { id: "overview", label: "Overview", icon: Info, path: `/trips/${trip.id}/overview` },
-    { id: "itinerary", label: "Itinerary", icon: Calendar, path: `/trips/${trip.id}/itinerary` },
+    { id: "itinerary", label: "Itinerary & Routine", icon: Calendar, path: `/trips/${trip.id}/itinerary` },
     { id: "budget", label: "Budget Planner", icon: Wallet, path: `/trips/${trip.id}/budget` },
     { id: "emergency", label: "Emergency Assist", icon: Navigation, path: `/trips/${trip.id}/emergency` },
     { id: "memories", label: "Memories & Journal", icon: BookOpen, path: `/trips/${trip.id}/memories` },
@@ -47,40 +49,40 @@ export default function TripWorkspaceLayout({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Trip workspace header banner */}
-      <Card className="p-6 relative overflow-hidden bg-[#1A3A5C] text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <Card className="p-6 relative overflow-hidden bg-slate-900 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800 shadow-xl">
         {trip.coverImage && (
-          <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" alt="" />
+          <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none" alt="" />
         )}
         <div className="relative space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-[#E85D26] text-white text-xs px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider">
+            <span className="bg-blue-600 text-white text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
               {trip.purpose}
             </span>
-            <span className="text-xs text-blue-200">
+            <span className="text-xs text-slate-300 font-medium">
               {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
             </span>
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight">{trip.name}</h1>
-          <p className="text-xs text-blue-200 flex items-center gap-1">
-            <Calendar size={14} /> {trip.startDate} to {trip.endDate} ({trip.duration})
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{trip.name}</h1>
+          <p className="text-xs text-slate-300 flex items-center gap-1">
+            <Calendar size={14} className="text-blue-400" /> {trip.startDate} to {trip.endDate} ({trip.duration})
           </p>
         </div>
 
-        <div className="relative flex gap-2 flex-wrap">
+        <div className="relative flex gap-2.5 flex-wrap">
           <ButtonVariantShare trip={trip} />
         </div>
       </Card>
 
       {/* Tabs */}
-      <div className="flex border-b border-[#E5E0D8] overflow-x-auto pb-1 gap-6">
+      <div className="flex border-b border-slate-200 overflow-x-auto pb-1 gap-6">
         {tabs.map((tab) => {
           const isSelected = typeof window !== "undefined" && window.location.pathname.endsWith(tab.id);
           return (
             <Link key={tab.id} href={tab.path} className="block flex-shrink-0">
-              <span className={`pb-3 text-sm font-semibold flex items-center gap-1.5 border-b-2 transition-all cursor-pointer ${
+              <span className={`pb-3 text-sm font-bold flex items-center gap-1.5 border-b-2 transition-all cursor-pointer ${
                 isSelected
-                  ? "border-[#E85D26] text-[#E85D26]"
-                  : "border-transparent text-[#6B7280] hover:text-[#1C1C1E]"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-slate-500 hover:text-slate-900"
               }`}>
                 <tab.icon size={16} /> {tab.label}
               </span>
@@ -94,30 +96,17 @@ export default function TripWorkspaceLayout({
   );
 }
 
-// Inline mini action component
-import { useToast } from "@/components/ui/Toast";
 function ButtonVariantShare({ trip }: { trip: Trip }) {
   const { addToast } = useToast();
   
   const handleExportPDF = () => {
-    addToast("success", "PDF generation started. Preparing trip summary...");
-    // Import jsPDF dynamically
-    import("jspdf").then(({ jsPDF }) => {
-      const doc = new jsPDF();
-      doc.setFont("helvetica", "bold");
-      doc.text("SafarSet Trip Summary", 14, 20);
-      doc.setFont("helvetica", "normal");
-      doc.text(`Trip Name: ${trip.name}`, 14, 30);
-      doc.text(`From: ${trip.from}`, 14, 40);
-      doc.text(`Dates: ${trip.startDate} to ${trip.endDate}`, 14, 50);
-      doc.text(`Transport: ${trip.transport?.provider || "None"} (${trip.transport?.mode || "N/A"})`, 14, 60);
-      doc.text(`Hotel: ${trip.hotel?.name || "None"}`, 14, 70);
-      doc.text(`Total Budget: INR ${trip.budget?.total || 0}`, 14, 80);
-      doc.save(`SafarSet-${trip.name.replace(/\s+/g, "-")}.pdf`);
-      addToast("success", "PDF Downloaded! 🎉");
-    }).catch(err => {
-      addToast("error", "Error creating PDF document");
-    });
+    addToast("success", "Generating full PDF report...");
+    try {
+      generateTripPDF(trip);
+      addToast("success", "PDF Report downloaded successfully! 📄");
+    } catch (err) {
+      addToast("error", "Failed to generate PDF. Please try again.");
+    }
   };
 
   return (
@@ -125,17 +114,17 @@ function ButtonVariantShare({ trip }: { trip: Trip }) {
       <button
         onClick={() => {
           navigator.clipboard.writeText(window.location.href);
-          addToast("success", "Shareable workspace link copied!");
+          addToast("success", "Workspace link copied to clipboard!");
         }}
-        className="px-4 py-2 border border-white/20 rounded-xl text-sm font-semibold hover:bg-white/10 transition-colors flex items-center gap-1.5"
+        className="px-4 py-2 border border-slate-700 bg-slate-800/80 rounded-xl text-xs font-bold hover:bg-slate-700 transition-colors flex items-center gap-1.5"
       >
-        Share Workspace
+        Share Link
       </button>
       <button
         onClick={handleExportPDF}
-        className="px-4 py-2 bg-[#E85D26] hover:bg-[#C44A1A] rounded-xl text-sm font-semibold text-white transition-colors flex items-center gap-1.5"
+        className="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold text-white transition-all shadow-md flex items-center gap-1.5"
       >
-        <FileDown size={14} /> Export PDF
+        <FileDown size={15} /> Export PDF Report
       </button>
     </>
   );

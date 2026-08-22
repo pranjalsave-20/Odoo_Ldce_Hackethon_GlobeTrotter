@@ -1,0 +1,10 @@
+[build]
+  base = "safarset"
+  command = "npm run build"
+  publish = "safarset/.next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"
