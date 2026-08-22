@@ -4,56 +4,47 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
   Plane, Train, Bus, Car, Anchor, MapPin, Sparkles, ArrowRight, 
-  CheckCircle2, Compass, Star, Navigation, ShieldCheck, Users
+  CheckCircle2, Compass, Star, Navigation, ShieldCheck
 } from "lucide-react";
 
-export interface IndiaLocation {
+export interface HeroMapCity {
   id: string;
   name: string;
   state: string;
-  region: "North" | "West" | "South" | "East" | "Central";
   x: number;
   y: number;
-  mode: "flight" | "train" | "ferry" | "road";
   labelPos: "left" | "right" | "top" | "bottom";
+  mode: "flight" | "train" | "ferry" | "road";
   tag: string;
-  highlights: string[];
-  bestTime: string;
-  avgBudgetPerDay: number;
+  avgBudget: number;
   rating: number;
   image: string;
 }
 
-export const INDIA_LOCATIONS: IndiaLocation[] = [
+export const HERO_MAP_CITIES: HeroMapCity[] = [
   {
     id: "srinagar",
     name: "Srinagar",
     state: "Jammu & Kashmir",
-    region: "North",
-    x: 185,
-    y: 65,
-    mode: "flight",
+    x: 210,
+    y: 60,
     labelPos: "right",
-    tag: "Dal Lake & Shikara",
-    highlights: ["Dal Lake", "Mughal Gardens", "Gulmarg Meadow"],
-    bestTime: "Apr – Oct",
-    avgBudgetPerDay: 3500,
+    mode: "flight",
+    tag: "Dal Lake & High Passes",
+    avgBudget: 3500,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=400&q=80"
   },
   {
     id: "delhi",
-    name: "New Delhi",
+    name: "Delhi",
     state: "NCR",
-    region: "North",
-    x: 215,
-    y: 160,
-    mode: "train",
+    x: 230,
+    y: 155,
     labelPos: "right",
-    tag: "Capital Transit Hub",
-    highlights: ["Red Fort", "Qutub Minar", "India Gate", "Connaught Place"],
-    bestTime: "Oct – Mar",
-    avgBudgetPerDay: 2800,
+    mode: "train",
+    tag: "National Multi-Modal Hub",
+    avgBudget: 2800,
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80"
   },
@@ -61,15 +52,12 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "jaipur",
     name: "Jaipur",
     state: "Rajasthan",
-    region: "West",
-    x: 175,
+    x: 185,
     y: 195,
-    mode: "road",
     labelPos: "left",
-    tag: "Pink City Heritage",
-    highlights: ["Amer Fort", "Hawa Mahal", "City Palace"],
-    bestTime: "Oct – Mar",
-    avgBudgetPerDay: 2400,
+    mode: "road",
+    tag: "Pink City Heritage Corridor",
+    avgBudget: 2400,
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=400&q=80"
   },
@@ -77,15 +65,12 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "varanasi",
     name: "Varanasi",
     state: "Uttar Pradesh",
-    region: "North",
-    x: 300,
+    x: 305,
     y: 215,
+    labelPos: "bottom",
     mode: "train",
-    labelPos: "top",
     tag: "Spiritual Kashi Yatra",
-    highlights: ["Kashi Vishwanath", "Ganga Aarti", "Assi Ghat"],
-    bestTime: "Oct – Mar",
-    avgBudgetPerDay: 1800,
+    avgBudget: 1800,
     rating: 5.0,
     image: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=400&q=80"
   },
@@ -93,15 +78,12 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "ahmedabad",
     name: "Ahmedabad",
     state: "Gujarat",
-    region: "West",
-    x: 145,
-    y: 250,
+    x: 150,
+    y: 260,
     mode: "road",
     labelPos: "left",
-    tag: "UNESCO Walled City & Business",
-    highlights: ["Sabarmati Ashram", "Adalaj Stepwell", "Riverfront"],
-    bestTime: "Nov – Feb",
-    avgBudgetPerDay: 2200,
+    tag: "Sabarmati & Expressways",
+    avgBudget: 2200,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=400&q=80"
   },
@@ -109,47 +91,25 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "mumbai",
     name: "Mumbai",
     state: "Maharashtra",
-    region: "West",
-    x: 155,
-    y: 325,
-    mode: "ferry",
+    x: 165,
+    y: 335,
     labelPos: "left",
-    tag: "Financial & Coastal Gateway",
-    highlights: ["Gateway of India", "Marine Drive", "Elephanta Caves"],
-    bestTime: "All Year",
-    avgBudgetPerDay: 3800,
+    mode: "ferry",
+    tag: "Western Sea Terminal",
+    avgBudget: 3800,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&q=80"
-  },
-  {
-    id: "goa",
-    name: "Goa",
-    state: "Goa",
-    region: "West",
-    x: 170,
-    y: 385,
-    mode: "ferry",
-    labelPos: "left",
-    tag: "Coastal Beaches & Heritage",
-    highlights: ["Baga Beach", "Old Goa Churches", "Dudhsagar Falls"],
-    bestTime: "Nov – Feb",
-    avgBudgetPerDay: 3200,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=400&q=80"
   },
   {
     id: "kolkata",
     name: "Kolkata",
     state: "West Bengal",
-    region: "East",
-    x: 355,
-    y: 260,
-    mode: "train",
+    x: 370,
+    y: 265,
     labelPos: "right",
-    tag: "City of Joy & Culture",
-    highlights: ["Victoria Memorial", "Howrah Bridge", "Dakshineswar"],
-    bestTime: "Oct – Mar",
-    avgBudgetPerDay: 2000,
+    mode: "ferry",
+    tag: "Eastern Maritime Port",
+    avgBudget: 2000,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1558431382-27e303142255?w=400&q=80"
   },
@@ -157,15 +117,12 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "guwahati",
     name: "Guwahati",
     state: "Assam",
-    region: "East",
-    x: 420,
+    x: 435,
     y: 195,
     mode: "flight",
     labelPos: "right",
     tag: "Northeast Gateway & Brahmaputra",
-    highlights: ["Kamakhya Temple", "Brahmaputra Cruise", "Kaziranga"],
-    bestTime: "Oct – Apr",
-    avgBudgetPerDay: 2500,
+    avgBudget: 2600,
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1571498664957-fde3c36c28f1?w=400&q=80"
   },
@@ -173,15 +130,12 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "bengaluru",
     name: "Bengaluru",
     state: "Karnataka",
-    region: "South",
-    x: 215,
-    y: 415,
-    mode: "flight",
+    x: 225,
+    y: 430,
     labelPos: "left",
-    tag: "Garden City & Tech Hub",
-    highlights: ["Lalbagh Botanical Garden", "Bangalore Palace", "Cubbon Park"],
-    bestTime: "Sep – Mar",
-    avgBudgetPerDay: 3000,
+    mode: "flight",
+    tag: "Southern Tech & Air Hub",
+    avgBudget: 3000,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=400&q=80"
   },
@@ -189,213 +143,224 @@ export const INDIA_LOCATIONS: IndiaLocation[] = [
     id: "chennai",
     name: "Chennai",
     state: "Tamil Nadu",
-    region: "South",
-    x: 265,
-    y: 410,
-    mode: "ferry",
+    x: 275,
+    y: 425,
     labelPos: "right",
-    tag: "Dravidian Temples & Marina Beach",
-    highlights: ["Marina Beach", "Kapaleeshwarar Temple", "Mahabalipuram"],
-    bestTime: "Nov – Feb",
-    avgBudgetPerDay: 2200,
+    mode: "ferry",
+    tag: "Coromandel Maritime Port",
+    avgBudget: 2300,
     rating: 4.6,
     image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&q=80"
-  },
-  {
-    id: "kochi",
-    name: "Kochi",
-    state: "Kerala",
-    region: "South",
-    x: 200,
-    y: 460,
-    mode: "ferry",
-    labelPos: "bottom",
-    tag: "Backwaters & Maritime Port",
-    highlights: ["Fort Kochi", "Chinese Fishing Nets", "Alleppey Houseboat"],
-    bestTime: "Sep – Mar",
-    avgBudgetPerDay: 2900,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80"
   }
 ];
 
 export default function BharatParikramaHeroMap() {
   const router = useRouter();
   const [selectedCityId, setSelectedCityId] = useState<string>("delhi");
-  const [regionFilter, setRegionFilter] = useState<string>("All");
 
-  const selectedLocation = INDIA_LOCATIONS.find(loc => loc.id === selectedCityId) || INDIA_LOCATIONS[1];
+  const selectedCity = HERO_MAP_CITIES.find(c => c.id === selectedCityId) || HERO_MAP_CITIES[1];
 
-  const filteredLocations = regionFilter === "All" 
-    ? INDIA_LOCATIONS 
-    : INDIA_LOCATIONS.filter(loc => loc.region === regionFilter);
-
-  const handleLaunchTrip = (cityName: string) => {
+  const handleLaunchPlan = (cityName: string) => {
     router.push(`/plan?to=${encodeURIComponent(cityName)}`);
   };
 
   return (
-    <div className="w-full select-none space-y-4">
+    <div className="relative w-full max-w-[620px] mx-auto select-none">
       
-      {/* Outer Card Container */}
-      <div className="relative rounded-3xl bg-white border border-slate-200 shadow-xl p-4 sm:p-6 overflow-hidden">
+      {/* Outer Clean Container with subtle blueprint grid */}
+      <div className="relative rounded-3xl bg-white/70 backdrop-blur-xs p-2 sm:p-4 overflow-visible">
         
-        {/* Header Ribbon & Region Filters */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-100 gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
-            <span className="text-xs font-black uppercase tracking-wider text-slate-800">
-              Interactive Pan-India Yatra Map
-            </span>
-          </div>
-
-          {/* Region Tabs */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-[11px] font-bold overflow-x-auto">
-            {["All", "North", "West", "South", "East"].map(r => (
-              <button
-                key={r}
-                onClick={() => setRegionFilter(r)}
-                className={`px-2.5 py-1 rounded-lg transition-colors ${
-                  regionFilter === r 
-                    ? "bg-white text-blue-700 shadow-xs" 
-                    : "text-slate-500 hover:text-slate-900"
-                }`}
-              >
-                {r}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Map Canvas Surface */}
-        <div className="relative w-full aspect-[4/3.8] rounded-2xl bg-gradient-to-b from-slate-900 via-slate-900 to-blue-950 overflow-hidden shadow-inner border border-slate-800">
+        {/* SVG Canvas Matching the Reference Image Exactly */}
+        <div className="relative w-full aspect-[4/3.9] overflow-visible">
           
-          {/* Subtle Grid */}
+          {/* Square Grid Pattern in Background */}
           <div 
-            className="absolute inset-0 opacity-15 pointer-events-none"
+            className="absolute inset-0 opacity-25 pointer-events-none rounded-3xl"
             style={{
-              backgroundImage: `linear-gradient(#475569 1px, transparent 1px), linear-gradient(90deg, #475569 1px, transparent 1px)`,
-              backgroundSize: '24px 24px'
+              backgroundImage: `linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)`,
+              backgroundSize: '32px 32px'
             }}
           />
 
-          {/* SVG Map Canvas */}
           <svg
-            viewBox="0 0 500 510"
-            className="w-full h-full relative z-10"
+            viewBox="0 0 540 520"
+            className="w-full h-full relative z-10 overflow-visible"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="indiaRouteGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#38bdf8" />
-                <stop offset="50%" stopColor="#fb923c" />
-                <stop offset="100%" stopColor="#f43f5e" />
-              </linearGradient>
-
-              <linearGradient id="seaRouteGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#0284c7" stopOpacity="0.3" />
-              </linearGradient>
-
-              <filter id="indiaMapGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#0f172a" floodOpacity="0.08" />
               </filter>
             </defs>
 
-            {/* India Boundary Shape */}
-            <g filter="url(#indiaMapGlow)">
+            {/* ── INDIA MAINLAND VECTOR OUTLINE (White Fill with Dark Border) ── */}
+            <g filter="url(#softShadow)">
+              {/* Outer Boundary */}
               <path
                 d="
-                  M 185 45
-                  C 200 35, 220 40, 235 55
-                  C 250 70, 270 85, 285 105
-                  C 295 120, 325 125, 345 135
-                  C 370 145, 400 155, 430 170
-                  C 445 180, 445 200, 425 210
-                  C 405 220, 375 225, 360 240
-                  C 350 255, 345 285, 325 310
-                  C 305 335, 285 370, 270 410
-                  C 255 450, 235 470, 205 480
-                  C 195 475, 185 440, 175 410
-                  C 165 375, 150 340, 145 310
-                  C 135 280, 125 260, 135 235
-                  C 145 210, 155 180, 150 155
-                  C 145 130, 160 100, 175 75
+                  M 210 25
+                  C 225 20, 240 30, 245 50
+                  C 250 65, 265 80, 280 100
+                  C 295 115, 325 130, 355 140
+                  C 380 148, 410 152, 440 148
+                  C 455 160, 455 185, 445 205
+                  C 425 220, 395 230, 385 220
+                  C 375 240, 370 260, 360 268
+                  C 350 282, 345 305, 335 315
+                  C 315 340, 295 375, 270 415
+                  C 255 440, 250 465, 250 475
+                  C 240 485, 225 495, 215 495
+                  C 205 490, 195 465, 185 425
+                  C 175 385, 165 350, 165 330
+                  C 155 300, 140 280, 125 260
+                  C 115 245, 115 215, 140 195
+                  C 155 175, 165 155, 170 130
+                  C 175 105, 185 75, 195 55
                   Z
                 "
-                fill="#0f172a"
-                fillOpacity="0.9"
-                stroke="#1e40af"
-                strokeWidth="2.5"
+                fill="#ffffff"
+                stroke="#1e293b"
+                strokeWidth="1.8"
                 strokeLinejoin="round"
-              />
-
-              <path
-                d="
-                  M 185 45
-                  C 200 35, 220 40, 235 55
-                  C 250 70, 270 85, 285 105
-                  C 295 120, 325 125, 345 135
-                  C 370 145, 400 155, 430 170
-                  C 445 180, 445 200, 425 210
-                  C 405 220, 375 225, 360 240
-                  C 350 255, 345 285, 325 310
-                  C 305 335, 285 370, 270 410
-                  C 255 450, 235 470, 205 480
-                  C 195 475, 185 440, 175 410
-                  C 165 375, 150 340, 145 310
-                  C 135 280, 125 260, 135 235
-                  C 145 210, 155 180, 150 155
-                  C 145 130, 160 100, 175 75
-                  Z
-                "
-                fill="none"
-                stroke="#38bdf8"
-                strokeWidth="1.2"
-                strokeOpacity="0.5"
               />
 
               {/* Northeast Wing */}
               <path
-                d="M 345 135 C 375 120, 425 125, 450 150 C 460 165, 445 190, 420 195 Z"
-                fill="#0f172a"
-                fillOpacity="0.85"
-                stroke="#38bdf8"
-                strokeWidth="1.2"
-                strokeOpacity="0.5"
+                d="M 355 140 C 385 130, 425 135, 450 155 C 460 175, 450 200, 420 200 C 400 200, 385 185, 365 170 Z"
+                fill="#ffffff"
+                stroke="#1e293b"
+                strokeWidth="1.8"
               />
+
+              {/* Internal State Dividing Lines (Subtle) */}
+              <g stroke="#cbd5e1" strokeWidth="0.9" fill="none" strokeDasharray="2 2">
+                <path d="M 195 95 Q 230 115 265 110" />
+                <path d="M 180 160 Q 220 180 270 175" />
+                <path d="M 165 210 Q 210 240 290 230" />
+                <path d="M 140 270 Q 200 285 320 270" />
+                <path d="M 175 320 Q 240 335 300 330" />
+                <path d="M 190 380 Q 235 390 265 405" />
+                <path d="M 205 440 Q 230 450 245 460" />
+              </g>
             </g>
 
-            {/* Connecting Parikrama Corridors */}
+            {/* ── SOLID GOLD/BROWN CORRIDOR ROUTE (Matching Reference) ─── */}
             <path
               d="
-                M 185 65 L 215 160
-                M 215 160 L 175 195 L 145 250 L 155 325 L 170 385 L 215 415 L 200 460 L 265 410 L 355 260 L 300 215 L 215 160
-                M 355 260 L 420 195
+                M 210 60 L 230 155
+                M 230 155 L 185 195 L 150 260 L 165 335 L 225 430 L 275 425 L 370 265 L 305 215 L 230 155
+                M 370 265 L 435 195
               "
               fill="none"
-              stroke="url(#indiaRouteGradient)"
-              strokeWidth="2.5"
-              strokeDasharray="6 4"
+              stroke="#ca8a04"
+              strokeWidth="2.4"
               strokeLinecap="round"
             />
 
-            {/* Interactive Selectable City Nodes */}
-            {INDIA_LOCATIONS.map((loc) => {
-              const isSelected = selectedCityId === loc.id;
+            {/* ── DASHED AERIAL & MARITIME LOOPS (Matching Reference) ─── */}
+            <path
+              d="M 165 335 C 130 385, 160 460, 225 430"
+              fill="none"
+              stroke="#94a3b8"
+              strokeWidth="1.4"
+              strokeDasharray="4 4"
+            />
+            <path
+              d="M 275 425 C 330 410, 390 340, 370 265"
+              fill="none"
+              stroke="#94a3b8"
+              strokeWidth="1.4"
+              strokeDasharray="4 4"
+            />
+            <path
+              d="M 230 155 C 320 120, 420 150, 435 195"
+              fill="none"
+              stroke="#94a3b8"
+              strokeWidth="1.4"
+              strokeDasharray="4 4"
+            />
+
+            {/* ── VEHICLE & CULTURAL ICONS FLOATING ON MAP (From Reference Image) ─── */}
+            
+            {/* Train Icon near Delhi / Varanasi Corridor */}
+            <g transform="translate(265, 175)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">🚆</text>
+            </g>
+
+            {/* Car Icon on Central Highway */}
+            <g transform="translate(245, 275)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">🚗</text>
+            </g>
+
+            {/* Ship / Ferry in Arabian Sea (Off Mumbai Coast) */}
+            <g transform="translate(105, 325)" className="cursor-pointer">
+              <rect x="-16" y="-13" width="32" height="26" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="14">🚢</text>
+            </g>
+
+            {/* Ship / Ferry in Arabian Sea (Farther West) */}
+            <g transform="translate(75, 335)" className="cursor-pointer">
+              <rect x="-14" y="-11" width="28" height="22" rx="7" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1" />
+              <text x="0" y="4" textAnchor="middle" fontSize="12">🛳️</text>
+            </g>
+
+            {/* Airplane in Flight Arc (South-West) */}
+            <g transform="translate(160, 445)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">✈️</text>
+            </g>
+
+            {/* Ship in Bay of Bengal (Off Kolkata) */}
+            <g transform="translate(400, 290)" className="cursor-pointer">
+              <rect x="-15" y="-12" width="30" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">🚢</text>
+            </g>
+
+            {/* Ship in Bay of Bengal (Off North-East) */}
+            <g transform="translate(380, 130)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">🚢</text>
+            </g>
+
+            {/* Airplane in Flight Arc (East) */}
+            <g transform="translate(375, 415)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">✈️</text>
+            </g>
+
+            {/* Ship off Southern Coast */}
+            <g transform="translate(330, 480)" className="cursor-pointer">
+              <rect x="-14" y="-12" width="28" height="24" rx="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.2" filter="url(#softShadow)" />
+              <text x="0" y="4.5" textAnchor="middle" fontSize="13">⛴️</text>
+            </g>
+
+            {/* Cultural Elements in Bay of Bengal: Plant/Tea Leaves */}
+            <g transform="translate(420, 380)">
+              <text x="0" y="0" textAnchor="middle" fontSize="18">🌱</text>
+            </g>
+
+            {/* Cultural Elements in Bay of Bengal: Clay Pot / Heritage Dish */}
+            <g transform="translate(480, 290)">
+              <text x="0" y="0" textAnchor="middle" fontSize="18">🍲</text>
+            </g>
+
+            {/* ── CITY LOCATION PINS & LABELS (Exact Match to Image) ─── */}
+            {HERO_MAP_CITIES.map((city) => {
+              const isSelected = selectedCityId === city.id;
               
               let dx = 12;
               let dy = 4;
               let anchorPos: "start" | "end" | "middle" = "start";
-              if (loc.labelPos === "left") {
+              if (city.labelPos === "left") {
                 dx = -12;
                 anchorPos = "end";
-              } else if (loc.labelPos === "top") {
+              } else if (city.labelPos === "top") {
                 dx = 0;
                 dy = -14;
                 anchorPos = "middle";
-              } else if (loc.labelPos === "bottom") {
+              } else if (city.labelPos === "bottom") {
                 dx = 0;
                 dy = 18;
                 anchorPos = "middle";
@@ -403,39 +368,44 @@ export default function BharatParikramaHeroMap() {
 
               return (
                 <g
-                  key={loc.id}
-                  transform={`translate(${loc.x}, ${loc.y})`}
+                  key={city.id}
+                  transform={`translate(${city.x}, ${city.y})`}
                   className="cursor-pointer group"
-                  onClick={() => setSelectedCityId(loc.id)}
+                  onClick={() => setSelectedCityId(city.id)}
                 >
-                  {/* Ping Animation on Selected */}
+                  {/* Ping effect when active */}
                   {isSelected && (
-                    <circle cx="0" cy="0" r="16" fill="#38bdf8" fillOpacity="0.3" className="animate-ping" />
+                    <circle cx="0" cy="-6" r="16" fill="#3b82f6" fillOpacity="0.25" className="animate-ping" />
                   )}
 
-                  {/* Outer Ring */}
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r={isSelected ? "9" : "5"}
-                    fill={isSelected ? "#fb923c" : "#38bdf8"}
-                    stroke="#ffffff"
-                    strokeWidth={isSelected ? "2.5" : "1.5"}
-                    className="transition-all duration-300 group-hover:scale-125"
-                  />
+                  {/* SVG Blue Location Pin Marker */}
+                  <g transform="translate(-10, -22)">
+                    <path
+                      d="M 10 0 C 4.5 0 0 4.5 0 10 C 0 16 10 24 10 24 C 10 24 20 16 20 10 C 20 4.5 15.5 0 10 0 Z"
+                      fill={isSelected ? "#1d4ed8" : "#2563eb"}
+                      stroke="#ffffff"
+                      strokeWidth="1.5"
+                      filter="url(#softShadow)"
+                    />
+                    <circle cx="10" cy="9" r="3.5" fill="#ffffff" />
+                  </g>
 
-                  {/* City Label */}
+                  {/* City Name Label with White Shadow for crystal clear reading */}
                   <text
                     x={dx}
                     y={dy}
                     textAnchor={anchorPos}
-                    fontSize={isSelected ? "12" : "10"}
-                    fontWeight={isSelected ? "900" : "600"}
-                    fill={isSelected ? "#ffffff" : "#cbd5e1"}
-                    fontFamily="Inter, system-ui, sans-serif"
-                    className="transition-colors duration-200 group-hover:fill-amber-300"
+                    fontSize="11"
+                    fontWeight={isSelected ? "900" : "700"}
+                    fill={isSelected ? "#1d4ed8" : "#0f172a"}
+                    stroke="#ffffff"
+                    strokeWidth="3"
+                    strokeLinejoin="round"
+                    paintOrder="stroke fill"
+                    fontFamily="Plus Jakarta Sans, Inter, sans-serif"
+                    className="transition-colors duration-200 group-hover:fill-blue-700 pointer-events-none"
                   >
-                    {loc.name}
+                    {city.name}
                   </text>
                 </g>
               );
@@ -444,40 +414,24 @@ export default function BharatParikramaHeroMap() {
 
         </div>
 
-        {/* ── SELECTED CITY DETAIL & 1-CLICK LAUNCHER ─────────────── */}
-        <div className="mt-4 p-4 bg-slate-900 text-white rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          
-          <div className="flex items-center gap-3.5 w-full sm:w-auto">
-            <div className="w-14 h-14 rounded-xl overflow-hidden relative flex-shrink-0 border border-slate-700">
-              <img src={selectedLocation.image} alt={selectedLocation.name} className="w-full h-full object-cover" />
+        {/* ── INTERACTIVE SELECTED CITY CARD ─────────────────────── */}
+        <div className="mt-2 p-3 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl overflow-hidden relative flex-shrink-0 border border-slate-200">
+              <img src={selectedCity.image} alt={selectedCity.name} className="w-full h-full object-cover" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h4 className="text-base font-black text-white">{selectedLocation.name}, {selectedLocation.state}</h4>
-                <span className="text-[10px] bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded-full font-bold">
-                  {selectedLocation.region} Hub
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 font-medium">{selectedLocation.tag}</p>
-              <p className="text-[11px] text-amber-400 font-bold mt-0.5">
-                ⭐ {selectedLocation.rating} • Best: {selectedLocation.bestTime} • Avg: ₹{selectedLocation.avgBudgetPerDay}/day
-              </p>
+              <p className="text-xs font-black text-slate-900">{selectedCity.name}, {selectedCity.state}</p>
+              <p className="text-[11px] text-slate-500 font-medium">{selectedCity.tag} • ⭐ {selectedCity.rating}</p>
             </div>
           </div>
 
           <button
-            onClick={() => handleLaunchTrip(selectedLocation.name)}
-            className="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all whitespace-nowrap hover:scale-105"
+            onClick={() => handleLaunchPlan(selectedCity.name)}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1 shrink-0"
           >
-            <Sparkles size={14} /> Plan Yatra to {selectedLocation.name} <ArrowRight size={14} />
+            Plan Trip <ArrowRight size={13} />
           </button>
-
-        </div>
-
-        {/* Legend */}
-        <div className="flex items-center justify-between pt-3 text-[11px] text-slate-500 font-semibold">
-          <span className="flex items-center gap-1">📍 Click any city node on the map to inspect & plan</span>
-          <span className="text-blue-700 font-bold">28 States & UTs Connected</span>
         </div>
 
       </div>
