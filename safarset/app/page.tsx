@@ -1,271 +1,575 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Compass, Shield, Zap, Layers, CheckCircle2, MapPin, Sparkles, Navigation, Globe, ArrowUpRight } from "lucide-react";
-import BharatParikramaHeroMap from "@/components/maps/BharatParikramaHeroMap";
-import BottomWavyTimeline from "@/components/landing/BottomWavyTimeline";
+import { ArrowRight, ChevronRight, CheckCircle2 } from "lucide-react";
+import IndiaMapSimple from "@/components/maps/IndiaMapSimple";
+import { POPULAR_DESTINATIONS, MOCK_COMMUNITY } from "@/lib/data/mockData";
 
-export default function Home() {
+/* ─── Static page data ──────────────────────────────────── */
+
+const STATS = [
+  { value: "28+",  label: "States Covered" },
+  { value: "4",    label: "Travel Modes" },
+  { value: "100+", label: "Destinations" },
+  { value: "AI",   label: "Powered Planning" },
+];
+
+const FEATURES = [
+  {
+    icon: "🗺️",
+    title: "Multi-Modal Routing",
+    desc: "Plan seamless journeys using flights, trains, roads and maritime routes across India in one intelligent itinerary.",
+  },
+  {
+    icon: "💼",
+    title: "Business Travel Mode",
+    desc: "Organize professional travel around meetings and available free time. Never miss a client appointment.",
+  },
+  {
+    icon: "₹",
+    title: "Smart Budget Planner",
+    desc: "Track transportation, accommodation, food and activity expenses with clear visual breakdowns.",
+  },
+  {
+    icon: "📅",
+    title: "Smart Itinerary",
+    desc: "Create organized day-wise travel plans tailored to your purpose, schedule, and preferences.",
+  },
+  {
+    icon: "📍",
+    title: "Explore Nearby",
+    desc: "Discover places that fit your available time slots. Make the most of every free hour on the road.",
+  },
+  {
+    icon: "🤖",
+    title: "AI Travel Assistant",
+    desc: "Get contextual help with your journey. Reschedule, reroute, and adapt plans on the go with Parikrama AI.",
+  },
+];
+
+const CIRCUITS = [
+  {
+    name: "Ganga Heritage & Deccan Corridor",
+    route: "New Delhi → Varanasi → Prayagraj → Ayodhya → Mumbai",
+    duration: "8 Days / 7 Nights",
+    price: "₹24,999",
+    modes: ["✈ Flight", "🚆 Vande Bharat", "🚗 Private Cab", "⛴ River Cruise"],
+    img1: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&q=80",
+    img2: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80",
+    tag: "Heritage",
+  },
+  {
+    name: "Rajasthan Royal Circuit",
+    route: "Delhi → Jaipur → Jodhpur → Udaipur → Delhi",
+    duration: "7 Days / 6 Nights",
+    price: "₹19,999",
+    modes: ["🚆 Express Train", "🚗 Private Cab", "✈ Return Flight"],
+    img1: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80",
+    img2: "https://images.unsplash.com/photo-1587295656906-b09049e6f74d?w=600&q=80",
+    tag: "Royal",
+  },
+  {
+    name: "South India Coastal Trail",
+    route: "Chennai → Pondicherry → Madurai → Kochi → Goa",
+    duration: "10 Days / 9 Nights",
+    price: "₹32,999",
+    modes: ["✈ Flight", "🚆 Overnight Train", "⛴ Backwater Ferry"],
+    img1: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    img2: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80",
+    tag: "Coastal",
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "Bharat Parikrama made my multi-city journey so much easier to organize. The AI itinerary was spot on.",
+    name: "Priya Sharma",
+    city: "Mumbai",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&q=80",
+  },
+  {
+    quote: "The business travel mode is exactly what I needed. It blocked my meeting times and planned everything around them.",
+    name: "Vikram Nair",
+    city: "Bengaluru",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&q=80",
+  },
+  {
+    quote: "Planned our entire Rajasthan trip end-to-end. Clean, professional, and the family loved every moment.",
+    name: "Anjali Kapoor",
+    city: "Delhi",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&q=80",
+  },
+];
+
+const WHY_ITEMS = [
+  "Dynamic Multi-Modal Transit Optimization (Air, Rail, Ferry, Road)",
+  "Autonomous Rerouting with Buffer Time Guarantee",
+  "Verified Cultural & Heritage Waypoints Across 28 States",
+  "Integrated Emergency Assistance & AI Travel Companion",
+];
+
+/* ─── Page ──────────────────────────────────────────────── */
+
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white">
-      
-      {/* HERO SECTION */}
-      <section className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-white border-b border-slate-200">
-        
-        {/* Subtle grid pattern & glow */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#1e3a8a 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}
-        />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/50 rounded-full filter blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-orange-100/40 rounded-full filter blur-3xl pointer-events-none" />
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#FAFAF8" }}>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Headline & Hero Text */}
-            <div className="lg:col-span-6 space-y-6">
-              
-              {/* Eyebrow Pill Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-900 text-xs font-black tracking-wider uppercase shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                <span>MARITIME VOYAGE & TRANSIT INTELLIGENCE</span>
-              </div>
+      {/* ── 1. HERO ─────────────────────────────────────────── */}
+      <section style={{ background: "#fff", paddingTop: "80px", paddingBottom: "80px", borderBottom: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }} className="hero-grid">
 
-              {/* Main Headlines */}
-              <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-950 tracking-tight leading-[1.05] uppercase">
-                  BHARAT PARIKRAMA
-                </h1>
-                
-                <h2 className="text-xl sm:text-2xl font-extrabold text-blue-900 tracking-tight">
-                  Pan–India Travel & Itinerary Optimization
-                </h2>
+            {/* Left: Text */}
+            <div>
+              <span style={{ display: "block", fontSize: "11px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#C8922A", marginBottom: "20px" }}>
+                AI-POWERED INDIA TRAVEL PLANNING
+              </span>
 
-                <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed pt-2">
-                  Smarter journeys. Seamless multi-modal experiences. Real-time adaptive travel plans across air, rail, sea, and roads.
-                </p>
-              </div>
+              <h1 style={{ fontSize: "clamp(40px, 5vw, 60px)", fontWeight: 800, lineHeight: 1.05, color: "#0F2D52", letterSpacing: "-0.02em", marginBottom: "12px" }}>
+                भारत परिक्रमा
+              </h1>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <h2 style={{ fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 700, color: "#1E5EAA", marginBottom: "20px", lineHeight: 1.35 }}>
+                Pan-India Travel &amp; Itinerary Optimization
+              </h2>
+
+              <p style={{ fontSize: "17px", color: "#4A5568", lineHeight: 1.7, marginBottom: "36px", maxWidth: "440px" }}>
+                Smarter journeys across India — from Himalayan peaks to coastal shores. Plan multi-modal trips, manage budgets, and get AI-powered recommendations.
+              </p>
+
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 <Link
-                  href="/dashboard"
-                  className="inline-flex items-center gap-2.5 px-7 py-4 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-blue-900 hover:bg-blue-950 shadow-lg shadow-blue-900/20 hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
+                  href="/plan"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "48px", padding: "0 28px", borderRadius: "8px", fontSize: "15px", fontWeight: 600, background: "#1E5EAA", color: "#fff", textDecoration: "none", transition: "all 0.18s ease" }}
                 >
-                  PLAN YOUR PARIKRAMA <ArrowRight size={16} />
+                  Plan Your Parikrama <ArrowRight size={16} />
                 </Link>
-
                 <Link
-                  href="#problem"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300/80 shadow-xs transition-all duration-200"
+                  href="/explore"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "48px", padding: "0 24px", borderRadius: "8px", fontSize: "15px", fontWeight: 600, background: "#fff", color: "#0F2D52", border: "1.5px solid #E4E4DF", textDecoration: "none" }}
                 >
-                  EXPLORE HOW IT WORKS
+                  Explore Bharat
                 </Link>
               </div>
-
-              {/* Stat Cards Grid */}
-              <div className="grid grid-cols-3 gap-3 pt-6 border-t border-slate-200/80">
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                  <p className="text-xl font-black text-slate-900">28+ States</p>
-                  <p className="text-xs text-slate-500 font-medium mt-0.5">Pan-India Network</p>
-                </div>
-                <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/70">
-                  <p className="text-xl font-black text-blue-900">Multi-Modal</p>
-                  <p className="text-xs text-blue-700/80 font-medium mt-0.5">Air, Rail, Sea & Road</p>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                  <p className="text-xl font-black text-slate-900">Real-Time</p>
-                  <p className="text-xs text-slate-500 font-medium mt-0.5">Adaptive Rerouting</p>
-                </div>
-              </div>
-
             </div>
 
-            {/* Right Column: Hero Interactive Map */}
-            <div className="lg:col-span-6 flex justify-center w-full">
-              <BharatParikramaHeroMap />
+            {/* Right: India Map */}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <IndiaMapSimple style={{ maxWidth: "500px", width: "100%" }} />
             </div>
-
           </div>
         </div>
+
+        <style>{`
+          @media (max-width: 860px) {
+            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          }
+        `}</style>
       </section>
 
-      {/* Bottom Timeline Ribbon Section */}
-      <BottomWavyTimeline />
+      {/* ── 2. STATS BAR ────────────────────────────────────── */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #E4E4DF" }}>
+        <div className="container" style={{ paddingTop: "28px", paddingBottom: "28px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", textAlign: "center" }} className="stats-grid">
+            {STATS.map((s, i) => (
+              <div key={s.label} style={{ padding: "0 24px", borderRight: i < STATS.length - 1 ? "1px solid #E4E4DF" : "none" }}>
+                <p style={{ fontSize: "30px", fontWeight: 800, color: "#1E5EAA", lineHeight: 1.1 }}>{s.value}</p>
+                <p style={{ fontSize: "13px", color: "#718096", marginTop: "4px", fontWeight: 500 }}>{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .stats-grid > div { border-right: none !important; border-bottom: 1px solid #E4E4DF; padding: 16px 0 !important; }
+          }
+        `}</style>
+      </div>
 
-      {/* SECTION: THE PROBLEM */}
-      <section id="problem" className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold text-blue-800 tracking-widest uppercase bg-blue-100/80 px-3.5 py-1.5 rounded-full border border-blue-200">
-              Current Challenges
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">
-              The Problem with Multi-Modal Travel in India
-            </h2>
-            <p className="text-slate-600 text-base leading-relaxed">
-              Navigating multiple transport systems across states often leads to fragmentation, delays, and unexpected route disruptions.
+      {/* ── 3. FEATURES ─────────────────────────────────────── */}
+      <section style={{ background: "#FAFAF8", paddingTop: "96px", paddingBottom: "96px" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "56px" }}>
+            <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "12px" }}>What We Offer</span>
+            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 800, color: "#0F2D52", letterSpacing: "-0.01em" }}>Everything You Need for Your Journey</h2>
+            <p style={{ fontSize: "17px", color: "#4A5568", marginTop: "12px", maxWidth: "540px", margin: "12px auto 0", lineHeight: 1.7 }}>
+              From planning your route to managing your stay, Bharat Parikrama keeps your entire journey organized.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            
-            <div className="bg-slate-50/80 p-8 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-900 text-white flex items-center justify-center font-black text-lg shadow-sm">
-                01
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="features-grid">
+            {FEATURES.map((f) => (
+              <div key={f.title} style={{ background: "#fff", border: "1px solid #E4E4DF", borderRadius: "16px", padding: "28px", transition: "box-shadow 0.2s, transform 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; (e.currentTarget as HTMLDivElement).style.transform = "none"; }}
+              >
+                <div style={{ width: "44px", height: "44px", background: "#EEF3FA", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", marginBottom: "20px" }}>
+                  {f.icon}
+                </div>
+                <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#0F2D52", marginBottom: "10px" }}>{f.title}</h3>
+                <p style={{ fontSize: "15px", color: "#4A5568", lineHeight: 1.65, marginBottom: "20px" }}>{f.desc}</p>
+                <Link href="/plan" style={{ fontSize: "13px", fontWeight: 600, color: "#1E5EAA", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  Learn more <ArrowRight size={13} />
+                </Link>
               </div>
-              <h3 className="text-lg font-bold text-slate-950">Fragmented Schedules</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Flights, Vande Bharat trains, and coastal ferries operate on isolated schedules without synchronized transfer windows.
-              </p>
-            </div>
-
-            <div className="bg-slate-50/80 p-8 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-900 text-white flex items-center justify-center font-black text-lg shadow-sm">
-                02
-              </div>
-              <h3 className="text-lg font-bold text-slate-950">Unpredictable Delays</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Weather shifts, rail maintenance, or ocean wave surges often cause cascading delays across connecting legs of a trip.
-              </p>
-            </div>
-
-            <div className="bg-slate-50/80 p-8 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-900 text-white flex items-center justify-center font-black text-lg shadow-sm">
-                03
-              </div>
-              <h3 className="text-lg font-bold text-slate-950">Manual Re-Planning</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Travelers are forced to manually re-book accommodation and transit when a single leg fails, causing stress and financial loss.
-              </p>
-            </div>
-
+            ))}
           </div>
-
         </div>
+        <style>{`
+          @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          @media (max-width: 560px) { .features-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
       </section>
 
-      {/* SECTION: APPROACH */}
-      <section id="approach" className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            
-            <div className="space-y-6">
-              <span className="text-xs font-extrabold text-blue-800 tracking-widest uppercase bg-blue-100 px-3.5 py-1.5 rounded-full border border-blue-200">
-                Institutional Approach
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">
-                Unified Command Engine for Pan-India Travel
+      {/* ── 4. WHY BHARAT PARIKRAMA (approach) ─────────────── */}
+      <section style={{ background: "#fff", paddingTop: "96px", paddingBottom: "96px", borderTop: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }} className="approach-grid">
+            {/* Left */}
+            <div>
+              <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "16px" }}>Why Us</span>
+              <h2 style={{ fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 800, color: "#0F2D52", marginBottom: "16px", lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+                Unified Planning Engine for Pan-India Travel
               </h2>
-              <p className="text-slate-600 leading-relaxed">
-                Bharat Parikrama synthesizes real-time transit telemetry from air corridors, rail networks, and maritime sea lanes into one continuous, adaptive itinerary.
+              <p style={{ fontSize: "16px", color: "#4A5568", lineHeight: 1.7, marginBottom: "32px" }}>
+                Bharat Parikrama synthesizes transit data from air corridors, rail networks, and maritime sea lanes into one continuous, adaptive itinerary.
               </p>
-
-              <div className="space-y-3.5 pt-2">
-                {[
-                  "Dynamic Multi-Modal Transit Optimization (Air, Rail, Ferry, Road)",
-                  "Autonomous Rerouting with Buffer Time Guarantee",
-                  "Verified Cultural & Heritage Waypoints Across 28 States",
-                  "Integrated Emergency Assistance & Weather Telemetry",
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <CheckCircle2 size={18} className="text-blue-700 shrink-0" />
-                    <span className="text-sm font-bold text-slate-800">{feature}</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "36px" }}>
+                {WHY_ITEMS.map((item) => (
+                  <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <CheckCircle2 size={18} style={{ color: "#1E5EAA", flexShrink: 0, marginTop: "2px" }} />
+                    <span style={{ fontSize: "15px", fontWeight: 500, color: "#0F2D52" }}>{item}</span>
                   </div>
                 ))}
               </div>
-
-              <div className="pt-4">
-                <Link
-                  href="/dashboard"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-xs font-black uppercase text-white bg-blue-900 hover:bg-blue-950 shadow-md transition-all"
-                >
-                  ENTER COMMAND ROOM <ArrowRight size={15} />
-                </Link>
-              </div>
+              <Link href="/signup" style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "48px", padding: "0 28px", borderRadius: "8px", fontSize: "15px", fontWeight: 600, background: "#1E5EAA", color: "#fff", textDecoration: "none" }}>
+                Start Planning <ArrowRight size={16} />
+              </Link>
             </div>
 
-            {/* Visual Card Stack */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold">
-                    <Sparkles size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">AI Route Matrix</h4>
-                    <p className="text-xs text-slate-500">Active Monitoring</p>
-                  </div>
+            {/* Right: live route card */}
+            <div style={{ background: "#fff", border: "1px solid #E4E4DF", borderRadius: "20px", padding: "28px", boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: "20px", borderBottom: "1px solid #F0F0EC", marginBottom: "20px" }}>
+                <div>
+                  <p style={{ fontSize: "14px", fontWeight: 700, color: "#0F2D52" }}>AI Route Matrix</p>
+                  <p style={{ fontSize: "12px", color: "#718096" }}>Active Monitoring</p>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
-                  ● Operational
-                </span>
+                <span style={{ padding: "4px 12px", borderRadius: "20px", background: "#ECFDF5", border: "1px solid #A7F3D0", fontSize: "12px", fontWeight: 700, color: "#065F46" }}>● Operational</span>
               </div>
-
-              <div className="space-y-3">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg">✈️</span>
+              {[
+                { icon: "✈️", name: "Flight Leg #BP-402", route: "Delhi (DEL) → Kochi (COK)", status: "On Time", statusColor: "#1E5EAA", statusBg: "#EEF3FA" },
+                { icon: "🚢", name: "Maritime Ferry #MF-12", route: "Kochi → Kavaratti (Lakshadweep)", status: "Smooth Sea", statusColor: "#1E5EAA", statusBg: "#EEF3FA" },
+                { icon: "🚆", name: "Vande Bharat #VB-208", route: "Varanasi → New Delhi", status: "Reserved", statusColor: "#065F46", statusBg: "#ECFDF5" },
+              ].map((leg) => (
+                <div key={leg.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px", borderRadius: "10px", background: "#FAFAF8", border: "1px solid #E4E4DF", marginBottom: "12px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span style={{ fontSize: "18px" }}>{leg.icon}</span>
                     <div>
-                      <p className="text-xs font-bold text-slate-900">Flight Leg #BP-402</p>
-                      <p className="text-[11px] text-slate-500">Delhi (DEL) → Kochi (COK)</p>
+                      <p style={{ fontSize: "12px", fontWeight: 700, color: "#0F2D52" }}>{leg.name}</p>
+                      <p style={{ fontSize: "11px", color: "#718096" }}>{leg.route}</p>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">On Time</span>
+                  <span style={{ fontSize: "11px", fontWeight: 700, color: leg.statusColor, background: leg.statusBg, padding: "3px 10px", borderRadius: "5px" }}>{leg.status}</span>
                 </div>
-
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg">🚢</span>
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">Maritime Ferry #MF-12</p>
-                      <p className="text-[11px] text-slate-500">Kochi → Kavaratti (Lakshadweep)</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Smooth Sea</span>
-                </div>
-
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg">🚆</span>
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">Vande Bharat #VB-208</p>
-                      <p className="text-[11px] text-slate-500">Varanasi → New Delhi</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Reserved</span>
-                </div>
-              </div>
+              ))}
             </div>
-
           </div>
         </div>
+        <style>{`
+          @media (max-width: 860px) { .approach-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
       </section>
 
-      {/* CTA SECTION */}
-      <section className="py-16 bg-blue-950 text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-            Ready to Plan Your Bharat Parikrama?
+      {/* ── 5. CURATED CIRCUITS ──────────────────────────────── */}
+      <section style={{ background: "#FAFAF8", paddingTop: "96px", paddingBottom: "96px", borderTop: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", marginBottom: "48px" }}>
+            <div>
+              <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "12px" }}>Ready-Made Plans</span>
+              <h2 style={{ fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 800, color: "#0F2D52", letterSpacing: "-0.01em" }}>Curated Bharat Circuits</h2>
+              <p style={{ fontSize: "16px", color: "#4A5568", marginTop: "8px", maxWidth: "460px", lineHeight: 1.65 }}>Thoughtfully planned journeys connecting India's culture, cities and experiences.</p>
+            </div>
+            <Link href="/explore" style={{ fontSize: "14px", fontWeight: 600, color: "#1E5EAA", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}>
+              View all circuits <ChevronRight size={16} />
+            </Link>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="circuits-grid">
+            {CIRCUITS.map((c) => (
+              <div key={c.name} style={{ background: "#fff", border: "1px solid #E4E4DF", borderRadius: "20px", overflow: "hidden", transition: "box-shadow 0.2s, transform 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 28px rgba(0,0,0,0.09)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; (e.currentTarget as HTMLDivElement).style.transform = "none"; }}
+              >
+                {/* Dual image */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", height: "180px" }}>
+                  <img src={c.img1} alt={c.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <img src={c.img2} alt={c.route} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderLeft: "3px solid #FAFAF8" }} />
+                </div>
+
+                <div style={{ padding: "24px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#C8922A" }}>{c.tag}</span>
+                    <span style={{ fontSize: "12px", color: "#718096" }}>• {c.duration}</span>
+                    <span style={{ fontSize: "11px", background: "#EEF3FA", color: "#1E5EAA", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>Instant Itinerary</span>
+                  </div>
+
+                  <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0F2D52", marginBottom: "6px" }}>{c.name}</h3>
+                  <p style={{ fontSize: "13px", color: "#4A5568", marginBottom: "20px" }}>{c.route}</p>
+
+                  <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#718096", marginBottom: "8px" }}>Integrated Modes of Transit</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "24px" }}>
+                    {c.modes.map(m => (
+                      <span key={m} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "4px 10px", background: "#F0F4FA", border: "1px solid #D0DCF0", borderRadius: "6px", fontSize: "11px", fontWeight: 600, color: "#0F2D52" }}>{m}</span>
+                    ))}
+                  </div>
+
+                  <hr style={{ border: "none", borderTop: "1px solid #E4E4DF", margin: "0 0 20px" }} />
+
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <p style={{ fontSize: "11px", color: "#718096", fontWeight: 500 }}>Starting from</p>
+                      <p style={{ fontSize: "22px", fontWeight: 800, color: "#0F2D52", lineHeight: 1.1 }}>{c.price}</p>
+                      <p style={{ fontSize: "11px", color: "#718096" }}>/per person</p>
+                    </div>
+                    <Link href="/plan" style={{ display: "inline-flex", alignItems: "center", gap: "6px", height: "40px", padding: "0 18px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, background: "#1E5EAA", color: "#fff", textDecoration: "none" }}>
+                      Explore <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 1000px) { .circuits-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          @media (max-width: 640px)  { .circuits-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
+      </section>
+
+      {/* ── 6. EXPLORE BHARAT ────────────────────────────────── */}
+      <section style={{ background: "#fff", paddingTop: "96px", paddingBottom: "96px", borderTop: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "12px" }}>Destinations</span>
+            <h2 style={{ fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 800, color: "#0F2D52", letterSpacing: "-0.01em" }}>Explore Bharat</h2>
+            <p style={{ fontSize: "16px", color: "#4A5568", marginTop: "8px", lineHeight: 1.65 }}>From mountains and heritage cities to coastlines and spiritual destinations.</p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "16px" }} className="dest-grid">
+            {POPULAR_DESTINATIONS.map((d) => (
+              <Link
+                key={d.city}
+                href={`/explore?city=${d.city}`}
+                style={{ display: "block", aspectRatio: "3/4", position: "relative", borderRadius: "12px", overflow: "hidden", textDecoration: "none" }}
+              >
+                <img src={d.image} alt={d.city} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.3s ease" }}
+                  onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
+                  onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(to top, rgba(10,25,50,0.85) 0%, transparent 100%)", padding: "20px 12px 14px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#fff" }}>{d.city}</p>
+                  <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.72)", marginTop: "2px" }}>{d.tag}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <Link href="/explore" style={{ display: "inline-flex", alignItems: "center", gap: "6px", height: "44px", padding: "0 24px", borderRadius: "8px", fontSize: "14px", fontWeight: 600, background: "#fff", color: "#0F2D52", border: "1.5px solid #E4E4DF", textDecoration: "none" }}>
+              View all 100+ destinations <ChevronRight size={15} />
+            </Link>
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 1024px) { .dest-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+          @media (max-width: 580px)  { .dest-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        `}</style>
+      </section>
+
+      {/* ── 7. COMMUNITY TRIPS ───────────────────────────────── */}
+      <section style={{ background: "#FAFAF8", paddingTop: "96px", paddingBottom: "96px", borderTop: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", marginBottom: "40px" }}>
+            <div>
+              <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "12px" }}>Community</span>
+              <h2 style={{ fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 800, color: "#0F2D52", letterSpacing: "-0.01em" }}>Community Trips</h2>
+              <p style={{ fontSize: "16px", color: "#4A5568", marginTop: "8px", lineHeight: 1.65 }}>Browse itineraries shared by fellow travellers.</p>
+            </div>
+            <Link href="/community" style={{ fontSize: "14px", fontWeight: 600, color: "#1E5EAA", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}>
+              See all <ChevronRight size={16} />
+            </Link>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="community-grid">
+            {MOCK_COMMUNITY.slice(0, 3).map((t) => (
+              <div key={t.id} style={{ background: "#fff", border: "1px solid #E4E4DF", borderRadius: "16px", overflow: "hidden", transition: "box-shadow 0.2s, transform 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; (e.currentTarget as HTMLDivElement).style.transform = "none"; }}
+              >
+                <div style={{ aspectRatio: "16/9", overflow: "hidden" }}>
+                  <img src={t.coverImage} alt={t.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.3s ease" }}
+                    onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.03)")}
+                    onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                  />
+                </div>
+
+                <div style={{ padding: "20px" }}>
+                  <p style={{ fontSize: "11px", color: "#C8922A", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>{t.purpose} • {t.duration}</p>
+                  <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0F2D52", marginBottom: "6px" }}>{t.title}</h3>
+                  <p style={{ fontSize: "13px", color: "#4A5568", marginBottom: "16px" }}>{t.route}</p>
+
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      {t.userAvatar
+                        ? <img src={t.userAvatar} alt={t.userName} style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover" }} />
+                        : <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#1E5EAA", color: "#fff", fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{t.userName[0]}</div>
+                      }
+                      <span style={{ fontSize: "13px", color: "#4A5568", fontWeight: 500 }}>{t.userName}</span>
+                    </div>
+                    <span style={{ fontSize: "13px", color: "#718096" }}>♡ {t.likes}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 900px)  { .community-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          @media (max-width: 580px)  { .community-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
+      </section>
+
+      {/* ── 8. TESTIMONIALS ──────────────────────────────────── */}
+      <section style={{ background: "#fff", paddingTop: "96px", paddingBottom: "96px", borderTop: "1px solid #E4E4DF" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#C8922A", marginBottom: "12px" }}>Travellers Say</span>
+            <h2 style={{ fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 800, color: "#0F2D52", letterSpacing: "-0.01em" }}>Travellers Love Bharat Parikrama</h2>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="testimonials-grid">
+            {TESTIMONIALS.map((t) => (
+              <div key={t.name} style={{ background: "#FAFAF8", border: "1px solid #E4E4DF", borderRadius: "16px", padding: "28px" }}>
+                <div style={{ marginBottom: "16px", fontSize: "16px", color: "#F0B84A" }}>★★★★★</div>
+                <p style={{ fontSize: "15px", color: "#4A5568", lineHeight: 1.7, marginBottom: "24px" }}>"{t.quote}"</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <img src={t.avatar} alt={t.name} style={{ width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover" }} />
+                  <div>
+                    <p style={{ fontSize: "14px", fontWeight: 700, color: "#0F2D52" }}>{t.name}</p>
+                    <p style={{ fontSize: "12px", color: "#718096" }}>{t.city}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 900px)  { .testimonials-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          @media (max-width: 580px)  { .testimonials-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
+      </section>
+
+      {/* ── 9. CTA ───────────────────────────────────────────── */}
+      <section style={{ background: "#0F2D52", paddingTop: "96px", paddingBottom: "96px" }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <span style={{ display: "block", fontSize: "11px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginBottom: "20px" }}>
+            START YOUR JOURNEY
+          </span>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "#fff", marginBottom: "16px", lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+            Start Planning Your Parikrama
           </h2>
-          <p className="text-blue-200 max-w-2xl mx-auto text-base">
-            Create optimized multi-modal travel itineraries across India with real-time route intelligence.
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.65)", marginBottom: "40px", maxWidth: "440px", margin: "0 auto 40px", lineHeight: 1.7 }}>
+            One journey. Multiple destinations. One intelligent travel companion.
           </p>
-          <div>
+          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
             <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider text-slate-950 bg-white hover:bg-slate-100 shadow-xl transition-all hover:scale-[1.02]"
+              href="/signup"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "50px", padding: "0 32px", borderRadius: "8px", fontSize: "15px", fontWeight: 700, background: "#fff", color: "#0F2D52", textDecoration: "none" }}
             >
-              LAUNCH COMMAND ROOM <ArrowRight size={16} />
+              Plan Your Trip <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/explore"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "50px", padding: "0 28px", borderRadius: "8px", fontSize: "15px", fontWeight: 600, background: "rgba(255,255,255,0.1)", color: "#fff", border: "1.5px solid rgba(255,255,255,0.25)", textDecoration: "none" }}
+            >
+              Explore India
             </Link>
           </div>
         </div>
       </section>
+
+      {/* ── FOOTER ───────────────────────────────────────────── */}
+      <footer style={{ background: "#0A1E38" }}>
+        <div className="container" style={{ paddingTop: "64px", paddingBottom: "64px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", gap: "48px" }} className="footer-grid">
+
+            {/* Brand col */}
+            <div>
+              <div style={{ marginBottom: "16px" }}>
+                <p style={{ fontSize: "18px", fontWeight: 800, color: "#fff", lineHeight: 1.2 }}>भारत परिक्रमा</p>
+                <p style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#C8922A" }}>BHARAT PARIKRAMA</p>
+              </div>
+              <p style={{ fontSize: "14px", color: "#8BA8C8", lineHeight: 1.7, maxWidth: "280px" }}>
+                India's AI-powered travel planning platform. Multi-modal journeys, smart itineraries, and seamless experiences across 28 states.
+              </p>
+            </div>
+
+            {/* Platform */}
+            <div>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#C8D8EC", marginBottom: "20px" }}>Platform</p>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {[{ l: "Plan a Trip", h: "/plan" }, { l: "Explore India", h: "/explore" }, { l: "Community Trips", h: "/community" }, { l: "AI Assistant", h: "/dashboard" }].map(({ l, h }) => (
+                  <li key={l} style={{ marginBottom: "4px" }}>
+                    <Link href={h} style={{ fontSize: "14px", color: "#8BA8C8", textDecoration: "none", display: "block", padding: "3px 0", transition: "color 0.15s" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#8BA8C8")}
+                    >{l}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Travel */}
+            <div>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#C8D8EC", marginBottom: "20px" }}>Travel</p>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {["Hotels", "Transport", "Local Guides", "Emergency Help"].map(l => (
+                  <li key={l} style={{ marginBottom: "4px" }}>
+                    <Link href="#" style={{ fontSize: "14px", color: "#8BA8C8", textDecoration: "none", display: "block", padding: "3px 0" }}>{l}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#C8D8EC", marginBottom: "20px" }}>Support</p>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {["Contact", "Help Center", "Privacy Policy", "Terms of Service"].map(l => (
+                  <li key={l} style={{ marginBottom: "4px" }}>
+                    <Link href="#" style={{ fontSize: "14px", color: "#8BA8C8", textDecoration: "none", display: "block", padding: "3px 0" }}>{l}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div style={{ marginTop: "56px", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+            <p style={{ fontSize: "13px", color: "#5A7A9A" }}>© 2026 Bharat Parikrama. Made for journeys across India.</p>
+            <div style={{ display: "flex", gap: "24px" }}>
+              {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(l => (
+                <Link key={l} href="#" style={{ fontSize: "12px", color: "#5A7A9A", textDecoration: "none" }}>{l}</Link>
+              ))}
+            </div>
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px !important; } }
+          @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
+      </footer>
 
     </div>
   );

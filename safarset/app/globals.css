@@ -98,3 +98,27 @@ body {
 .node-glow {
   filter: drop-shadow(0 0 6px rgba(29, 78, 216, 0.4));
 }
+
+/* Chat bubble & assistant UI styles */
+.chat-user {
+  background: var(--blue);
+  color: white;
+  border-radius: 18px 18px 4px 18px;
+  padding: 10px 14px;
+}
+.chat-ai {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px 18px 18px 4px;
+  padding: 10px 14px;
+  color: var(--text-primary);
+}
+.ai-fab {
+  box-shadow: 0 8px 24px rgba(30, 94, 170, 0.25);
+  transition: all 0.2s ease;
+}
+.ai-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(30, 94, 170, 0.35);
+}
+

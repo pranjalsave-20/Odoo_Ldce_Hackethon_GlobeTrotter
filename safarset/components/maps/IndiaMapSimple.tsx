@@ -41,7 +41,7 @@ const modeIcon: Record<string, string> = {
   ship:   "⛴",
 };
 
-export default function IndiaMapSimple({ className = "" }: { className?: string }) {
+export default function IndiaMapSimple({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   const cityMap = Object.fromEntries(CITIES.map(c => [c.name, c]));
 
   return (
