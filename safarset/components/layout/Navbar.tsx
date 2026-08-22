@@ -16,6 +16,7 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "Plan a Trip", href: "/plan" },
     { label: "Explore India", href: "/explore" },
+    { label: "Local Guru 🎙️", href: "/local-guru" },
     { label: "Community Yatras", href: "/community" },
   ];
 
