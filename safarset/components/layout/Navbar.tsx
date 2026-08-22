@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth/AuthContext";
-import { Menu, X, Moon, ArrowRight, User, LogOut, Settings, Map, Plus } from "lucide-react";
+import { Menu, X, ArrowRight, User, LogOut, Map, Plus, Compass, Users } from "lucide-react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -11,13 +11,12 @@ export default function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   const navItems = [
-    { label: "The problem", href: "/#problem" },
-    { label: "Approach", href: "/#approach" },
-    { label: "Route intelligence", href: "/explore" },
-    { label: "Adaptive rerouting", href: "/community" },
+    { label: "Home", href: "/" },
+    { label: "Plan a Trip", href: "/plan" },
+    { label: "Explore India", href: "/explore" },
+    { label: "Community Yatras", href: "/community" },
   ];
 
   return (
@@ -25,56 +24,48 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          {/* Left: Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group text-decoration-none">
-            {/* Government / Institutional Seal Icon Badge */}
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 border border-amber-300 flex items-center justify-center shadow-sm shrink-0">
-              <span className="text-xl">🏛️</span>
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center font-black text-base shadow-sm group-hover:bg-blue-800 transition-colors">
+              BP
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-extrabold text-slate-900 leading-none font-serif tracking-tight">
-                भारत परिक्रमा
+              <span className="text-base sm:text-lg font-black text-slate-900 leading-none tracking-tight">
+                Bharat <span className="text-blue-700">Parikrama</span>
               </span>
-              <span className="text-[9px] font-extrabold text-slate-700 tracking-[0.2em] uppercase mt-0.5">
-                BHARAT PARIKRAMA
+              <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">
+                Plan Karo. Safar Set Karo.
               </span>
             </div>
           </Link>
 
-          {/* Middle: Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center gap-7">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-medium text-slate-600 hover:text-blue-700 transition-colors"
+                className={`text-xs sm:text-sm font-bold transition-colors ${
+                  pathname === item.href ? "text-blue-700" : "text-slate-600 hover:text-blue-700"
+                }`}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          {/* Right: Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200"
-            >
-              <Moon size={14} />
-              <span>{darkMode ? "Light" : "Dark"}</span>
-            </button>
-
+          {/* Right Actions */}
+          <div className="hidden md:flex items-center gap-3">
             {user ? (
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-blue-200 bg-blue-50/80 hover:bg-blue-100/80 transition-colors"
+                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors"
                 >
-                  <div className="w-7 h-7 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
                     {user.name[0]}
                   </div>
-                  <span className="text-xs font-bold text-blue-900">{user.name.split(" ")[0]}</span>
+                  <span className="text-xs font-bold text-slate-800">{user.name.split(" ")[0]}</span>
                 </button>
 
                 {userDropdownOpen && (
@@ -86,40 +77,48 @@ export default function Navbar() {
                     <Link
                       href="/dashboard"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
                     >
-                      <Map size={13} /> Dashboard
+                      <Map size={14} /> Dashboard
                     </Link>
                     <Link
                       href="/plan"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
                     >
-                      <Plus size={13} /> Plan New Trip
+                      <Plus size={14} /> + Plan New Yatra
                     </Link>
                     <button
                       onClick={() => { logout(); setUserDropdownOpen(false); router.push("/"); }}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-xs font-medium text-red-600 hover:bg-red-50 text-left"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 text-left"
                     >
-                      <LogOut size={13} /> Sign Out
+                      <LogOut size={14} /> Sign Out
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
-              >
-                COMMAND ROOM <ArrowRight size={14} />
-              </Link>
+              <div className="flex items-center gap-2.5">
+                <Link
+                  href="/login"
+                  className="px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/plan"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 shadow-sm transition-all"
+                >
+                  <Plus size={14} /> Plan Trip
+                </Link>
+              </div>
             )}
           </div>
 
           {/* Mobile menu trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -129,24 +128,24 @@ export default function Navbar() {
 
       {/* Mobile Nav */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3">
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-medium text-slate-700 hover:text-blue-700 py-1.5"
+              className="block text-sm font-bold text-slate-700 hover:text-blue-700 py-1.5"
             >
               {item.label}
             </Link>
           ))}
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
             <Link
-              href="/dashboard"
+              href="/plan"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase text-white bg-blue-600"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold text-white bg-blue-700"
             >
-              COMMAND ROOM <ArrowRight size={13} />
+              <Plus size={14} /> Plan New Yatra
             </Link>
           </div>
         </div>
