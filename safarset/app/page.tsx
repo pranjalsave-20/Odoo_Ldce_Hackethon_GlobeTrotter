@@ -28,14 +28,31 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans antialiased overflow-x-hidden">
       
-      {/* ── HERO SECTION WITH LOOPING VIDEO INSTEAD OF STATIC MAP ─── */}
-      <section className="relative pt-6 pb-2 sm:pt-12 bg-gradient-to-b from-blue-50/40 via-white to-slate-50/80 border-b border-slate-200/80">
+      {/* ── HERO SECTION WITH BACKGROUND LOOPING VIDEO & PIP SHOWCASE CARD ── */}
+      <section className="relative pt-6 pb-2 sm:pt-12 overflow-hidden border-b border-slate-200/80">
         
+        {/* Full-Width Background Looping Silent Video */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-25 filter blur-[0.5px] scale-105"
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+          {/* Glassmorphic Gradient Overlay for 100% Readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-blue-50/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-50/40 via-transparent to-slate-50" />
+        </div>
+
         {/* Soft Background Grid */}
         <div 
-          className="absolute inset-0 opacity-30 pointer-events-none"
+          className="absolute inset-0 opacity-20 pointer-events-none z-1"
           style={{
-            backgroundImage: `linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }}
         />
@@ -48,7 +65,7 @@ export default function Home() {
             <div className="lg:col-span-6 space-y-6">
               
               {/* Pill Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100/70 border border-blue-200 text-blue-800 text-[11px] font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100/80 border border-blue-200 text-blue-800 text-[11px] font-black uppercase tracking-wider shadow-xs backdrop-blur-xs">
                 <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
                 <span>MARITIME VOYAGE INTELLIGENCE</span>
               </div>
@@ -63,7 +80,7 @@ export default function Home() {
                   Pan-India Travel & Itinerary Optimization
                 </h2>
                 
-                <p className="text-base sm:text-lg text-slate-500 font-medium pt-1 max-w-lg leading-relaxed">
+                <p className="text-base sm:text-lg text-slate-600 font-medium pt-1 max-w-lg leading-relaxed">
                   Smarter journeys. Seamless experiences. Adaptive travel plans.
                 </p>
               </div>
@@ -86,7 +103,7 @@ export default function Home() {
               </div>
 
               {/* Quick Trip Planner Form Card */}
-              <form onSubmit={handleQuickPlan} className="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-md space-y-3 mt-4">
+              <form onSubmit={handleQuickPlan} className="bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-lg space-y-3 mt-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                     <Sparkles size={14} className="text-blue-600" /> Instant Route Planner
@@ -115,7 +132,7 @@ export default function Home() {
                       value={toCity}
                       onChange={e => setToCity(e.target.value)}
                       className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                      placeholder="e.g. Delhi, Srinagar, Varanasi"
+                      placeholder="e.g. Delhi, Srinagar, Varanasi, Udaipur"
                       required
                     />
                   </div>
@@ -123,7 +140,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md"
                 >
                   <Navigation size={14} /> Calculate Optimal Route & Transit
                 </button>
@@ -131,7 +148,7 @@ export default function Home() {
 
             </div>
 
-            {/* Right Hero Video Showcase (Playing In Loop From Assets Folder) */}
+            {/* Right Hero: PIP Video Showcase Card (Playing In Loop) */}
             <div className="lg:col-span-6 flex flex-col items-center justify-center">
               <div className="w-full max-w-[580px] rounded-3xl overflow-hidden bg-white/95 backdrop-blur-xl border border-slate-200 shadow-2xl p-4 sm:p-5 space-y-3.5">
                 
@@ -164,7 +181,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Main Dynamic View: Continuous Looping Silent Video */}
+                {/* Main Dynamic View: Continuous Looping Silent Video in PIP Card */}
                 {heroViewMode === "video" ? (
                   <div className="relative aspect-[16/10] sm:aspect-[16/11] rounded-2xl overflow-hidden shadow-inner border border-slate-200 bg-slate-950 group">
                     <video
