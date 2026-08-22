@@ -1,5 +1,6 @@
 // Clean, simple India map — light background, subtle outline, restrained route lines, simple city dots
 // No dark command-center, no complex animations, no overlapping elements
+import React from "react";
 
 interface CityDot {
   name: string;

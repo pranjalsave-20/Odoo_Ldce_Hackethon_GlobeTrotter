@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useTrips } from "@/lib/context/TripsContext";
 import { Card, Button, Input } from "@/components/ui/index";
 import { useToast } from "@/components/ui/Toast";
@@ -7,7 +7,8 @@ import { Wallet, Plus, Trash2, ArrowUpRight, TrendingUp, Info } from "lucide-rea
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import type { Trip } from "@/lib/types";
 
-export default function TripBudgetPage({ params }: { params: { id: string } }) {
+export default function TripBudgetPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const { getTrip, updateTrip } = useTrips();
   const { addToast } = useToast();
   
@@ -16,9 +17,9 @@ export default function TripBudgetPage({ params }: { params: { id: string } }) {
   const [expenseForm, setExpenseForm] = useState({ category: "Food", amount: "", description: "" });
 
   useEffect(() => {
-    const t = getTrip(params.id);
+    const t = getTrip(resolvedParams.id);
     if (t) setTrip(t);
-  }, [params.id, getTrip]);
+  }, [resolvedParams.id, getTrip]);
 
   if (!trip) return null;
 

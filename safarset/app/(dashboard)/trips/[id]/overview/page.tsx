@@ -1,20 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useTrips } from "@/lib/context/TripsContext";
 import { Card } from "@/components/ui/index";
 import { Calendar, MapPin, Wallet, Briefcase, Star, Plane, BedDouble, HelpCircle } from "lucide-react";
 import type { Trip } from "@/lib/types";
 
-export default function TripOverview({ params }: { params: { id: string } }) {
+export default function TripOverview({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const { getTrip } = useTrips();
   const [trip, setTrip] = useState<Trip | null>(null);
 
   useEffect(() => {
-    const t = getTrip(params.id);
+    const t = getTrip(resolvedParams.id);
     if (t) setTrip(t);
-  }, [params.id, getTrip]);
+  }, [resolvedParams.id, getTrip]);
 
   if (!trip) return null;
+
 
   return (
     <div className="space-y-6 animate-fade-in">

@@ -10,6 +10,9 @@
   --text-blue: #1e3a8a;
   --text-muted: #64748b;
   --radius-pill: 9999px;
+  /* Chat / AI bubble colors */
+  --blue: #1E5EAA;
+  --text-primary: #0f172a;
 }
 
 *, *::before, *::after {
@@ -86,12 +89,21 @@ body {
   50% { transform: translateY(-6px); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .animate-dash {
   animation: dashMove 3s linear infinite;
 }
 
 .animate-float {
   animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease both;
 }
 
 /* Map Node Glow */
@@ -120,5 +132,21 @@ body {
 .ai-fab:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 32px rgba(30, 94, 170, 0.35);
+}
+
+/* Purpose / Budget card selection in plan wizard */
+.purpose-card {
+  transition: all 0.15s ease;
+}
+.purpose-card.selected {
+  border: 2px solid #2563eb;
+  background: #eff6ff;
+}
+
+/* Container utility */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 

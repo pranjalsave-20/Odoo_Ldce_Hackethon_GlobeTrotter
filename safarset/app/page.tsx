@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight, CheckCircle2 } from "lucide-react";
 import IndiaMapSimple from "@/components/maps/IndiaMapSimple";
 import { POPULAR_DESTINATIONS, MOCK_COMMUNITY } from "@/lib/data/mockData";
+import Navbar from "@/components/layout/Navbar";
+
 
 /* ─── Static page data ──────────────────────────────────── */
 
@@ -113,6 +115,8 @@ const WHY_ITEMS = [
 export default function HomePage() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#FAFAF8" }}>
+
+      <Navbar />
 
       {/* ── 1. HERO ─────────────────────────────────────────── */}
       <section style={{ background: "#fff", paddingTop: "80px", paddingBottom: "80px", borderBottom: "1px solid #E4E4DF" }}>

@@ -97,7 +97,9 @@ export default function SignupPage() {
               <Input label="Email address" type="email" value={form.email} onChange={e => setForm({...form, email:e.target.value})} placeholder="arjun@example.com" error={errors.email} required />
               <div className="relative">
                 <Input label="Password" type={showPw ? "text" : "password"} value={form.password} onChange={e => setForm({...form, password:e.target.value})} placeholder="Minimum 8 characters" error={errors.password} required />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-9 text-gray-400"><EyeOff size={15}/></button>
+                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-9 text-gray-400 hover:text-gray-600">
+                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
                 {strength && <span className={`text-xs font-medium ${strengthColor} mt-0.5 block`}>{strength} password</span>}
               </div>
               <Input label="Confirm Password" type="password" value={form.confirm} onChange={e => setForm({...form, confirm:e.target.value})} placeholder="Re-enter password" error={errors.confirm} required />

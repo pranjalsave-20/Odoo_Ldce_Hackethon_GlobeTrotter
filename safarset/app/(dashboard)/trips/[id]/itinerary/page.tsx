@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useTrips } from "@/lib/context/TripsContext";
 import { Card, Button } from "@/components/ui/index";
 import { useToast } from "@/components/ui/Toast";
 import { Clock, MapPin, Sparkles, Check, RefreshCw, Plus, Edit } from "lucide-react";
 import type { Trip, ItineraryDay, Activity } from "@/lib/types";
 
-export default function TripItineraryPage({ params }: { params: { id: string } }) {
+export default function TripItineraryPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const { getTrip, updateItinerary } = useTrips();
   const { addToast } = useToast();
   
@@ -15,9 +16,9 @@ export default function TripItineraryPage({ params }: { params: { id: string } }
   const [rescheduling, setRescheduling] = useState(false);
 
   useEffect(() => {
-    const t = getTrip(params.id);
+    const t = getTrip(resolvedParams.id);
     if (t) setTrip(t);
-  }, [params.id, getTrip]);
+  }, [resolvedParams.id, getTrip]);
 
   if (!trip) return null;
 

@@ -48,8 +48,7 @@ export default function SafarAI() {
 
   const renderContent = (text: string) =>
     text.split("\n").map((line, i) => {
-      const bold = line.replace(/\*\*(.*?)\*\//g, "<strong>$1</strong>"); // Match markdown bold
-      const finalLine = bold.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+      const finalLine = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
       return (
         <p key={i} className={line.startsWith("⚠️") ? "text-amber-700 font-medium" : ""} dangerouslySetInnerHTML={{ __html: finalLine }} />
       );

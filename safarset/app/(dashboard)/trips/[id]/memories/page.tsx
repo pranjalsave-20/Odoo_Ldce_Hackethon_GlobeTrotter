@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useTrips } from "@/lib/context/TripsContext";
 import { Card, Button, Input } from "@/components/ui/index";
 import { useToast } from "@/components/ui/Toast";
 import { BookOpen, Camera, Plus, Trash2, Heart } from "lucide-react";
 import type { Trip, TravelMemory } from "@/lib/types";
 
-export default function TripMemoriesPage({ params }: { params: { id: string } }) {
+export default function TripMemoriesPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const { getTrip, updateTrip } = useTrips();
   const { addToast } = useToast();
   
@@ -18,7 +19,7 @@ export default function TripMemoriesPage({ params }: { params: { id: string } })
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    const t = getTrip(params.id);
+    const t = getTrip(resolvedParams.id);
     if (t) {
       setTrip(t);
       // Fallback dummy memories if not initialized
@@ -33,7 +34,7 @@ export default function TripMemoriesPage({ params }: { params: { id: string } })
         }
       ]);
     }
-  }, [params.id, getTrip]);
+  }, [resolvedParams.id, getTrip]);
 
   if (!trip) return null;
 
