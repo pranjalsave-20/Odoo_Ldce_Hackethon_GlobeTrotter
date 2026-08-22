@@ -30,7 +30,7 @@ const RESPONSES = [
   },
 ];
 
-const DEFAULT = "I'm Parikrama AI, your intelligent travel assistant! I can help you:\n\n• Find places to eat & explore nearby\n• Reschedule your itinerary\n• Manage your budget\n• Find local experiences\n• Handle emergencies\n\nWhat can I help you with today?";
+const DEFAULT = "I'm Travel Guru, your intelligent travel assistant! I can help you:\n\n• Find places to eat & explore nearby\n• Reschedule your itinerary\n• Manage your budget\n• Find local experiences\n• Handle emergencies\n\nWhat can I help you with today?";
 
 export const aiService = {
   async chat(message: string, trip?: Trip): Promise<ChatMessage> {

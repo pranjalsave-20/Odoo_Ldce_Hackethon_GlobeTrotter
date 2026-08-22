@@ -520,7 +520,7 @@ export const localGuruService = {
       speechAudioText = `Here are secret local gems and cultural highlights in ${cityData.name}. ${filteredPlaces.map(p => p.name).join(', ')}.`;
     } else {
       // Default general request
-      replyText = `Welcome to **${cityData.name}** (${cityData.stateOrCountry})! As your Local Guru, here are the top famous places you simply cannot miss in ${cityData.name}:`;
+      replyText = `Welcome to **${cityData.name}** (${cityData.stateOrCountry})! As your Travel Guru, here are the top famous places you simply cannot miss in ${cityData.name}:`;
       speechAudioText = `Welcome to ${cityData.name}! Here are the top famous places to visit: ${filteredPlaces.slice(0, 3).map(p => p.name).join(', ')}.`;
     }
 
