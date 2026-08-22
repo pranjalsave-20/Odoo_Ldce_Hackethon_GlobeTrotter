@@ -7,10 +7,8 @@ import {
   Plane, Train, Bus, Car, ArrowRight, MapPin, Calendar, Sparkles, 
   Briefcase, Compass, ShieldCheck, FileDown, CheckCircle2, Star, Clock,
   UserCheck, Zap, Phone, Award, Play, ChevronRight, Navigation, RefreshCw,
-  Video, Eye, Map
+  Video
 } from "lucide-react";
-import BharatParikramaHeroMap from "@/components/maps/BharatParikramaHeroMap";
-import BottomWavyTimeline from "@/components/landing/BottomWavyTimeline";
 import { POPULAR_DESTINATIONS, MOCK_LOCAL_CABS, MOCK_GUIDES } from "@/lib/data/mockData";
 
 export default function Home() {
@@ -18,7 +16,6 @@ export default function Home() {
   const [fromCity, setFromCity] = useState("Mumbai");
   const [toCity, setToCity] = useState("Delhi");
   const [purpose, setPurpose] = useState("business");
-  const [heroViewMode, setHeroViewMode] = useState<"video" | "map">("video");
 
   const handleQuickPlan = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,82 +25,75 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans antialiased overflow-x-hidden">
       
-      {/* ── HERO SECTION WITH BACKGROUND LOOPING VIDEO & PIP SHOWCASE CARD ── */}
-      <section className="relative pt-6 pb-2 sm:pt-12 overflow-hidden border-b border-slate-200/80">
+      {/* ── CLEAN CINEMATIC HERO SECTION WITH LOOPING VIDEO BACKGROUND ── */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white py-12 sm:py-16">
         
-        {/* Full-Width Background Looping Silent Video */}
+        {/* Full-Bleed High-Definition Looping Video in Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-25 filter blur-[0.5px] scale-105"
+            className="w-full h-full object-cover scale-105 filter brightness-90 contrast-105"
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
             <source src="/hero.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
-          {/* Glassmorphic Gradient Overlay for 100% Readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-blue-50/70" />
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-50/40 via-transparent to-slate-50" />
+
+          {/* Gradients to guarantee 100% crystal clear readability without square patterns */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/40 to-slate-950/80" />
         </div>
 
-        {/* Soft Background Grid */}
-        <div 
-          className="absolute inset-0 opacity-20 pointer-events-none z-1"
-          style={{
-            backgroundImage: `linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Hero Content (Matches Reference Image Typography Exactly) */}
-            <div className="lg:col-span-6 space-y-6">
+            {/* Left Hero Content */}
+            <div className="lg:col-span-7 space-y-6">
               
               {/* Pill Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100/80 border border-blue-200 text-blue-800 text-[11px] font-black uppercase tracking-wider shadow-xs backdrop-blur-xs">
-                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/30 border border-blue-400/40 text-blue-200 text-[11px] font-black uppercase tracking-wider backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
                 <span>MARITIME VOYAGE INTELLIGENCE</span>
               </div>
 
-              {/* Huge Bold Title */}
+              {/* Main Heading */}
               <div className="space-y-2">
-                <h1 className="text-5xl sm:text-6xl font-black text-slate-950 tracking-tight leading-[1.05]">
+                <h1 className="text-5xl sm:text-6xl font-black text-white tracking-tight leading-[1.05] drop-shadow-md">
                   BHARAT PARIKRAMA
                 </h1>
                 
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1d4ed8] tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-400 tracking-tight drop-shadow">
                   Pan-India Travel & Itinerary Optimization
                 </h2>
                 
-                <p className="text-base sm:text-lg text-slate-600 font-medium pt-1 max-w-lg leading-relaxed">
+                <p className="text-base sm:text-lg text-slate-200 font-medium pt-1 max-w-lg leading-relaxed drop-shadow">
                   Smarter journeys. Seamless experiences. Adaptive travel plans.
                 </p>
               </div>
 
-              {/* Action Buttons (Exact Pills from Reference Image) */}
+              {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   href="/plan"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/25 transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/30 transition-all hover:scale-105"
                 >
                   PLAN YOUR PARIKRAMA <ArrowRight size={16} />
                 </Link>
 
                 <a
                   href="#approach"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm transition-all hover:border-slate-300"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition-all"
                 >
                   EXPLORE HOW IT WORKS
                 </a>
               </div>
 
-              {/* Quick Trip Planner Form Card */}
-              <form onSubmit={handleQuickPlan} className="bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-lg space-y-3 mt-4">
+              {/* Quick Trip Planner Form Floating Over Video */}
+              <form onSubmit={handleQuickPlan} className="bg-white/95 backdrop-blur-xl p-4 sm:p-5 rounded-3xl border border-white/20 shadow-2xl space-y-3 mt-4 text-slate-900">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                     <Sparkles size={14} className="text-blue-600" /> Instant Route Planner
@@ -120,7 +110,7 @@ export default function Home() {
                       type="text"
                       value={fromCity}
                       onChange={e => setFromCity(e.target.value)}
-                      className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-slate-900"
                       placeholder="e.g. Mumbai"
                       required
                     />
@@ -131,7 +121,7 @@ export default function Home() {
                       type="text"
                       value={toCity}
                       onChange={e => setToCity(e.target.value)}
-                      className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-slate-900"
                       placeholder="e.g. Delhi, Srinagar, Varanasi, Udaipur"
                       required
                     />
@@ -140,7 +130,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.01]"
                 >
                   <Navigation size={14} /> Calculate Optimal Route & Transit
                 </button>
@@ -148,138 +138,67 @@ export default function Home() {
 
             </div>
 
-            {/* Right Hero: PIP Video Showcase Card (Playing In Loop) */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center">
-              <div className="w-full max-w-[580px] rounded-3xl overflow-hidden bg-white/95 backdrop-blur-xl border border-slate-200 shadow-2xl p-4 sm:p-5 space-y-3.5">
+            {/* Right Hero: Picture-In-Picture Showcase Card */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="w-full rounded-3xl overflow-hidden bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-2xl p-4 sm:p-5 space-y-3.5 text-white">
                 
-                {/* Header with Switcher Tabs */}
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2.5">
                     <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-900">
+                    <span className="text-xs font-black uppercase tracking-wider text-white">
                       Live Voyage Stream
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl text-[11px] font-bold">
-                    <button
-                      onClick={() => setHeroViewMode("video")}
-                      className={`px-3 py-1 rounded-xl transition-all flex items-center gap-1 ${
-                        heroViewMode === "video" ? "bg-white text-blue-700 shadow-xs" : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      <Video size={12} /> Video Reel
-                    </button>
-                    <button
-                      onClick={() => setHeroViewMode("map")}
-                      className={`px-3 py-1 rounded-xl transition-all flex items-center gap-1 ${
-                        heroViewMode === "map" ? "bg-white text-blue-700 shadow-xs" : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      <Map size={12} /> Vector Map
-                    </button>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-400/30">
+                    HD Reel
+                  </span>
+                </div>
+
+                {/* Looping Video Showcase Window */}
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/15 bg-black group">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/videos/hero.mp4" type="video/mp4" />
+                    <source src="/hero.mp4" type="video/mp4" />
+                  </video>
+
+                  <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-lg border border-white/10">
+                    📹 Bharat Parikrama Live Reel
                   </div>
                 </div>
 
-                {/* Main Dynamic View: Continuous Looping Silent Video in PIP Card */}
-                {heroViewMode === "video" ? (
-                  <div className="relative aspect-[16/10] sm:aspect-[16/11] rounded-2xl overflow-hidden shadow-inner border border-slate-200 bg-slate-950 group">
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover scale-[1.02]"
-                    >
-                      <source src="/videos/hero.mp4" type="video/mp4" />
-                      <source src="/hero.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-
-                    {/* Subtle Overlay Gradients */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-                    {/* Top Floating Badge */}
-                    <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/15 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                      Bharat Parikrama HD Reel
-                    </div>
-
-                    {/* Bottom Floating Telemetry */}
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
-                      <div>
-                        <p className="font-extrabold text-sm text-white drop-shadow">Pan-India Transit Corridors</p>
-                        <p className="text-[11px] text-slate-200 drop-shadow">28 States • Vande Bharat • Coastal Ferries</p>
-                      </div>
-
-                      <Link
-                        href="/plan"
-                        className="px-3.5 py-1.5 bg-white text-slate-950 hover:bg-slate-100 rounded-xl text-[11px] font-black uppercase tracking-wider shadow-md transition-all hover:scale-105"
-                      >
-                        Plan Now
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="w-full">
-                    <BharatParikramaHeroMap />
-                  </div>
-                )}
-
-                {/* Bottom Quick Feature Highlights */}
-                <div className="grid grid-cols-3 gap-2 pt-1 text-center text-[11px] font-bold text-slate-600">
-                  <div className="p-2 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="block text-blue-700">Multi-Modal</span>
-                    <span className="text-[10px] text-slate-400">Flight, Train & Road</span>
-                  </div>
-                  <div className="p-2 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="block text-emerald-700">Uber-Style Cabs</span>
-                    <span className="text-[10px] text-slate-400">Sedan, EV & Auto</span>
-                  </div>
-                  <div className="p-2 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="block text-amber-700">Certified Guides</span>
-                    <span className="text-[10px] text-slate-400">Heritage & Yatra</span>
-                  </div>
+                {/* Telemetry info */}
+                <div className="space-y-1.5 text-xs text-slate-300">
+                  <p className="font-bold text-white">Seamless Pan-India Transit</p>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Compare multi-modal transit, schedule meetings with buffer time, and book verified local cabs and guides.
+                  </p>
                 </div>
+
+                <Link
+                  href="/plan"
+                  className="block text-center w-full py-2.5 bg-white hover:bg-slate-100 text-slate-950 rounded-xl text-xs font-black uppercase tracking-wider shadow-md transition-all hover:scale-102"
+                >
+                  Start Custom Itinerary Now
+                </Link>
 
               </div>
             </div>
 
           </div>
 
-          {/* Bottom Wavy Timeline Ribbon (Matches Bottom of Reference Screenshot) */}
-          <div className="mt-8 pt-4">
-            <BottomWavyTimeline />
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── ROUTE INTELLIGENCE & FULL PAN-INDIA MAP SECTION ──────── */}
-      <section id="route-intelligence" className="py-16 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-              Interactive Route Telemetry
-            </span>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-              Explore 28 States, Kashmir & Indian Islands
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500">
-              Click any city or island node to view key attractions, transit modes, average daily budget, and 1-click plan launch.
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <BharatParikramaHeroMap />
-          </div>
-
         </div>
       </section>
 
       {/* ── THE PROBLEM & APPROACH SECTION ──────────────────────── */}
-      <section id="problem" className="py-16 bg-slate-50 border-b border-slate-200">
+      <section id="problem" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -295,7 +214,7 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-3 gap-6">
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xl">
                 🔄
               </div>
@@ -305,7 +224,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl">
                 💼
               </div>
@@ -315,7 +234,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xl">
                 🚖
               </div>
@@ -330,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* ── LOCAL TAXIS & LOCAL TOUR GUIDES MARKETPLACE ──────────── */}
-      <section id="approach" className="py-16 bg-white border-b border-slate-200">
+      <section id="approach" className="py-16 bg-slate-100/70 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -419,7 +338,7 @@ export default function Home() {
       </section>
 
       {/* ── POPULAR TRAVEL CIRCUITS IN INDIA ─────────────────────── */}
-      <section className="py-16 bg-slate-50 border-b border-slate-200">
+      <section className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
