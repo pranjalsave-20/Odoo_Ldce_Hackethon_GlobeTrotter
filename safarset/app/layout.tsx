@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import { ToastProvider } from "@/components/ui/Toast";
@@ -6,6 +7,13 @@ import { ToastProvider } from "@/components/ui/Toast";
 export const metadata: Metadata = {
   title: "Bharat Parikrama – Dynamic India Voyage Optimization",
   description: "AI-powered multi-modal India travel planning platform. Connect flights, maritime cruises, Vande Bharat trains, hotels & regional exploration.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
