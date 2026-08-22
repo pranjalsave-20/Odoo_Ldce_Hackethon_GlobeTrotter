@@ -3,160 +3,151 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth/AuthContext";
-import { Menu, X, Plus, User, LogOut, Settings, Map, Bell } from "lucide-react";
-
-const NAV_LINKS = [
-  { href: "/",          label: "Home" },
-  { href: "/explore",   label: "Explore" },
-  { href: "/community", label: "Community" },
-  { href: "/about",     label: "How It Works" },
-];
-
-const DASH_LINKS = [
-  { href: "/dashboard",  label: "Dashboard" },
-  { href: "/trips",      label: "My Trips" },
-  { href: "/explore",    label: "Explore" },
-  { href: "/community",  label: "Community" },
-];
+import { Menu, X, Moon, ArrowRight, User, LogOut, Settings, Map, Plus } from "lucide-react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const pathname  = usePathname();
-  const router    = useRouter();
-  const [menuOpen,  setMenuOpen]  = useState(false);
-  const [userOpen,  setUserOpen]  = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-  const isDash  = ["/dashboard", "/trips", "/plan", "/profile", "/memories", "/community"].some(p => pathname.startsWith(p));
-  const links   = user && isDash ? DASH_LINKS : NAV_LINKS;
-  const isActive = (href: string) => pathname === href;
+  const navItems = [
+    { label: "The problem", href: "/#problem" },
+    { label: "Approach", href: "/#approach" },
+    { label: "Route intelligence", href: "/explore" },
+    { label: "Adaptive rerouting", href: "/community" },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-[var(--border)]">
-      <nav
-        className="container"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "76px" }}
-      >
-        {/* Logo */}
-        <Link href={user ? "/dashboard" : "/"} style={{ textDecoration: "none", display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-          <span style={{ fontSize: "18px", fontWeight: 800, color: "var(--navy)", letterSpacing: "-0.01em" }}>
-            भारत परिक्रमा
-          </span>
-          <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--gold)" }}>
-            BHARAT PARIKRAMA
-          </span>
-        </Link>
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
 
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex" style={{ alignItems: "center", gap: "32px" }}>
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`nav-link${isActive(href) ? " active" : ""}`}
+          {/* Left: Brand Logo */}
+          <Link href="/" className="flex items-center gap-3 group text-decoration-none">
+            {/* Government / Institutional Seal Icon Badge */}
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 border border-amber-300 flex items-center justify-center shadow-sm shrink-0">
+              <span className="text-xl">🏛️</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-extrabold text-slate-900 leading-none font-serif tracking-tight">
+                भारत परिक्रमा
+              </span>
+              <span className="text-[9px] font-extrabold text-slate-700 tracking-[0.2em] uppercase mt-0.5">
+                BHARAT PARIKRAMA
+              </span>
+            </div>
+          </Link>
+
+          {/* Middle: Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="text-sm font-medium text-slate-600 hover:text-blue-700 transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right: Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200"
             >
-              {label}
-            </Link>
-          ))}
-        </div>
+              <Moon size={14} />
+              <span>{darkMode ? "Light" : "Dark"}</span>
+            </button>
 
-        {/* Desktop Right Actions */}
-        <div className="hidden md:flex" style={{ alignItems: "center", gap: "12px" }}>
-          {user ? (
-            <>
-              <button
-                className="btn btn-primary"
-                style={{ height: "40px", padding: "0 20px", fontSize: "14px" }}
-                onClick={() => router.push("/plan")}
-              >
-                <Plus size={15} /> Plan Trip
-              </button>
-              <button
-                style={{ position: "relative", width: "36px", height: "36px", borderRadius: "50%", border: "none", background: "#F0F4FA", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-secondary)" }}
-              >
-                <Bell size={16} />
-                <span style={{ position: "absolute", top: "6px", right: "6px", width: "7px", height: "7px", borderRadius: "50%", background: "var(--gold)" }} />
-              </button>
-              <div style={{ position: "relative" }}>
+            {user ? (
+              <div className="relative">
                 <button
-                  onClick={() => setUserOpen(!userOpen)}
-                  style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", border: "none", background: "none", padding: "4px" }}
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-blue-200 bg-blue-50/80 hover:bg-blue-100/80 transition-colors"
                 >
-                  {user.avatar
-                    ? <img src={user.avatar} alt={user.name} style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover" }} />
-                    : <div style={{ width: "34px", height: "34px", borderRadius: "50%", background: "var(--blue)", color: "#fff", fontWeight: 700, fontSize: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}>{user.name[0]}</div>
-                  }
-                  <span style={{ fontSize: "14px", fontWeight: 500, color: "var(--navy)" }}>{user.name.split(" ")[0]}</span>
+                  <div className="w-7 h-7 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
+                    {user.name[0]}
+                  </div>
+                  <span className="text-xs font-bold text-blue-900">{user.name.split(" ")[0]}</span>
                 </button>
-                {userOpen && (
-                  <div style={{ position: "absolute", right: 0, top: "calc(100% + 8px)", width: "220px", background: "#fff", border: "1px solid var(--border)", borderRadius: "12px", boxShadow: "var(--shadow)", overflow: "hidden", zIndex: 100 }}>
-                    <div style={{ padding: "16px", borderBottom: "1px solid var(--border)" }}>
-                      <p style={{ fontWeight: 600, fontSize: "14px", color: "var(--navy)" }}>{user.name}</p>
-                      <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>{user.email}</p>
+
+                {userDropdownOpen && (
+                  <div className="absolute right-0 top-11 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50">
+                    <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50">
+                      <p className="text-xs font-bold text-slate-900">{user.name}</p>
+                      <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                     </div>
-                    <div style={{ padding: "8px" }}>
-                      {[
-                        { icon: User, label: "Profile", action: "/profile" },
-                        { icon: Map, label: "My Trips", action: "/trips" },
-                        { icon: Settings, label: "Settings", action: "/profile?tab=settings" },
-                      ].map(({ icon: Icon, label, action }) => (
-                        <button key={label} onClick={() => { router.push(action); setUserOpen(false); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px", borderRadius: "8px", border: "none", background: "none", cursor: "pointer", fontSize: "14px", color: "var(--navy)", textAlign: "left" }}>
-                          <Icon size={14} /> {label}
-                        </button>
-                      ))}
-                      <hr style={{ margin: "6px 0", border: "none", borderTop: "1px solid var(--border)" }} />
-                      <button onClick={() => { logout(); router.push("/"); setUserOpen(false); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px", borderRadius: "8px", border: "none", background: "none", cursor: "pointer", fontSize: "14px", color: "#DC2626", textAlign: "left" }}>
-                        <LogOut size={14} /> Sign Out
-                      </button>
-                    </div>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setUserDropdownOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      <Map size={13} /> Dashboard
+                    </Link>
+                    <Link
+                      href="/plan"
+                      onClick={() => setUserDropdownOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      <Plus size={13} /> Plan New Trip
+                    </Link>
+                    <button
+                      onClick={() => { logout(); setUserDropdownOpen(false); router.push("/"); }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs font-medium text-red-600 hover:bg-red-50 text-left"
+                    >
+                      <LogOut size={13} /> Sign Out
+                    </button>
                   </div>
                 )}
               </div>
-            </>
-          ) : (
-            <>
-              <Link href="/login" style={{ fontSize: "14px", fontWeight: 500, color: "var(--text-secondary)", textDecoration: "none", padding: "8px" }}>Login</Link>
-              <Link href="/signup" className="btn btn-primary" style={{ height: "42px", padding: "0 22px", fontSize: "14px" }}>
-                Plan Your Parikrama →
+            ) : (
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+              >
+                COMMAND ROOM <ArrowRight size={14} />
               </Link>
-            </>
-          )}
+            )}
+          </div>
+
+          {/* Mobile menu trigger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          >
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+
         </div>
+      </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{ border: "none", background: "none", cursor: "pointer", padding: "8px", color: "var(--navy)" }}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden" style={{ background: "#fff", borderTop: "1px solid var(--border)", padding: "24px 20px", display: "flex", flexDirection: "column", gap: "4px" }}>
-          {links.map(({ href, label }) => (
+      {/* Mobile Nav */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3">
+          {navItems.map((item) => (
             <Link
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              style={{ padding: "13px 0", fontSize: "16px", fontWeight: 500, color: isActive(href) ? "var(--blue)" : "var(--navy)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}
+              key={item.label}
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-medium text-slate-700 hover:text-blue-700 py-1.5"
             >
-              {label}
+              {item.label}
             </Link>
           ))}
-          <div style={{ paddingTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
-            {user ? (
-              <button onClick={() => { router.push("/plan"); setMenuOpen(false); }} className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                + Plan New Trip
-              </button>
-            ) : (
-              <>
-                <Link href="/login" onClick={() => setMenuOpen(false)} className="btn btn-secondary" style={{ width: "100%", justifyContent: "center" }}>Login</Link>
-                <Link href="/signup" onClick={() => setMenuOpen(false)} className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>Plan Your Parikrama →</Link>
-              </>
-            )}
+          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase text-white bg-blue-600"
+            >
+              COMMAND ROOM <ArrowRight size={13} />
+            </Link>
           </div>
         </div>
       )}

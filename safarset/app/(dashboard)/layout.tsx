@@ -16,10 +16,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F9F7F4] flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-[#E85D26] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-[#6B7280]">Loading SafarSet...</p>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center space-y-3">
+          <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm text-slate-500">Loading...</p>
         </div>
       </div>
     );
