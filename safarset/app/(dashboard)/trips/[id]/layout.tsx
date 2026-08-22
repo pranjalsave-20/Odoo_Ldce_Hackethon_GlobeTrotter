@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTrips } from "@/lib/context/TripsContext";
 import { Card } from "@/components/ui/index";
 import Link from "next/link";
-import { Calendar, MapPin, Wallet, Sparkles, Navigation, Info, FileDown, BookOpen } from "lucide-react";
+import { Calendar, MapPin, Wallet, Sparkles, Navigation, Info, FileDown, BookOpen, Car } from "lucide-react";
 import type { Trip } from "@/lib/types";
 import { generateTripPDF } from "@/lib/services/pdfGenerator";
 import { useToast } from "@/components/ui/Toast";
@@ -41,6 +41,7 @@ export default function TripWorkspaceLayout({
   const tabs = [
     { id: "overview", label: "Overview", icon: Info, path: `/trips/${trip.id}/overview` },
     { id: "itinerary", label: "Itinerary & Routine", icon: Calendar, path: `/trips/${trip.id}/itinerary` },
+    { id: "services", label: "Local Cabs & Guides", icon: Car, path: `/trips/${trip.id}/services` },
     { id: "budget", label: "Budget Planner", icon: Wallet, path: `/trips/${trip.id}/budget` },
     { id: "emergency", label: "Emergency Assist", icon: Navigation, path: `/trips/${trip.id}/emergency` },
     { id: "memories", label: "Memories & Journal", icon: BookOpen, path: `/trips/${trip.id}/memories` },
@@ -49,21 +50,21 @@ export default function TripWorkspaceLayout({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Trip workspace header banner */}
-      <Card className="p-6 relative overflow-hidden bg-slate-900 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800 shadow-xl">
+      <Card className="p-6 relative overflow-hidden bg-slate-900 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800 shadow-xl rounded-3xl">
         {trip.coverImage && (
-          <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none" alt="" />
+          <img src={trip.coverImage} className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" alt="" />
         )}
         <div className="relative space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-blue-600 text-white text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+            <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-black uppercase tracking-wider">
               {trip.purpose}
             </span>
-            <span className="text-xs text-slate-300 font-medium">
+            <span className="text-xs text-slate-300 font-bold">
               {trip.from} → {trip.stops.map(s => s.city).join(" → ")}
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{trip.name}</h1>
-          <p className="text-xs text-slate-300 flex items-center gap-1">
+          <p className="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
             <Calendar size={14} className="text-blue-400" /> {trip.startDate} to {trip.endDate} ({trip.duration})
           </p>
         </div>
@@ -79,9 +80,9 @@ export default function TripWorkspaceLayout({
           const isSelected = typeof window !== "undefined" && window.location.pathname.endsWith(tab.id);
           return (
             <Link key={tab.id} href={tab.path} className="block flex-shrink-0">
-              <span className={`pb-3 text-sm font-bold flex items-center gap-1.5 border-b-2 transition-all cursor-pointer ${
+              <span className={`pb-3 text-xs sm:text-sm font-bold flex items-center gap-1.5 border-b-2 transition-all cursor-pointer ${
                 isSelected
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-blue-700 text-blue-700"
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}>
                 <tab.icon size={16} /> {tab.label}

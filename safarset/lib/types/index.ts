@@ -15,7 +15,8 @@ export interface Meeting { id:string; name:string; company?:string; date:string;
 export interface Activity { id:string; name:string; category:ActivityCategory; time:string; duration:string; location:string; city:string; estimatedCost:number; distance?:string; travelTime?:string; image:string; description?:string; openingHours?:string; rating?:number; type:"activity"|"meal"|"travel"|"hotel"|"meeting"|"free-time"; }
 export interface ItineraryDay { day:number; date:string; city:string; activities:Activity[]; }
 export interface Restaurant { id:string; name:string; rating:number; reviewCount:number; distance:string; costPerPerson:number; cuisine:string; category:FoodCategory[]; popularDishes:string[]; openingHours:string; image:string; city:string; }
-export interface Guide { id:string; name:string; avatar:string; languages:string[]; city:string; specialization:string[]; experience:number; rating:number; reviewCount:number; pricePerHour:number; bio?:string; }
+export interface Guide { id:string; name:string; avatar:string; languages:string[]; city:string; specialization:string[]; experience:number; rating:number; reviewCount:number; pricePerHour:number; bio?:string; verified?:boolean; phone?:string; }
+export interface LocalCab { id:string; driverName:string; driverPhoto:string; vehicleModel:string; vehicleType:"Sedan"|"SUV"|"Auto Rickshaw"|"Electric Cab"; vehicleNumber:string; rating:number; tripsCount:number; etaMinutes:number; pricePerKm:number; baseFare:number; city:string; phone:string; isAvailable:boolean; }
 export interface BudgetCategory { name:string; planned:number; estimated:number; actual:number; color:string; }
 export interface BudgetSummary { total:number; estimated:number; actual:number; remaining:number; categories:BudgetCategory[]; }
 export interface TripTravellers { adults:number; children:number; seniors:number; groupType:GroupType; }
