@@ -4,8 +4,8 @@ import { AuthProvider } from "@/lib/auth/AuthContext";
 import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
-  title: "SafarSet – Plan Karo. Safar Set Karo.",
-  description: "AI-powered India travel planning platform. Smart itineraries, transport, hotels, meetings, food discovery and more.",
+  title: "Bharat Parikrama – Dynamic India Voyage Optimization",
+  description: "AI-powered multi-modal India travel planning platform. Connect flights, maritime cruises, Vande Bharat trains, hotels & regional exploration.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

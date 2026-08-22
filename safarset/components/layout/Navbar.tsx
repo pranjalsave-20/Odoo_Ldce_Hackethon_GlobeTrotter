@@ -35,8 +35,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 font-bold text-xl">
-            <div className="w-8 h-8 bg-[#E85D26] rounded-lg flex items-center justify-center text-white text-sm font-bold">S</div>
-            <span className="text-[#1C1C1E]">Safar<span className="text-[#E85D26]">Set</span></span>
+            <div className="w-9 h-9 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center text-white text-sm font-black shadow-md">
+              भारत
+            </div>
+            <span className="text-[#1C1C1E] tracking-tight">Bharat<span className="text-[#E85D26]">Parikrama</span></span>
           </Link>
 
           {/* Desktop Nav */}

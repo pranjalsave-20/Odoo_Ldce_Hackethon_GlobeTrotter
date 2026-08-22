@@ -98,6 +98,46 @@ a, button { transition: all 0.2s ease; }
 .ai-fab { box-shadow: 0 8px 24px rgba(232,93,38,0.35); }
 .ai-fab:hover { box-shadow: 0 12px 32px rgba(232,93,38,0.45); transform: scale(1.05); }
 
+@keyframes dashMove {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0.2; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes planeFly {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
+.animate-dash {
+  animation: dashMove 2.5s linear infinite;
+}
+
+.animate-dash-fast {
+  animation: dashMove 1.5s linear infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatSlow 4.5s ease-in-out 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @media (max-width: 768px) {
   .mobile-bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -106,3 +146,4 @@ a, button { transition: all 0.2s ease; }
     box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
   }
 }
+
