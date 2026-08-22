@@ -189,8 +189,8 @@ export const MOCK_TRIPS: Trip[] = [
     stops: [{ city: "Ahmedabad", state: "Gujarat", nights: 2 }],
     purpose: "business",
     tripType: "round-trip",
-    startDate: "2024-09-12",
-    endDate: "2024-09-14",
+    startDate: "2026-09-12",
+    endDate: "2026-09-14",
     duration: "3 Days / 2 Nights",
     travellers: { adults: 1, children: 0, seniors: 0, groupType: "solo" },
     budgetTier: "comfort",
@@ -198,9 +198,9 @@ export const MOCK_TRIPS: Trip[] = [
     status: "upcoming",
     coverImage: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80",
     isPublic: false,
-    createdAt: "2024-08-20",
+    createdAt: "2026-08-20",
     meetings: [
-      { id:"m1", name:"Client Review Meeting – TechCorp", company:"TechCorp India", date:"2024-09-13", startTime:"14:00", endTime:"15:30", location:"TechCorp Office, SG Highway, Ahmedabad", notes:"Q3 Strategy Review" }
+      { id:"m1", name:"Client Review Meeting – TechCorp", company:"TechCorp India", date:"2026-09-13", startTime:"14:00", endTime:"15:30", location:"TechCorp Office, SG Highway, Ahmedabad", notes:"Q3 Strategy Review" }
     ],
     transport: {
       id:"tr-vb", mode:"train", from:"Mumbai", to:"Ahmedabad", duration:"5h 25m",
@@ -215,7 +215,7 @@ export const MOCK_TRIPS: Trip[] = [
     },
     itinerary: [
       {
-        day: 1, date: "2024-09-12", city: "Ahmedabad",
+        day: 1, date: "2026-09-12", city: "Ahmedabad",
         activities: [
           { id:"a1", name:"Departure from Mumbai Central via Vande Bharat Express", category:"travel", time:"06:00", duration:"5h 25m", location:"Mumbai Central Station", city:"Mumbai", estimatedCost:1450, image:"https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80", type:"travel" },
           { id:"a2", name:"Arrival & Hotel Check-in at Hyatt Regency", category:"hotel", time:"12:00", duration:"45 min", location:"Hyatt Regency, SG Highway", city:"Ahmedabad", estimatedCost:5500, image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80", type:"hotel" },
@@ -225,7 +225,7 @@ export const MOCK_TRIPS: Trip[] = [
         ]
       },
       {
-        day: 2, date: "2024-09-13", city: "Ahmedabad",
+        day: 2, date: "2026-09-13", city: "Ahmedabad",
         activities: [
           { id:"a6", name:"Breakfast at Hotel & Work Prep", category:"food", time:"08:00", duration:"1 hr", location:"Hyatt Regency", city:"Ahmedabad", estimatedCost:0, image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80", type:"meal" },
           { id:"a7", name:"Free Time Slot – Adalaj Stepwell Exploration", category:"historical", time:"09:30", duration:"2 hrs", location:"Adalaj, Gandhinagar", city:"Ahmedabad", estimatedCost:20, distance:"12 km", image:"https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&q=80", rating:4.7, type:"free-time" },
@@ -234,7 +234,7 @@ export const MOCK_TRIPS: Trip[] = [
         ]
       },
       {
-        day: 3, date: "2024-09-14", city: "Ahmedabad",
+        day: 3, date: "2026-09-14", city: "Ahmedabad",
         activities: [
           { id:"a10", name:"Hotel Checkout & Local Cab to Kalupur Station", category:"travel", time:"10:30", duration:"45 min", location:"Ahmedabad Railway Station", city:"Ahmedabad", estimatedCost:250, image:"https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80", type:"travel" },
           { id:"a11", name:"Return Vande Bharat Express to Mumbai", category:"travel", time:"14:00", duration:"5h 25m", location:"Mumbai Central", city:"Mumbai", estimatedCost:1450, image:"https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80", type:"travel" }
@@ -248,6 +248,103 @@ export const MOCK_TRIPS: Trip[] = [
         { name: "Hotel Stay", planned: 12000, estimated: 11000, actual: 0, color: "#0f172a" },
         { name: "Meals & Dining", planned: 3000, estimated: 1800, actual: 0, color: "#d97706" },
         { name: "Local Cabs & Guides", planned: 1000, estimated: 800, actual: 0, color: "#10b981" }
+      ]
+    }
+  },
+  {
+    id: "trip-2",
+    userId: "user-1",
+    name: "Delhi to Varanasi – Sacred Ganga Aarti & Kashi Yatra",
+    from: "Delhi",
+    stops: [{ city: "Varanasi", state: "Uttar Pradesh", nights: 3 }],
+    purpose: "devotional",
+    tripType: "round-trip",
+    startDate: "2026-10-05",
+    endDate: "2026-10-08",
+    duration: "4 Days / 3 Nights",
+    travellers: { adults: 2, children: 0, seniors: 0, groupType: "couple" },
+    budgetTier: "comfort",
+    budgetAmount: 28000,
+    status: "upcoming",
+    coverImage: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=800&q=80",
+    isPublic: true,
+    createdAt: "2026-08-21",
+    meetings: [],
+    transport: {
+      id:"tr-varanasi-vb", mode:"train", from:"Delhi", to:"Varanasi", duration:"8h 00m",
+      cost:1750, comfort:"High", provider:"Vande Bharat Express (22436)", departure:"06:00", arrival:"14:00"
+    },
+    hotel: {
+      id:"h5", name:"BrijRama Palace Varanasi", stars:5, rating:4.9, reviewCount:1420,
+      location:"Darbhanga Ghat", city:"Varanasi", distanceFromCenter:"1.2 km",
+      pricePerNight:7500, image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80",
+      amenities:["Free WiFi","Ghat View","Vegetarian Fine Dining"],
+      tags:["Spiritual","Heritage Palace","Ganga View"]
+    },
+    itinerary: [
+      {
+        day: 1, date: "2026-10-05", city: "Varanasi",
+        activities: [
+          { id:"v1", name:"Vande Bharat Express from New Delhi to Varanasi Junction", category:"travel", time:"06:00", duration:"8 hrs", location:"New Delhi Railway Station", city:"Delhi", estimatedCost:1750, type:"travel", image:"https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80" },
+          { id:"v2", name:"Boat Transfer & Check-in at BrijRama Palace", category:"hotel", time:"14:30", duration:"1 hr", location:"Darbhanga Ghat", city:"Varanasi", estimatedCost:7500, type:"hotel", image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" },
+          { id:"v3", name:"Dashashwamedh Ghat Evening Ganga Maha Aarti", category:"religious", time:"18:30", duration:"2 hrs", location:"Dashashwamedh Ghat", city:"Varanasi", estimatedCost:0, type:"activity", image:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=500&q=80" }
+        ]
+      }
+    ],
+    budget: {
+      total: 28000, estimated: 22500, actual: 3500, remaining: 24500,
+      categories: [
+        { name: "Transport", planned: 6000, estimated: 3500, actual: 3500, color: "#1e40af" },
+        { name: "Hotel Stay", planned: 15000, estimated: 15000, actual: 0, color: "#0f172a" },
+        { name: "Devotional & Meals", planned: 7000, estimated: 4000, actual: 0, color: "#d97706" }
+      ]
+    }
+  },
+  {
+    id: "trip-3",
+    userId: "user-1",
+    name: "Delhi to Srinagar & Gulmarg – Kashmir Paradise",
+    from: "Delhi",
+    stops: [{ city: "Srinagar", state: "Jammu & Kashmir", nights: 3 }],
+    purpose: "leisure",
+    tripType: "round-trip",
+    startDate: "2026-10-18",
+    endDate: "2026-10-21",
+    duration: "4 Days / 3 Nights",
+    travellers: { adults: 2, children: 1, seniors: 0, groupType: "family" },
+    budgetTier: "premium",
+    budgetAmount: 45000,
+    status: "upcoming",
+    coverImage: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&q=80",
+    isPublic: true,
+    createdAt: "2026-08-21",
+    meetings: [],
+    transport: {
+      id:"tr-srinagar-flight", mode:"flight", from:"Delhi", to:"Srinagar", duration:"1h 35m",
+      cost:4800, comfort:"High", provider:"Air India AI-825", departure:"08:15", arrival:"09:50"
+    },
+    hotel: {
+      id:"h6", name:"The Lalit Grand Palace Srinagar", stars:5, rating:4.9, reviewCount:980,
+      location:"Gupkar Road", city:"Srinagar", distanceFromCenter:"2.8 km",
+      pricePerNight:8900, image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80",
+      amenities:["Dal Lake View","Heated Pool","Heritage Palace","Gardens"],
+      tags:["Heritage Palace","Dal Lake","Luxury 5 Star"]
+    },
+    itinerary: [
+      {
+        day: 1, date: "2026-10-18", city: "Srinagar",
+        activities: [
+          { id:"s1", name:"Flight to Srinagar Sheikh Ul-Alam International Airport", category:"travel", time:"08:15", duration:"1h 35m", location:"IGI Airport T3", city:"Delhi", estimatedCost:4800, type:"travel", image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80" },
+          { id:"s2", name:"Dal Lake Sunset Shikara Ride to Floating Gardens", category:"nature", time:"16:00", duration:"2 hrs", location:"Dal Lake Ghat 7", city:"Srinagar", estimatedCost:800, type:"activity", image:"https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=500&q=80" }
+        ]
+      }
+    ],
+    budget: {
+      total: 45000, estimated: 38000, actual: 9600, remaining: 35400,
+      categories: [
+        { name: "Flights", planned: 12000, estimated: 9600, actual: 9600, color: "#1e40af" },
+        { name: "Heritage Hotel", planned: 24000, estimated: 22000, actual: 0, color: "#0f172a" },
+        { name: "Sightseeing & Food", planned: 9000, estimated: 6400, actual: 0, color: "#10b981" }
       ]
     }
   }
