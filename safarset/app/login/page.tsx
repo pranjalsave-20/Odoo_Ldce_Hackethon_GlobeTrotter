@@ -1,10 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useToast } from "@/components/ui/Toast";
-import { Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, Mail, Lock, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const { login, loginWithGoogle } = useAuth();
@@ -20,14 +21,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) { setError("Please fill all fields"); return; }
+    if (!email || !password) { setError("Please enter your email and password."); return; }
     setLoading(true); setError("");
     const res = await login(email, password);
     if (res.success) {
-      addToast("success", "Welcome back! 🎉");
+      addToast("success", "Welcome back to Bharat Parikrama! 🎉");
       router.push("/dashboard");
     } else {
-      setError(res.error || "Login failed");
+      setError(res.error || "Invalid credentials. Please try again.");
       setLoading(false);
     }
   };
@@ -45,93 +46,87 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080d1a] flex items-center justify-center p-4 sm:p-8 font-sans">
+    <div className="min-h-screen bg-[#080d1a] flex items-center justify-center p-3 sm:p-6 lg:p-8 font-sans">
       
-      {/* Outer Browser Window Mockup Container matching exact screenshot */}
-      <div className="w-full max-w-[1100px] bg-[#0c1220] rounded-[24px] overflow-hidden shadow-2xl border border-slate-800 grid grid-cols-1 lg:grid-cols-2 min-h-[640px]">
+      {/* Outer Split Card Container */}
+      <div className="w-full max-w-[1050px] bg-[#0c1220] rounded-3xl overflow-hidden shadow-2xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
         
-        {/* LEFT PANEL: Geometric Dark Architecture Graphic + Brand Info */}
-        <div className="relative bg-[#0b1326] p-8 sm:p-12 flex flex-col justify-between overflow-hidden min-h-[500px]">
+        {/* LEFT PANEL: Travel Intelligence & Heritage Visual */}
+        <div className="lg:col-span-5 relative bg-[#0b1326] p-6 sm:p-10 flex flex-col justify-between overflow-hidden min-h-[380px] lg:min-h-full">
           
-          {/* Architectural Faceted Glass Background Layer */}
-          <div className="absolute inset-0 z-0">
-            {/* High definition architectural glass pattern */}
-            <svg className="w-full h-full object-cover opacity-25" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#0f172a" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
-                </linearGradient>
-                <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#020617" stopOpacity="0.95" />
-                </linearGradient>
-              </defs>
-              <rect width="800" height="800" fill="#090d16" />
-              {/* Faceted glass polygons simulating geometric architecture */}
-              <polygon points="0,0 400,200 200,600 0,400" fill="url(#grad1)" />
-              <polygon points="400,200 800,0 800,500 500,800" fill="url(#grad2)" />
-              <polygon points="200,600 500,800 0,800" fill="#030712" />
-              <polygon points="400,200 500,800 200,600" fill="url(#grad1)" opacity="0.6" />
-              <polygon points="0,0 800,0 400,200" fill="#1e293b" opacity="0.2" />
-              {/* Structural grid lines */}
-              <line x1="0" y1="0" x2="800" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.15" />
-              <line x1="800" y1="0" x2="0" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.15" />
-              <line x1="400" y1="0" x2="400" y2="800" stroke="#38bdf8" strokeWidth="1" opacity="0.1" />
-              <line x1="0" y1="400" x2="800" y2="400" stroke="#38bdf8" strokeWidth="1" opacity="0.1" />
-            </svg>
-            {/* Additional realistic Unsplash architectural background image */}
+          {/* Background Visual Layer */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <img 
-              src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?q=80&w=1200&auto=format&fit=crop" 
-              alt="Architecture" 
-              className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay" 
+              src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000&q=80" 
+              alt="Bharat Parikrama Heritage" 
+              className="w-full h-full object-cover opacity-30 filter contrast-125"
             />
-            {/* Gradient shadow overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080d1a] via-[#080d1a]/50 to-transparent" />
+            {/* Gradient Overlays for High Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d1a] via-[#080d1a]/70 to-[#080d1a]/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080d1a]/90 via-transparent to-[#080d1a]" />
           </div>
 
-          {/* Top Header Row */}
+          {/* Top Brand Header */}
           <div className="relative z-10 flex items-center justify-between w-full">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 text-white group text-decoration-none">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md">
-                <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
+            <Link href="/" className="flex items-center gap-3 group text-decoration-none">
+              <div className="w-10 h-10 rounded-2xl overflow-hidden bg-amber-50/10 border border-amber-400/30 p-0.5 shadow-md flex items-center justify-center shrink-0">
+                <img src="/logo.png" alt="Bharat Parikrama" className="w-full h-full object-contain" />
               </div>
-              <span className="font-bold text-lg text-white font-sans tracking-tight">
-                SafarSet
-              </span>
+              <div className="flex flex-col">
+                <span className="font-black text-sm text-teal-400 font-serif leading-none">
+                  भारत परिक्रमा
+                </span>
+                <span className="text-[9px] font-black text-slate-200 tracking-wider uppercase mt-0.5">
+                  BHARAT PARIKRAMA
+                </span>
+              </div>
             </Link>
 
-            {/* Back link - neatly padded so it never touches the right boundary */}
-            <Link href="/" className="flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors">
-              <ArrowLeft size={13} /> Back to Website
+            <Link href="/" className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">
+              <ArrowLeft size={13} /> Back to Home
             </Link>
           </div>
 
-          {/* Bottom Left Content Area */}
-          <div className="relative z-10 space-y-3.5 max-w-md my-auto lg:my-0 pt-12">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight font-sans">
-              Edit Smarter. Export<br />Faster. Create Anywhere.
+          {/* Left Hero Tagline & Features */}
+          <div className="relative z-10 space-y-4 my-auto lg:my-0 pt-8 lg:pt-0">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[10px] font-black uppercase tracking-wider">
+              <Sparkles size={12} /> SMART ROUTE OPTIMIZATION
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight">
+              Plan Smarter. Travel Deeper. Explore India.
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal opacity-90">
-              From quick social media clips to full-length videos, our powerful editor lets you work seamlessly across devices.
+
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-medium">
+              From multi-modal Vande Bharat rail & flight routes to meetings and verified local guides, optimize journeys across 28 states & union territories.
             </p>
 
-            {/* Indicator Dots */}
-            <div className="flex items-center gap-2 pt-2">
-              <span className="w-6 h-1 rounded-full bg-white" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            {/* Feature Bullets */}
+            <div className="space-y-2 pt-2 text-xs font-semibold text-slate-300">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                <span>Multi-Modal Rail, Air & Expressway Transit</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                <span>Automated Meeting Buffer Alarms</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                <span>Uber-Style Cabs & Verified Tour Guides</span>
+              </div>
             </div>
+          </div>
+
+          {/* Left Footer Note */}
+          <div className="relative z-10 pt-4 border-t border-slate-800 text-[11px] text-slate-500 hidden sm:block">
+            Pan-India Travel & Itinerary Optimization Platform
           </div>
 
         </div>
 
-        {/* RIGHT PANEL: Clean White Card Container */}
-        <div className="bg-white p-8 sm:p-12 flex flex-col justify-center items-center w-full">
+        {/* RIGHT PANEL: Clean White Login Form Card */}
+        <div className="lg:col-span-7 bg-white p-6 sm:p-10 lg:p-12 flex flex-col justify-center items-center w-full">
           
           <div className="w-full max-w-md space-y-6">
             
@@ -140,98 +135,103 @@ export default function LoginPage() {
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Welcome Back!
               </h2>
-              <p className="text-slate-500 text-xs sm:text-sm">
-                Log in to start creating stunning videos with ease.
+              <p className="text-xs sm:text-sm text-slate-500 font-medium">
+                Log in to access your Bharat Parikrama itineraries and active route telemetry.
               </p>
             </div>
 
-            {/* Error Banner */}
+            {/* Error banner */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl p-3">
-                {error}
+              <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl border border-red-200 font-semibold">
+                ⚠️ {error}
               </div>
             )}
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               
-              {/* Email Input */}
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Input your email"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900 placeholder:text-slate-400 bg-white"
-                  required
-                />
+              <div>
+                <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail size={16} className="absolute left-3.5 top-3.5 text-slate-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold text-slate-900"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
               </div>
 
-              {/* Password Input */}
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700">Password</label>
+              <div>
+                <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                  Password
+                </label>
                 <div className="relative">
+                  <Lock size={16} className="absolute left-3.5 top-3.5 text-slate-400" />
                   <input
                     type={showPw ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Input your password"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900 placeholder:text-slate-400 bg-white pr-10"
+                    className="w-full pl-10 pr-10 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 font-semibold text-slate-900"
+                    placeholder="••••••••"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPw(!showPw)}
-                    className="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600"
+                    className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600"
                   >
                     {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </div>
 
-              {/* Remember Me & Forgot Password Row */}
-              <div className="flex items-center justify-between pt-1">
-                <label className="flex items-center gap-2 cursor-pointer">
+              {/* Remember me & Forgot Password */}
+              <div className="flex items-center justify-between text-xs pt-1">
+                <label className="flex items-center gap-2 cursor-pointer text-slate-600 font-semibold">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                   />
-                  <span className="text-xs text-slate-600 font-medium">Remember Me</span>
+                  Remember Me
                 </label>
 
-                <Link href="/forgot-password" className="text-xs text-slate-500 hover:text-slate-900 font-medium">
+                <Link href="/forgot-password" className="font-bold text-blue-600 hover:text-blue-700">
                   Forgot Password?
                 </Link>
               </div>
 
-              {/* Primary Black Login Button */}
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-4 bg-[#18181b] hover:bg-[#09090b] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all duration-150 disabled:opacity-50 mt-2"
+                className="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "Signing in..." : "Login to Bharat Parikrama"}
               </button>
+
             </form>
 
-            {/* Or Continue With Divider */}
+            {/* Divider */}
             <div className="relative flex items-center justify-center my-4">
               <div className="border-t border-slate-200 w-full" />
-              <span className="bg-white px-3 text-[11px] text-slate-400 font-medium whitespace-nowrap uppercase tracking-wider">
-                Or continue with:
+              <span className="bg-white px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
+                OR CONTINUE WITH
               </span>
-              <div className="border-t border-slate-200 w-full" />
             </div>
 
-            {/* Google Button */}
+            {/* Google Sign In */}
             <button
-              type="button"
               onClick={handleGoogleSignIn}
               disabled={googleLoading}
-              className="w-full py-3 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 font-semibold text-xs rounded-full flex items-center justify-center gap-2.5 transition-colors shadow-sm disabled:opacity-50"
+              className="w-full py-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center gap-3 shadow-xs"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -242,10 +242,10 @@ export default function LoginPage() {
               <span>{googleLoading ? "Connecting..." : "Continue with Google"}</span>
             </button>
 
-            {/* Bottom Signup Link */}
-            <p className="text-center text-xs text-slate-500 pt-1">
-              Don't have an account?{" "}
-              <Link href="/signup" className="font-bold text-slate-900 hover:underline">
+            {/* Bottom Sign-up Link */}
+            <p className="text-center text-xs text-slate-500 font-medium">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="font-bold text-blue-600 hover:text-blue-700 underline">
                 Sign up here
               </Link>
             </p>
@@ -255,6 +255,7 @@ export default function LoginPage() {
         </div>
 
       </div>
+
     </div>
   );
 }
